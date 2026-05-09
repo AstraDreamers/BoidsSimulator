@@ -3,11 +3,13 @@
 #include "../manager/manager_entity.h++"
 #include "../manager/manager_ui.h++"
 
+/// @brief Entry point
 class core {
 public:
   core();
   ~core() = default;
 
+  /// @brief Start the program
   void run();
 
 private:
@@ -26,8 +28,15 @@ private:
   sf::Clock m_clock;
   float m_dt;
 
+  /// @brief Separation weight
   float m_ws = 10.f;
+
+  /// @brief Alignment weight
   float m_wa = 1.f;
+
+  /// @brief Cohesion weight
   float m_wc = 0.5f;
+
+  /// @brief Vision range of entities (radius)
   float m_vision = 100.f;
 };

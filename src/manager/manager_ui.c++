@@ -17,7 +17,7 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa,
   m_text_header->setString("Boids Algorithm");
   m_text_header->setPosition({0.f, 0.f});
   m_text_header->setOrigin({0.f, 0.f});
-  m_text_header->setFillColor(GraphitePallete::Green);
+  m_text_header->setFillColor(GraphitePalette::Green);
 }
 
 void manager_ui::handle_events(const std::optional<sf::Event> &event) {}

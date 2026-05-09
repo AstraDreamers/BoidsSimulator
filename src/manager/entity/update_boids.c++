@@ -1,6 +1,10 @@
 #include "../manager_entity.h++"
 
 void manager_entity::update_boids() {
+  // TODO: This is O(n^2) and must be optimized in the future.
+  // TODO: Maybe use a spatial partitioning structure like a quadtree or a grid
+  // TODO: to reduce the number of comparisons.
+
   auto view =
       m_registry
           .view<Components::Movement::Position, Components::Movement::Velocity,

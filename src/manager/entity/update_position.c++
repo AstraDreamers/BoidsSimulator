@@ -1,6 +1,7 @@
 #include "../manager_entity.h++"
 
 void manager_entity::update_position(float dt) {
+  // Update position and wrapping entities around the screen
   m_registry
       .view<Components::Movement::Velocity, Components::Movement::Position>()
       .each([&](Components::Movement::Velocity &v,
@@ -29,6 +30,7 @@ void manager_entity::update_position(float dt) {
         }
       });
 
+  // Update the position of the circles, and add a rotation for fun
   m_registry
       .view<Components::Movement::Position, Components::Drawable::Circle>()
       .each([](Components::Movement::Position &p,

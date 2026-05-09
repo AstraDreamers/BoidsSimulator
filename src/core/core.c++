@@ -8,14 +8,14 @@ core::core() {
   m_window.create(sf::VideoMode(m_window_size, 32), "Boids Simulator",
                   sf::Style::Close, sf::State::Fullscreen, settings);
   m_window.setFramerateLimit(60);
-  m_window.clear(GraphitePallete::White);
+  m_window.clear(GraphitePalette::White);
 
   m_clearscreen_shape.setSize(sf::Vector2f(m_window_size));
   m_clearscreen_shape.setPosition({0.f, 0.f});
   m_clearscreen_shape.setOrigin({0.f, 0.f});
-  m_clearscreen_shape.setFillColor({GraphitePallete::White.r,
-                                    GraphitePallete::White.g,
-                                    GraphitePallete::White.b, 50});
+  m_clearscreen_shape.setFillColor({GraphitePalette::White.r,
+                                    GraphitePalette::White.g,
+                                    GraphitePalette::White.b, 50});
 
   m_manager_entity = std::make_unique<manager_entity>(m_window_size, m_ws, m_wa,
                                                       m_wc, m_vision);

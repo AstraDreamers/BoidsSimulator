@@ -24,7 +24,7 @@ manager_entity::manager_entity(sf::Vector2u window_size, float &ws, float &wa,
     circle.shape.setRadius(10.f);
     circle.shape.setOrigin({10.f, 10.f});
     circle.shape.setPointCount(5);
-    circle.shape.setFillColor(GraphitePallete::Blue);
+    circle.shape.setFillColor(GraphitePalette::Blue);
   }
 }
 
