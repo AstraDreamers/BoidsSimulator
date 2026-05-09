@@ -1,0 +1,26 @@
+# Prerequisites
+build/
+bin/
+out/
+
+# IDEs and Editors
+.vscode/
+.vs/
+.cache/
+.clangd/
+.clang-format-ignore
+
+# C++/MSVC specific
+*.pdb
+*.obj
+*.exe
+*.dll
+*.lib
+*.sln
+*.vcxproj
+*.user
+
+# Temporary/Log files
+*.log
+*.tlog
+*.lastbuildstate
