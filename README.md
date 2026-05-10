@@ -1,11 +1,13 @@
 ![Logo](boids_simulator.png)
 
 # Boids Simulator
-![WIP](https://img.shields.io/badge/Work-In%20Progress-orange)
-![Status](https://img.shields.io/badge/Status-Not%20Ready-red)
-[![EnTT](https://img.shields.io/badge/EnTT-v3.16.0-blue)](https://github.com/skypjack/entt/releases/tag/v3.16.0)
-[![SFML](https://img.shields.io/badge/SFML-3.1.0-green)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-![License](https://img.shields.io/badge/License-MIT-purple)
+![WIP](https://img.shields.io/badge/Work-In%20Progress-ffff00)
+![Status](https://img.shields.io/badge/Status-Not%20Ready-ff0000)
+[![C23](https://img.shields.io/badge/C-23-ffffaa)](https://cppreference.com/c/23)
+[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaffff)](https://cppreference.com/cpp/26)
+[![EnTT](https://img.shields.io/badge/EnTT-v3.16.0-aaaaff)](https://github.com/skypjack/entt/releases/tag/v3.16.0)
+[![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
+![License](https://img.shields.io/badge/License-MIT-ffaaff)
 
 A simple flocking simulation.
 > **Disclaimer: This is a proof-of-concept. The current implementation is $O(n^2)$ and is poorly optimized. Refactoring and spatial partitioning are planned for future milestones.**
