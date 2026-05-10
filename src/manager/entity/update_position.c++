@@ -2,10 +2,8 @@
 
 void manager_entity::update_position(float dt) {
   // Update position and wrapping entities around the screen
-  m_registry
-      .view<Components::Movement::Velocity, Components::Movement::Position>()
-      .each([&](Components::Movement::Velocity &v,
-                Components::Movement::Position &p) {
+  m_registry.view<Components::Movement::Velocity, Components::Movement::Position>().each(
+      [&](Components::Movement::Velocity &v, Components::Movement::Position &p) {
         p.x += v.x * dt;
         p.y += v.y * dt;
 
@@ -31,10 +29,8 @@ void manager_entity::update_position(float dt) {
       });
 
   // Update the position of the circles, and add a rotation for fun
-  m_registry
-      .view<Components::Movement::Position, Components::Drawable::Circle>()
-      .each([](Components::Movement::Position &p,
-               Components::Drawable::Circle &circle) {
+  m_registry.view<Components::Movement::Position, Components::Drawable::Circle>().each(
+      [](Components::Movement::Position &p, Components::Drawable::Circle &circle) {
         circle.shape.setPosition({p.x, p.y});
         circle.shape.rotate(sf::degrees(5.f));
       });

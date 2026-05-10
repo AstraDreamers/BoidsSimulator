@@ -12,7 +12,7 @@ A simple flocking simulation.
 
 ## Technical Architecture
 
-- This project only supports **Windows** platform as it uses **Win32 API backend**.
+- This project only supports **Windows** platform as it uses **Win32 API**.
 
 | Specification | Value |
 | :--- | :--- |

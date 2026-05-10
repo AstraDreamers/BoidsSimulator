@@ -1,7 +1,6 @@
 #include "manager_ui.h++"
 
-manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa,
-                       float &wc, float &vision) {
+manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc, float &vision) {
   m_window_size = window_size;
   m_ws = &ws;
   m_wa = &wa;
@@ -24,6 +23,4 @@ void manager_ui::handle_events(const std::optional<sf::Event> &event) {}
 
 void manager_ui::update(float dt) {}
 
-void manager_ui::render(sf::RenderWindow &window) {
-  window.draw(*m_text_header);
-}
+void manager_ui::render(sf::RenderWindow &window) { window.draw(*m_text_header); }

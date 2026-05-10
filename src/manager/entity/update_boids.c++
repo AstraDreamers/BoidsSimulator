@@ -7,14 +7,11 @@ void manager_entity::update_boids() {
 
   auto view =
       m_registry
-          .view<Components::Movement::Position, Components::Movement::Velocity,
-                Components::Movement::Acceleration>();
+          .view<Components::Movement::Position, Components::Movement::Velocity, Components::Movement::Acceleration>();
   float vision_square = (*m_vision) * (*m_vision);
 
-  view.each([&](entt::entity this_entity,
-                Components::Movement::Position &this_position,
-                Components::Movement::Velocity &this_velocity,
-                Components::Movement::Acceleration &this_acceleration) {
+  view.each([&](entt::entity this_entity, Components::Movement::Position &this_position,
+                Components::Movement::Velocity &this_velocity, Components::Movement::Acceleration &this_acceleration) {
     sf::Vector2f vector_s = {0.f, 0.f};
     sf::Vector2f vector_a = {0.f, 0.f};
     sf::Vector2f vector_c = {0.f, 0.f};
@@ -25,10 +22,8 @@ void manager_entity::update_boids() {
         continue;
       }
 
-      Components::Movement::Position &other_position =
-          view.get<Components::Movement::Position>(other_entity);
-      Components::Movement::Velocity &other_velocity =
-          view.get<Components::Movement::Velocity>(other_entity);
+      Components::Movement::Position &other_position = view.get<Components::Movement::Position>(other_entity);
+      Components::Movement::Velocity &other_velocity = view.get<Components::Movement::Velocity>(other_entity);
 
       float delta_x = other_position.x - this_position.x;
       float delta_y = other_position.y - this_position.y;
@@ -63,10 +58,8 @@ void manager_entity::update_boids() {
       vector_a *= (*m_wa);
       vector_c *= (*m_wc);
 
-      this_acceleration.x =
-          vector_s.x + vector_a.x + vector_c.x - this_velocity.x;
-      this_acceleration.y =
-          vector_s.y + vector_a.y + vector_c.y - this_velocity.y;
+      this_acceleration.x = vector_s.x + vector_a.x + vector_c.x - this_velocity.x;
+      this_acceleration.y = vector_s.y + vector_a.y + vector_c.y - this_velocity.y;
     } else {
       this_acceleration = {0.f, 0.f};
     }

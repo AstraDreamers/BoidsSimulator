@@ -9,8 +9,7 @@ public:
   /// @param wa The weight of the alignment behavior.
   /// @param wc The weight of the cohesion behavior.
   /// @param vision The vision radius of the boids.
-  manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc,
-             float &vision);
+  manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc, float &vision);
   ~manager_ui() = default;
 
   /// @brief Handle the events of the simulation.
