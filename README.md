@@ -12,6 +12,8 @@
 A simple flocking simulation.
 > **Disclaimer: This is a proof-of-concept. The current implementation is $O(n^2)$ and is poorly optimized. Refactoring and spatial partitioning are planned for future milestones.**
 
+> **WARNING: The velocity of entities aren't still clamped. if the velocity is too high, it can cause total freeze.**
+
 ## Technical Architecture
 
 - This project only supports **Windows** platform as it uses **Win32 API**.
