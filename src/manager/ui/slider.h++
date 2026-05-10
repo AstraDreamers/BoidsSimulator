@@ -9,18 +9,32 @@ public:
   slider(float &value, float clamp_min = 0.f, float clamp_max = 1.f);
   ~slider() = default;
 
+  /// @brief Set the position of the slider
+  /// @param position The new position of the slider
   void set_position(sf::Vector2f position);
+
+  /// @brief Set the size of the slider
+  /// @param size The new size of the slider
   void set_size(sf::Vector2f size);
 
+  /// @brief Set the color of the slider when it's inactive
+  /// @param color The new color of the slider when it's inactive
   void set_color_inactive(sf::Color color);
+
+  /// @brief Set the color of the slider when it's active
+  /// @param color The new color of the slider when it's active
   void set_color_active(sf::Color color);
+
+  /// @brief Set the color of the slider background
+  /// @param color The new color of the slider background
   void set_color_background(sf::Color color);
 
+  /// @brief Update slider logic
   void update();
-  void render(sf::RenderWindow &window);
 
-private:
-  sf::Color linear_interpolation();
+  /// @brief Render the slider
+  /// @param window The window to render the slider on
+  void render(sf::RenderWindow &window);
 
 private:
   sf::RectangleShape m_line;
@@ -41,7 +55,7 @@ private:
   sf::Color m_color_active;
   sf::Color m_color_background;
 
-  bool m_lock = false;
+  bool m_locked = false;
   float m_color_fade = 0.f;
   float m_size_fade = 0.f;
 };

@@ -23,8 +23,13 @@ core::core() {
 void core::run() {
   while (m_window.isOpen()) {
     handle_events();
-    update();
-    render();
+    if (m_window.hasFocus()) {
+      update();
+      render();
+    } else {
+      m_clock.restart();
+      Sleep(100);
+    }
   }
 }
 
