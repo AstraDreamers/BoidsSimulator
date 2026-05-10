@@ -28,7 +28,7 @@ void core::run() {
       render();
     } else {
       m_clock.restart();
-      Sleep(100);
+      render();
     }
   }
 }

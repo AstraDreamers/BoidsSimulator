@@ -33,10 +33,8 @@ private:
 
   std::unique_ptr<sf::Text> m_text_header;
 
-  std::unique_ptr<slider> m_slider_ws;
-  std::unique_ptr<slider> m_slider_wa;
-  std::unique_ptr<slider> m_slider_wc;
-  std::unique_ptr<slider> m_slider_vision;
+  std::unique_ptr<slider> m_slider[4];
+  std::unique_ptr<sf::Text> m_slider_text[4];
 
   float *m_ws = nullptr;
   float *m_wa = nullptr;

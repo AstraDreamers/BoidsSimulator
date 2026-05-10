@@ -18,51 +18,47 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
   m_text_header->setOrigin({0.f, 0.f});
   m_text_header->setFillColor(GraphitePalette::Green);
 
-  m_slider_ws = std::make_unique<slider>(*m_ws, 0.f, 10.f);
-  m_slider_wa = std::make_unique<slider>(*m_wa);
-  m_slider_wc = std::make_unique<slider>(*m_wc);
-  m_slider_vision = std::make_unique<slider>(*m_vision, 0.f, 100.f);
+  m_slider[0] = std::make_unique<slider>(*m_ws, 0.f, 10.f);
+  m_slider[1] = std::make_unique<slider>(*m_wa);
+  m_slider[2] = std::make_unique<slider>(*m_wc);
+  m_slider[3] = std::make_unique<slider>(*m_vision, 0.f, 100.f);
 
-  m_slider_ws->set_position({100.f, 400.f});
-  m_slider_wa->set_position({100.f, 500.f});
-  m_slider_wc->set_position({100.f, 600.f});
-  m_slider_vision->set_position({100.f, 700.f});
+  for (uint8_t i = 0; i < 4; i++) {
+    m_slider[i]->set_position({(static_cast<float>(i) / 4.f) * static_cast<float>(m_window_size.x) +
+                                   0.05f * static_cast<float>(m_window_size.x),
+                               0.9f * static_cast<float>(m_window_size.y)});
+    m_slider[i]->set_size({0.15f * static_cast<float>(m_window_size.x), 10.f});
+    m_slider[i]->set_color_background(GraphitePalette::Gray);
+    m_slider[i]->set_color_active(GraphitePalette::Blue);
+    m_slider[i]->set_color_inactive(GraphitePalette::Pink);
 
-  m_slider_ws->set_size({500.f, 20.f});
-  m_slider_wa->set_size({500.f, 20.f});
-  m_slider_wc->set_size({500.f, 20.f});
-  m_slider_vision->set_size({500.f, 20.f});
+    m_slider_text[i] = std::make_unique<sf::Text>(m_font_google_sans);
+    m_slider_text[i]->setCharacterSize(20);
+    m_slider_text[i]->setPosition({(static_cast<float>(i) / 4.f) * static_cast<float>(m_window_size.x) +
+                                       0.05f * static_cast<float>(m_window_size.x),
+                                   0.85f * static_cast<float>(m_window_size.y)});
+    m_slider_text[i]->setOrigin({0.f, 0.f});
+    m_slider_text[i]->setFillColor(GraphitePalette::Green);
+  }
 
-  m_slider_ws->set_color_active({255, 128, 128, 255});
-  m_slider_ws->set_color_inactive({255, 77, 77, 255});
-  m_slider_ws->set_color_background({225, 204, 204, 255});
-
-  m_slider_wa->set_color_active({128, 255, 128, 255});
-  m_slider_wa->set_color_inactive({77, 255, 77, 255});
-  m_slider_wa->set_color_background({204, 225, 204, 255});
-
-  m_slider_wc->set_color_active({128, 128, 255, 255});
-  m_slider_wc->set_color_inactive({77, 77, 255, 255});
-  m_slider_wc->set_color_background({204, 204, 225, 255});
-
-  m_slider_vision->set_color_active({255, 128, 255, 255});
-  m_slider_vision->set_color_inactive({225, 77, 255, 255});
-  m_slider_vision->set_color_background({225, 204, 225, 255});
+  m_slider_text[0]->setString("Separation");
+  m_slider_text[1]->setString("Alignment");
+  m_slider_text[2]->setString("Cohesion");
+  m_slider_text[3]->setString("Vision");
 }
 
 void manager_ui::handle_events(const std::optional<sf::Event> &event) {}
 
 void manager_ui::update(float dt) {
-  m_slider_ws->update();
-  m_slider_wa->update();
-  m_slider_wc->update();
-  m_slider_vision->update();
+  for (uint8_t i = 0; i < 4; i++) {
+    m_slider[i]->update();
+  }
 }
 
 void manager_ui::render(sf::RenderWindow &window) {
   window.draw(*m_text_header);
-  m_slider_ws->render(window);
-  m_slider_wa->render(window);
-  m_slider_wc->render(window);
-  m_slider_vision->render(window);
+  for (uint8_t i = 0; i < 4; i++) {
+    m_slider[i]->render(window);
+    window.draw(*m_slider_text[i]);
+  }
 }
