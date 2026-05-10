@@ -7,7 +7,7 @@ manager_entity::manager_entity(sf::Vector2u window_size, float &ws, float &wa, f
   m_wc = &wc;
   m_vision = &vision;
 
-  for (uint16_t i = 0; i < 100; i++) {
+  for (uint16_t i = 0; i < 200; i++) {
     entt::entity entity = m_registry.create();
 
     m_registry.emplace<Components::Movement::Position>(entity, static_cast<float>(rand() % m_window_size.x),
