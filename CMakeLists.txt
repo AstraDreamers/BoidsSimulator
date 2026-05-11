@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(BoidsSimulatior)
+project(BoidsSimulator)
 
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_C_STANDARD 23)
