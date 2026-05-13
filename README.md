@@ -114,7 +114,7 @@ Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{v_{ave
 
 $$\overrightarrow{u}=\frac{\overrightarrow{v_{average}}}{|\overrightarrow{v_{average}}|}=\frac{\overrightarrow{v_{average}}}{\sqrt{v_{average_x}^2+v_{average_y}^2}}$$
 
-> As we can see, $\overrightarrow{v_{average}}$ is at the denominator, which means that when it approaches circle, our variable overflows (as it easily surges over $2^{32}-1$ with `float` data type), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $\overrightarrow{v_{average}}$ is too low ($0.000001$ for example).
+> As we can see, $|\overrightarrow{v_{average}}|$ is at the denominator, which means that when it approaches $0$, our variable overflows (as it easily surges over $\pm3.4\cdot10^{38}$ with `float` data type, single-precision), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $|\overrightarrow{v_{average}}|$ is too low ($0.000001$ for example).
 
 Then we scale it with $v_{max}$ to get the desired velocity:
 
@@ -149,7 +149,7 @@ Let $\overrightarrow{k_{cohesion}} = \overrightarrow{P_AP_{center}}$. To ensure 
 
 $$\overrightarrow{u}=\frac{\overrightarrow{k_{cohesion}}}{|\overrightarrow{k_{cohesion}}|} = \frac{\overrightarrow{k_{cohesion}}}{\sqrt{{k_{cohesion_x}^2+k_{cohesion_y}^2}}}$$
 
-> As we can see, $\overrightarrow{k_{cohesion}}$ is at the denominator, which means that when it approaches circle, our variable overflows (as it easily surges over $2^{32}-1$ with `float` data type), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $\overrightarrow{k_{cohesion}}$ is too low ($0.000001$ for example).
+> As we can see, $|\overrightarrow{k_{cohesion}}|$ is at the denominator, which means that when it approaches $0$, our variable overflows (as it easily surges over $\pm3.4\cdot10^{38}$ with `float` data type, single precision), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $|\overrightarrow{k_{cohesion}}|$ is too low ($0.000001$ for example).
 
 Then we scale it with $v_{max}$ to get the desired velocity:
 
