@@ -35,7 +35,6 @@ A simple flocking simulation.
 Coming soon!
 
 ## The simulation logic (how it actually works)
-
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 - **[Separation](#separation)**: Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
 - **[Alignment](#alignment)**: Entities match their velocity vectors with the local average to achieve directional flocking consensus.
@@ -67,12 +66,12 @@ Given that $\Delta x=x_A-x_B$ and $\Delta y=y_A-y_B$, we can get:
 $$\overrightarrow{BA}=(\Delta x;\Delta y)$$
 $$\implies|\overrightarrow{BA}|^2=\Delta x^2+\Delta y^2$$
 
-Then, we can calculate $x$ and $y$ axis separately (just as what the CPU have to do):
+Then, we can calculate $x$ and $y$ axis separately (just as what the CPU has to do):
 
 $$x_k=\sum_{B\in N}\frac{\Delta x}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta x}{\Delta x^2+\Delta y^2}$$
 $$y_k=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta y}{\Delta x^2+\Delta y^2}$$
 
-> As we can see, $|\overrightarrow{BA}|$ is at the denominator of the fraction, which means that $|\overrightarrow{BA}|$ should not equal $0$, which can cause program crash. That's why we only check if the distance is larger than $0.01$ for mentioned safety issues.
+> As we can see, $|\overrightarrow{BA}|$ is at the denominator of the fraction, which means that $|\overrightarrow{BA}|$ should not equal $0$, which can cause the program to crash. That's why we only check if the distance is larger than $0.01$ for mentioned safety issues.
 >
 > Here is a piece of pseudo-C++ code:
 > ```cpp
@@ -87,7 +86,7 @@ $$y_k=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\
 
 Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{k}$ that has a length $|\overrightarrow{u}|=1$ (in other words, this is an **unit vector**). To calculate it (again, with some **Pythagorean theorem**):
 
-$$\overrightarrow{u}=\frac{\overrightarrow{k}}{|\overrightarrow{k}|}=\frac{\overrightarrow{k}}{\sqrt{x_k^2+y_k^2}}$$
+$$\overrightarrow{u}=\frac{\overrightarrow{k}}{|\overrightarrow{k}|}=\frac{\overrightarrow{k}}{\sqrt{k_x^2+k_y^2}}$$
 
 Because $\overrightarrow{k}$ varies significantly over time, we have to get its direction (we already did it and have $\overrightarrow{u}$), and apply a constant $v_{max}$ for all of the time. Then, we can get the desired velocity vector $\overrightarrow{v_{desired}}$:
 
@@ -115,6 +114,8 @@ Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{v_{ave
 
 $$\overrightarrow{u}=\frac{\overrightarrow{v_{average}}}{|\overrightarrow{v_{average}}|}=\frac{\overrightarrow{v_{average}}}{\sqrt{v_{average_x}^2+v_{average_y}^2}}$$
 
+> As we can see, $\overrightarrow{v_{average}}$ is at the denominator, which means that when it approaches circle, our variable overflows (as it easily surges over $2^{32}-1$ with `float` data type), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $\overrightarrow{v_{average}}$ is too low ($0.000001$ for example).
+
 Then we scale it with $v_{max}$ to get the desired velocity:
 
 $$\overrightarrow{v_{desired}}=\overrightarrow{u}\cdot v_{max}$$
@@ -137,7 +138,7 @@ This can be split into 2 axis:
 $$P_{{center}_x}=\frac{1}{n(N)}\sum_{B\in N}P_{B_x}$$
 $$P_{{center}_y}=\frac{1}{n(N)}\sum_{B\in N}P_{B_y}$$
 
-As we want the entity to move from the current position $P_A$ toward this center position $P_{center}$, we have to calculate vector $\overrightarrow{P_AP_{Center}}$. We know that at $O(0;0)$:
+As we want the entity to move from the current position $P_A$ toward this center position $P_{center}$, we have to calculate vector $\overrightarrow{P_AP_{center}}$. We know that at $O(0;0)$:
 
 $$\overrightarrow{P_AP_{center}}$$
 $$=\overrightarrow{P_AO}+\overrightarrow{OP_{center}}$$
@@ -146,7 +147,9 @@ $$=(x_{center}-x_A;y_{center}-y_A)$$
 
 Let $\overrightarrow{k_{cohesion}} = \overrightarrow{P_AP_{center}}$. To ensure the entity moves at a constant speed, we get the direction (unit vector $\overrightarrow{u}$) of $\overrightarrow{k_{cohesion}}$:
 
-$$\overrightarrow{u}=\frac{\overrightarrow{k_{cohesion}}}{|\overrightarrow{k_{cohesion}}|} = \frac{\overrightarrow{k_{cohesion}}}{\sqrt{x_k^2 + y_k^2}}$$
+$$\overrightarrow{u}=\frac{\overrightarrow{k_{cohesion}}}{|\overrightarrow{k_{cohesion}}|} = \frac{\overrightarrow{k_{cohesion}}}{\sqrt{{k_{cohesion_x}^2+k_{cohesion_y}^2}}}$$
+
+> As we can see, $\overrightarrow{k_{cohesion}}$ is at the denominator, which means that when it approaches circle, our variable overflows (as it easily surges over $2^{32}-1$ with `float` data type), or even cause the program to crash if it actually equals $0$. To ensure safety, we have to set the $\overrightarrow{u}=(0;0)$ when $\overrightarrow{k_{cohesion}}$ is too low ($0.000001$ for example).
 
 Then we scale it with $v_{max}$ to get the desired velocity:
 
@@ -157,7 +160,7 @@ Finally, we calculate the **steering force** $\overrightarrow{F_c}$ by finding t
 $$\overrightarrow{F_c}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 #### At the end
-Finally, we sum everything up together to get the **final acceleration**:
+Finally, we sum everything up together to get the **final acceleration for the entity**:
 
 $$\overrightarrow{a_A}=w_s\cdot\overrightarrow{F_s}+w_a\cdot\overrightarrow{F_a}+w_c\cdot\overrightarrow{F_c}$$
 
