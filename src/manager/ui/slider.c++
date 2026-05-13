@@ -8,6 +8,7 @@ slider::slider(float &value, float clamp_min, float clamp_max) {
   *m_value = std::clamp(*m_value, clamp_min, clamp_max);
   m_value_based = (*m_value - clamp_min) / clamp_max;
 
+  /// ? First initialization
   set_position({0.f, 0.f});
   set_size({100.f, 10.f});
   set_color_inactive(sf::Color::Blue);
