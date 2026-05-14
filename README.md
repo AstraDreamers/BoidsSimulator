@@ -68,8 +68,8 @@ $$\implies|\overrightarrow{BA}|^2=\Delta x^2+\Delta y^2$$
 
 Then, we can calculate $x$ and $y$ axis separately (just as what the CPU has to do):
 
-$$x_k=\sum_{B\in N}\frac{\Delta x}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta x}{\Delta x^2+\Delta y^2}$$
-$$y_k=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta y}{\Delta x^2+\Delta y^2}$$
+$$k_x=\sum_{B\in N}\frac{\Delta x}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta x}{\Delta x^2+\Delta y^2}$$
+$$k_y=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\Delta y}{\Delta x^2+\Delta y^2}$$
 
 > As we can see, $|\overrightarrow{BA}|$ is at the denominator of the fraction, which means that $|\overrightarrow{BA}|$ should not equal $0$, which can cause the program to crash. That's why we only check if the distance is larger than $0.01$ for mentioned safety issues.
 >
@@ -135,8 +135,8 @@ $$P_{center}=\frac{1}{n(N)}\sum_{B\in N}P_B$$
 
 This can be split into 2 axis:
 
-$$P_{{center}_x}=\frac{1}{n(N)}\sum_{B\in N}P_{B_x}$$
-$$P_{{center}_y}=\frac{1}{n(N)}\sum_{B\in N}P_{B_y}$$
+$$x_{P_{center}}=\frac{1}{n(N)}\sum_{B\in N}P_{B_x}$$
+$$y_{P_{center}}=\frac{1}{n(N)}\sum_{B\in N}P_{B_y}$$
 
 As we want the entity to move from the current position $P_A$ toward this center position $P_{center}$, we have to calculate vector $\overrightarrow{P_AP_{center}}$. We know that at $O(0;0)$:
 
