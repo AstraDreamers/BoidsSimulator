@@ -1,6 +1,8 @@
 #pragma once
 
+#include "../colors.h++"
 #include "ui/slider.h++"
+
 
 /// @brief Managing the user interface of the simulation.
 class manager_ui {

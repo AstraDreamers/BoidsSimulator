@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../colors.h++"
 #include "entity/components.h++"
 
 /// @brief Managing the entities in the simulation.

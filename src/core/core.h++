@@ -1,7 +1,9 @@
 #pragma once
 
+#include "../colors.h++"
 #include "../manager/manager_entity.h++"
 #include "../manager/manager_ui.h++"
+
 
 /// @brief Entry point
 class core {

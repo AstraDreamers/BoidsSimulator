@@ -16,7 +16,7 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
   m_text_header->setString("Boids Algorithm");
   m_text_header->setPosition({0.f, 0.f});
   m_text_header->setOrigin({0.f, 0.f});
-  m_text_header->setFillColor(GraphitePalette::Green);
+  m_text_header->setFillColor(color_palette::text_title);
 
   m_slider[0] = std::make_unique<slider>(*m_ws, 0.f, 10.f);
   m_slider[1] = std::make_unique<slider>(*m_wa, 0.f, 10.f);
@@ -30,9 +30,9 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
                                    0.05f * static_cast<float>(m_window_size.x),
                                0.9f * static_cast<float>(m_window_size.y)});
     m_slider[i]->set_size({0.15f * static_cast<float>(m_window_size.x), 10.f});
-    m_slider[i]->set_color_background(GraphitePalette::Gray);
-    m_slider[i]->set_color_active(GraphitePalette::Blue);
-    m_slider[i]->set_color_inactive(GraphitePalette::Pink);
+    m_slider[i]->set_color_background(color_palette::slider_background);
+    m_slider[i]->set_color_active(color_palette::slider_active);
+    m_slider[i]->set_color_inactive(color_palette::slider_inactive);
 
     m_slider_text[i] = std::make_unique<sf::Text>(m_font_google_sans);
     m_slider_text[i]->setCharacterSize(20);
@@ -40,7 +40,7 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
                                        0.05f * static_cast<float>(m_window_size.x),
                                    0.85f * static_cast<float>(m_window_size.y)});
     m_slider_text[i]->setOrigin({0.f, 0.f});
-    m_slider_text[i]->setFillColor(GraphitePalette::Green);
+    m_slider_text[i]->setFillColor(color_palette::text_slider_title);
     m_slider_text[i]->setString(slider_names[i]);
 
     m_slider_value[i] = std::make_unique<sf::Text>(m_font_google_sans);
@@ -49,7 +49,7 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
         {m_slider_text[i]->getPosition().x + m_slider_text[i]->getGlobalBounds().size.x + 10.f,
          m_slider_text[i]->getPosition().y});
     m_slider_value[i]->setOrigin({0.f, 0.f});
-    m_slider_value[i]->setFillColor(GraphitePalette::Green);
+    m_slider_value[i]->setFillColor(color_palette::text_slider_value);
   }
 }
 
