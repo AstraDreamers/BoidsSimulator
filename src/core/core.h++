@@ -4,7 +4,6 @@
 #include "../manager/manager_entity.h++"
 #include "../manager/manager_ui.h++"
 
-
 /// @brief Entry point
 class core {
 public:
@@ -22,7 +21,7 @@ private:
 private:
   sf::RenderWindow m_window;
   sf::Vector2u m_window_size;
-  sf::RectangleShape m_clearscreen_shape;
+  sf::VertexArray m_clearscreen_array;
 
   std::unique_ptr<manager_entity> m_manager_entity;
   std::unique_ptr<manager_ui> m_manager_ui;
