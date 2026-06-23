@@ -16,14 +16,14 @@ A simple flocking simulation.
 
 ## Technical Architecture
 
-- This project only supports **Windows** platform as it uses **Win32 API**.
+This project supports **Windows** and partly **Linux** (only tested on Kubuntu).
 
-| Specification | Value |
-| :--- | :--- |
-| **Toolchain** | CMake 4.0+ |
-| **C++ Standard** | C++26 |
-| **C Standard** | C23 |
-| **Linking** | Fully ***Static*** |
+| Specification    | Value      |
+|:-----------------|:-----------|
+| **Toolchain**    | CMake 4.0+ |
+| **C++ Standard** | C++26      |
+| **C Standard**   | C23        |
+| **Linking**      | Dynamic    |
 
 ### Dependencies
 - **[EnTT](https://github.com/skypjack/entt/releases/tag/v3.16.0) v3.16.0** — Entity Component System (ECS)
@@ -34,7 +34,7 @@ A simple flocking simulation.
 ## Build instruction
 Coming soon!
 
-## The simulation logic (how it actually works)
+## The simulation logic under the hood
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 - **[Separation](#separation)**: Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
 - **[Alignment](#alignment)**: Entities match their velocity vectors with the local average to achieve directional flocking consensus.
