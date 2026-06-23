@@ -8,7 +8,7 @@ manager_ui::manager_ui(sf::Vector2u window_size, float &ws, float &wa, float &wc
   m_vision = &vision;
 
   if (!m_font_google_sans.openFromFile("assets/Google Sans.ttf")) {
-    MessageBoxA(NULL, "Can't load font.", "Error", MB_ICONERROR | MB_OK);
+    exit(-1);
   }
 
   m_text_header = std::make_unique<sf::Text>(m_font_google_sans);

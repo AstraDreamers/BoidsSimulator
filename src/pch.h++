@@ -6,4 +6,3 @@
 #include <SFML/Window.hpp>
 
 #include <entt/entt.hpp>
-#include <windows.h>

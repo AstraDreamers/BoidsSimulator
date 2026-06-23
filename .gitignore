@@ -2,8 +2,11 @@
 build/
 bin/
 out/
+cmake-build-debug/
+cmake-build-release/
 
 # IDEs and Editors
+.idea/
 .vscode/
 .vs/
 .cache/
