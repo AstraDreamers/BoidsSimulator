@@ -1,7 +1,7 @@
 #include "core/core.h++"
 
 int main() {
-  core _core;
-  _core.run();
-  return 0;
+    core core_engine;
+    core_engine.run();
+    return 0;
 }
