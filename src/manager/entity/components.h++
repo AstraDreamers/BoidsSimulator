@@ -1,26 +1,24 @@
 #pragma once
 
-namespace Components {
-    namespace Movement {
-        struct Position {
-            float x;
-            float y;
-        };
+namespace components {
+    struct position {
+        float x;
+        float y;
+    };
 
-        struct Velocity {
-            float x;
-            float y;
-        };
+    struct velocity {
+        float x;
+        float y;
+    };
 
-        struct Acceleration {
-            float x;
-            float y;
-        };
-    } // namespace Movement
+    struct acceleration {
+        float x;
+        float y;
+    };
 
     namespace Drawable {
         struct Circle {
             sf::CircleShape shape;
         };
-    } // namespace Drawable
-} // namespace Components
+    }
+}

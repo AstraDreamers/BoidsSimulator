@@ -5,14 +5,11 @@ void manager_entity::update_boids() {
     // TODO: Maybe use a spatial partitioning structure like a quadtree or a grid
     // TODO: to reduce the number of comparisons.
 
-    auto view =
-        m_registry
-            .view<Components::Movement::Position, Components::Movement::Velocity, Components::Movement::Acceleration>();
-    float vision_square = (*m_vision) * (*m_vision);
+    const auto view = m_registry.view<components::position, components::velocity, components::acceleration>();
+    const float vision_square = (*m_vision) * (*m_vision);
 
-    view.each([&](entt::entity this_entity, Components::Movement::Position &this_position,
-                  Components::Movement::Velocity &this_velocity,
-                  Components::Movement::Acceleration &this_acceleration) {
+    view.each([&](const entt::entity this_entity, components::position &this_position,
+                  const components::velocity &this_velocity, components::acceleration &this_acceleration) {
         sf::Vector2f vector_s = {0.f, 0.f};
         sf::Vector2f vector_a = {0.f, 0.f};
         sf::Vector2f vector_c = {0.f, 0.f};
@@ -23,8 +20,8 @@ void manager_entity::update_boids() {
                 continue;
             }
 
-            Components::Movement::Position &other_position = view.get<Components::Movement::Position>(other_entity);
-            Components::Movement::Velocity &other_velocity = view.get<Components::Movement::Velocity>(other_entity);
+            components::position &other_position = view.get<components::position>(other_entity);
+            components::velocity &other_velocity = view.get<components::velocity>(other_entity);
 
             float delta_x = other_position.x - this_position.x;
             float delta_y = other_position.y - this_position.y;
