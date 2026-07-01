@@ -1,6 +1,7 @@
 ![Logo](boids_simulator.png)
 
 # Boids Simulator
+
 ![WIP](https://img.shields.io/badge/Work-In%20Progress-ffff00)
 ![Status](https://img.shields.io/badge/Status-Not%20Ready-ff0000)
 [![C23](https://img.shields.io/badge/C-23-ffffaa)](https://cppreference.com/c/23)
@@ -10,37 +11,41 @@
 ![License](https://img.shields.io/badge/License-MIT-ffaaff)
 
 A simple flocking simulation.
+
 > **Disclaimer: This is a proof-of-concept. The current implementation is $O(n^2)$ and is poorly optimized. Refactoring and spatial partitioning are planned for future milestones.**
 
 > **WARNING: The velocity of entities aren't still clamped. if the velocity is too high, it can cause total freeze.**
 
 ## Technical Architecture
 
-This project supports **Windows** and partly **Linux** (only tested on Kubuntu).
+This project supports **Windows** and partly **Linux** (only tested on Kubuntu and Debian 13 - Trixie).
 
-| Specification    | Value      |
-|:-----------------|:-----------|
-| **Toolchain**    | CMake 4.0+ |
-| **C++ Standard** | C++26      |
-| **C Standard**   | C23        |
-| **Linking**      | Dynamic    |
+| Specification     | Value                     |
+|:------------------|:--------------------------|
+| **CMake Version** | CMake 4.0+                |
+| **C++ Standard**  | C++26 (Standard Required) |
+| **C Standard**    | C23 (Standard Required)   |
+| **Linking**       | Dynamic Linking           |
 
 ### Dependencies
-- **[EnTT](https://github.com/skypjack/entt/releases/tag/v3.16.0) v3.16.0** — Entity Component System (ECS)
-- **[SFML](https://github.com/SFML/SFML/releases/tag/3.1.0) 3.1.0** — Multimedia & Rendering Layer
+- **[EnTT v3.16.0](https://github.com/skypjack/entt/releases/tag/v3.16.0)** — Entity Component System (ECS)
+- **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
 > **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required.
 
 ## Build instruction
+
 Coming soon!
 
 ## The simulation logic under the hood
+
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 - **[Separation](#separation)**: Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
 - **[Alignment](#alignment)**: Entities match their velocity vectors with the local average to achieve directional flocking consensus.
 - **[Cohesion](#cohesion)**: Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
 
 #### Variables
+
 There are some values we can tune to result with different results:
 - **Separation** $w_s$: Separation gain
 - **Alignment** $w_a$: Alignment gain
@@ -50,6 +55,7 @@ There are some values we can tune to result with different results:
 - **Vision range** $l_{vision}$: Vision range of entities, which affects how far the neighborhood selection applies.
 
 #### Separation
+
 This behavior prevents local congestion by applying a force inversely proportional to the distance between boids. 
 
 Given that $A$ is the current position of an entity, let $N$ be the set of neighbors that is inside the vision range of the mentioned entity, we can get this specific vector that tells us the direction to move and the intensity:
@@ -84,11 +90,11 @@ $$k_y=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\
 > }
 > ```
 
-Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{k}$ that has a length $|\overrightarrow{u}|=1$ (in other words, this is an **unit vector**). To calculate it (again, with some **Pythagorean theorem**):
+Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{k}$ that has a length $|\overrightarrow{u}|=1$ (in other words, this is a **unit vector**). To calculate it (again, with some **Pythagorean theorem**):
 
 $$\overrightarrow{u}=\frac{\overrightarrow{k}}{|\overrightarrow{k}|}=\frac{\overrightarrow{k}}{\sqrt{k_x^2+k_y^2}}$$
 
-Because $\overrightarrow{k}$ varies significantly over time, we have to get its direction (we already did it and have $\overrightarrow{u}$), and apply a constant $v_{max}$ for all of the time. Then, we can get the desired velocity vector $\overrightarrow{v_{desired}}$:
+Because $\overrightarrow{k}$ varies significantly over time, we have to get its direction (we already did it and have $\overrightarrow{u}$), and apply a constant $v_{max}$ for all the time. Then, we can get the desired velocity vector $\overrightarrow{v_{desired}}$:
 
 $$\overrightarrow{v_{desired}}=\overrightarrow{u}\cdot v_{max}$$
 
@@ -97,6 +103,7 @@ But there is a small problem. the current velocity of the entity, $\overrightarr
 $$\overrightarrow{F_s}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 #### Alignment
+
 This behavior ensures that an entity moves in the same direction as its neighbors, creating a synchronized "flocking" effect.
 
 > And yeah, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are *separated***. Please pay attention!
@@ -110,7 +117,7 @@ This can be split into 2 axis:
 $$v_{{average}_x}=\frac{1}{n(N)}\sum_{B\in N}v_{B_x}$$
 $$v_{{average}_y}=\frac{1}{n(N)}\sum_{B\in N}v_{B_y}$$
 
-Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{v_{average}}$, and also an unit vector (length equal $1$), to calculate it:
+Given that $\overrightarrow{u}$ is a direction vector of $\overrightarrow{v_{average}}$, and also a unit vector (length equal $1$), to calculate it:
 
 $$\overrightarrow{u}=\frac{\overrightarrow{v_{average}}}{|\overrightarrow{v_{average}}|}=\frac{\overrightarrow{v_{average}}}{\sqrt{v_{average_x}^2+v_{average_y}^2}}$$
 
@@ -125,6 +132,7 @@ The same as separation process, we also have to calculate the steering force bas
 $$\overrightarrow{F_a}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 #### Cohesion
+
 This behavior ensures the entities steer to the average position (center of mass) of the neighbors, keeping the group united.
 
 > I have to say it again, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are *separated***. Please pay attention!
@@ -160,6 +168,7 @@ Finally, we calculate the **steering force** $\overrightarrow{F_c}$ by finding t
 $$\overrightarrow{F_c}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 #### At the end
+
 Finally, we sum everything up together to get the **final acceleration for the entity**:
 
 $$\overrightarrow{a_A}=w_s\cdot\overrightarrow{F_s}+w_a\cdot\overrightarrow{F_a}+w_c\cdot\overrightarrow{F_c}$$
