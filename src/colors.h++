@@ -10,8 +10,8 @@ namespace color_palette {
     /// @brief The color of the title on the top of the simulator window.
     constexpr sf::Color text_title{255, 0, 128};
 
-    /// @brief The color of the title beyond the slider.
-    constexpr sf::Color text_slider_title{150, 160, 175};
+    /// @brief The color of the name beyond the slider.
+    constexpr sf::Color text_slider_name{150, 160, 175};
 
     /// @brief the color of the value beyond the slider.
     constexpr sf::Color text_slider_value{0, 255, 204};

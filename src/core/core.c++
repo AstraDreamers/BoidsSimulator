@@ -11,8 +11,8 @@ core::core() {
     m_window.setFramerateLimit(60);
     m_window.clear(color_palette::background);
 
-    m_manager_entity = std::make_unique<manager_entity>(m_window_size, m_ws, m_wa, m_wc, m_vision);
-    m_manager_ui = std::make_unique<manager_ui>(m_window_size, m_ws, m_wa, m_wc, m_vision);
+    m_manager_entity = std::make_unique<manager_entity>(m_window_size, m_boids_packet.gain_separation, m_boids_packet.gain_alignment, m_boids_packet.gain_cohesion, m_boids_packet.vision_range);
+    m_manager_ui = std::make_unique<manager_ui>(m_window_size, m_boids_packet);
 }
 
 void core::run() {
@@ -35,7 +35,6 @@ void core::handle_events() {
         }
 
         m_manager_entity->handle_events(event);
-        m_manager_ui->handle_events(event);
     }
 }
 
