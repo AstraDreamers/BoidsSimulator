@@ -23,12 +23,12 @@ class manager_ui {
     sf::Vector2u window_size_{0,0};
     boids_packet* boids_packet_{nullptr};
 
-    sf::Font font_;
+    sf::Font font_{};
 
-    std::unique_ptr<sf::Text> text_title_;
-    std::unique_ptr<sf::Text> text_slider_name_[4];
-    std::unique_ptr<sf::Text> text_slider_value_[4];
-    std::unique_ptr<slider> slider_[4];
+    std::unique_ptr<sf::Text> text_title_{nullptr};
+    std::array<std::unique_ptr<sf::Text>,4> text_slider_name_{nullptr};
+    std::array<std::unique_ptr<sf::Text>,4> text_slider_value_{nullptr};
+    std::array<std::unique_ptr<slider>,4> slider_{nullptr};
 
-    const std::array<std::string,4> slider_names_ = {"Separation", "Alignment", "Cohesion", "Vision"};
+    const std::array<std::string,4> slider_names_{"Separation", "Alignment", "Cohesion", "Vision"};
 };

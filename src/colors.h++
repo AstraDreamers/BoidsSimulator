@@ -1,11 +1,19 @@
 #pragma once
 
 namespace color_palette {
+    /// *******************************
+    /// Main Stuffs
+    /// *******************************
+
     /// @brief Background color of the simulator window.
     constexpr sf::Color background{10, 10, 15};
 
     /// @brief Body color of entities.
     constexpr sf::Color boids{0, 255, 204};
+
+    /// *******************************
+    /// Text
+    /// *******************************
 
     /// @brief The color of the title on the top of the simulator window.
     constexpr sf::Color text_title{255, 0, 128};
@@ -17,7 +25,7 @@ namespace color_palette {
     constexpr sf::Color text_slider_value{0, 255, 204};
 
     /// *******************************
-    /// Slider Colors
+    /// Sliders
     /// *******************************
 
     /// @brief The color of the slider's track.
@@ -32,4 +40,4 @@ namespace color_palette {
     /// @details When not hovering on the slider, it will return to this color.
     /// @see color_palette::slider_active
     constexpr sf::Color slider_inactive{80, 80, 100};
-}; // namespace color_palette
+} // namespace color_palette
