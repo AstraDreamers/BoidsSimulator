@@ -13,22 +13,22 @@ class manager_ui {
     ~manager_ui() = default;
 
     /// @brief Update the simulation.
-    /// @param dt The delta time since the last update.
-    void update(float dt) const;
+    void update() const;
 
     /// @brief Render the simulation.
     /// @param window The window to render to.
     void render(sf::RenderWindow &window) const;
 
   private:
-    sf::Vector2u m_window_size{0,0};
+    sf::Vector2u window_size_{0,0};
+    boids_packet* boids_packet_{nullptr};
 
-    sf::Font m_font;
+    sf::Font font_;
 
-    std::unique_ptr<sf::Text> m_text_title;
-    std::unique_ptr<sf::Text> m_text_slider_name[4];
-    std::unique_ptr<sf::Text> m_text_slider_value[4];
-    std::unique_ptr<slider> m_slider[4];
+    std::unique_ptr<sf::Text> text_title_;
+    std::unique_ptr<sf::Text> text_slider_name_[4];
+    std::unique_ptr<sf::Text> text_slider_value_[4];
+    std::unique_ptr<slider> slider_[4];
 
-    boids_packet* m_boids_packet{nullptr};
+    const std::array<std::string,4> slider_names_ = {"Separation", "Alignment", "Cohesion", "Vision"};
 };

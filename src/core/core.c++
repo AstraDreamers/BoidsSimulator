@@ -11,7 +11,9 @@ core::core() {
     m_window.setFramerateLimit(60);
     m_window.clear(color_palette::background);
 
-    m_manager_entity = std::make_unique<manager_entity>(m_window_size, m_boids_packet.gain_separation, m_boids_packet.gain_alignment, m_boids_packet.gain_cohesion, m_boids_packet.vision_range);
+    m_manager_entity =
+        std::make_unique<manager_entity>(m_window_size, m_boids_packet.gain_separation, m_boids_packet.gain_alignment,
+                                         m_boids_packet.gain_cohesion, m_boids_packet.vision_range);
     m_manager_ui = std::make_unique<manager_ui>(m_window_size, m_boids_packet);
 }
 
@@ -42,7 +44,7 @@ void core::update() {
     m_dt = m_clock.restart().asSeconds();
 
     m_manager_entity->update(m_dt);
-    m_manager_ui->update(m_dt);
+    m_manager_ui->update();
 }
 
 void core::render() {

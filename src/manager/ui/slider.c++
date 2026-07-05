@@ -18,8 +18,8 @@ slider::slider(float &value, float clamp_min, float clamp_max)
     update_geometry();
 }
 
-void slider::set_position(sf::Vector2f position) {
-    m_position = position;
+void slider::set_position(sf::Vector2f position) { /// position: {x=68.300003, y=691.199951}
+    m_position = position; // Exception: Exception: Exception 0xc0000005 encountered at address 0x7ff70af0b0d8: Access violation writing location 0x0000003c
     update_geometry();
 }
 
