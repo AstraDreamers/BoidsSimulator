@@ -10,8 +10,8 @@ set(CMAKE_C_STANDARD			23)
 set(CMAKE_CXX_STANDARD_REQUIRED	ON)
 set(CMAKE_C_STANDARD_REQUIRED	ON)
 
-set(BUILD_SHARED_LIBS		ON	CACHE BOOL "" FORCE)
-set(SFML_STATIC_LIBRARIES	OFF	CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS		OFF	CACHE BOOL "" FORCE)
+set(SFML_STATIC_LIBRARIES	ON	CACHE BOOL "" FORCE)
 
 include(FetchContent)
 
@@ -32,19 +32,25 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(sfml)
 FetchContent_MakeAvailable(entt)
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-		"src/*.cpp"
-		"src/*.hpp"
-		"src/*.c++"
-		"src/*.h++"
-		"src/*.c"
-		"src/*.h"
+add_executable(${PROJECT_NAME}
+		src/core/boids_packet.h++
+		src/core/core.h++
+		src/core/core.c++
+		src/manager/entity/components.h++
+		src/manager/entity/draw_entities.c++
+		src/manager/entity/update_boids.c++
+		src/manager/entity/update_position.c++
+		src/manager/entity/update_velocity.c++
+		src/manager/ui/slider.h++
+		src/manager/ui/slider.c++
+		src/manager/manager_entity.h++
+		src/manager/manager_entity.c++
+		src/manager/manager_ui.h++
+		src/manager/manager_ui.c++
+		src/colors.h++
+		src/main.c++
+		src/pch.h++
 )
-
-list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h++")
-
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES}
-		src/core/boids_packet.h++)
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE
 		src/pch.h++
@@ -62,6 +68,9 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 target_link_options(${PROJECT_NAME} PRIVATE
 		$<$<CONFIG:Release>:-mwindows>
 		-m64
+		-static-libgcc
+		-static-libstdc++
+		-static
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

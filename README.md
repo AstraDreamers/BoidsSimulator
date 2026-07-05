@@ -18,14 +18,14 @@ A simple flocking simulation.
 
 ## Technical Architecture
 
-This project supports **Windows** and partly **Linux** (only tested on Kubuntu and Debian 13 - Trixie).
+This project only supports **Windows**.
 
 | Specification     | Value                     |
 |:------------------|:--------------------------|
 | **CMake Version** | CMake 4.0+                |
 | **C++ Standard**  | C++26 (Standard Required) |
 | **C Standard**    | C23 (Standard Required)   |
-| **Linking**       | Dynamic Linking           |
+| **Linking**       | Static Linking            |
 
 ### Dependencies
 - **[EnTT v3.16.0](https://github.com/skypjack/entt/releases/tag/v3.16.0)** — Entity Component System (ECS)
