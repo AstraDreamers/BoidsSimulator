@@ -16,9 +16,9 @@ namespace components {
         float y;
     };
 
-    namespace Drawable {
-        struct Circle {
+    namespace drawable {
+        struct circle {
             sf::CircleShape shape;
         };
-    }
-}
+    } // namespace drawable
+} // namespace components
