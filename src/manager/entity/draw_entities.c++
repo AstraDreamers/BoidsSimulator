@@ -1,6 +1,7 @@
 #include "../manager_entity.h++"
+#include "components.h++"
 
 void manager_entity::draw_entities(sf::RenderWindow &window) {
-    m_registry.view<components::Drawable::Circle>().each(
-        [&window](components::Drawable::Circle &circle) { window.draw(circle.shape); });
+    registry_.view<components::drawable::circle>().each(
+        [&window](components::drawable::circle &circle) { window.draw(circle.shape); });
 }

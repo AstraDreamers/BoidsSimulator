@@ -1,12 +1,13 @@
 #include "../manager_entity.h++"
+#include "components.h++"
 
 void manager_entity::update_boids() {
     // TODO: This is O(n^2) and must be optimized in the future.
     // TODO: Maybe use a spatial partitioning structure like a quadtree or a grid
     // TODO: to reduce the number of comparisons.
 
-    const auto view = m_registry.view<components::position, components::velocity, components::acceleration>();
-    const float vision_square = (*m_vision) * (*m_vision);
+    const auto view = registry_.view<components::position, components::velocity, components::acceleration>();
+    const float vision_square = boids_packet_->vision_range * boids_packet_->vision_range;
 
     view.each([&](const entt::entity this_entity, components::position &this_position,
                   const components::velocity &this_velocity, components::acceleration &this_acceleration) {
@@ -46,15 +47,14 @@ void manager_entity::update_boids() {
         if (neighbor_count > 0) {
             float neighbor_count_invert = 1.f / static_cast<float>(neighbor_count);
 
-            // vector_s *= neighbor_count_invert;
             vector_a *= neighbor_count_invert;
             vector_c *= neighbor_count_invert;
 
             vector_c -= {this_position.x, this_position.y};
 
-            vector_s *= (*m_ws);
-            vector_a *= (*m_wa);
-            vector_c *= (*m_wc);
+            vector_s *= (boids_packet_->gain_separation);
+            vector_a *= (boids_packet_->gain_alignment);
+            vector_c *= (boids_packet_->gain_cohesion);
 
             this_acceleration.x = vector_s.x + vector_a.x + vector_c.x - this_velocity.x;
             this_acceleration.y = vector_s.y + vector_a.y + vector_c.y - this_velocity.y;

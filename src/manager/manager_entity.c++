@@ -14,9 +14,9 @@ manager_entity::manager_entity(sf::Vector2u window_size, boids_packet &boids_pac
         registry_.emplace<components::velocity>(entity, static_cast<float>(rand() % 400) - 200.f,
                                                 static_cast<float>(rand() % 400) - 200.f);
         registry_.emplace<components::acceleration>(entity, 0.f, 0.f);
-        registry_.emplace<components::Drawable::Circle>(entity);
+        registry_.emplace<components::drawable::circle>(entity);
 
-        auto &circle = registry_.get<components::Drawable::Circle>(entity);
+        auto &circle = registry_.get<components::drawable::circle>(entity);
         circle.shape.setRadius(10.f);
         circle.shape.setOrigin({10.f, 10.f});
         circle.shape.setPointCount(5);
