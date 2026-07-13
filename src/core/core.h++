@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../colors.h++"
 #include "../manager/manager_entity.h++"
 #include "../manager/manager_ui.h++"
 #include "boids_packet.h++"
@@ -20,14 +19,14 @@ class core {
     void render();
 
   private:
-    sf::RenderWindow m_window;
-    sf::Vector2u m_window_size;
+    sf::RenderWindow window_;
+    sf::Vector2u window_size_;
 
-    std::unique_ptr<manager_entity> m_manager_entity;
-    std::unique_ptr<manager_ui> m_manager_ui;
+    std::unique_ptr<manager_entity> manager_entity_;
+    std::unique_ptr<manager_ui> manager_ui_;
 
-    sf::Clock m_clock;
-    float m_dt;
+    sf::Clock clock_;
+    float dt_;
 
     boids_packet m_boids_packet;
 };
