@@ -2,7 +2,7 @@
 
 namespace color_palette {
     /// *******************************
-    /// Main Stuffs
+    /// ***** Main Stuffs *************
     /// *******************************
 
     /// @brief Background color of the simulator window.
@@ -12,7 +12,7 @@ namespace color_palette {
     constexpr sf::Color boids{0, 255, 204};
 
     /// *******************************
-    /// Text
+    /// ***** Text ********************
     /// *******************************
 
     /// @brief The color of the title on the top of the simulator window.
@@ -25,7 +25,7 @@ namespace color_palette {
     constexpr sf::Color text_slider_value{0, 255, 204};
 
     /// *******************************
-    /// Sliders
+    /// ***** Sliders *****************
     /// *******************************
 
     /// @brief The color of the slider's track.

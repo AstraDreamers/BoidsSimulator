@@ -3,7 +3,7 @@
 #include "entity/components.h++"
 
 manager_entity::manager_entity(sf::Vector2u window_size, boids_packet &boids_packet) {
-    window_size_ = window_size;
+    window_size_  = window_size;
     boids_packet_ = &boids_packet;
 
     for (uint16_t i = 0; i < 200; i++) {

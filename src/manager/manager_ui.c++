@@ -5,7 +5,7 @@ manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packe
     /// ****************************
     /// ***** Value Inheritance ****
     /// ****************************
-    window_size_ = window_size;
+    window_size_  = window_size;
     boids_packet_ = &boids_packet;
 
     /// ****************************

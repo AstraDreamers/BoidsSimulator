@@ -26,7 +26,7 @@ class manager_entity {
     void draw_entities(sf::RenderWindow &window);
 
   private:
-    sf::Vector2u window_size_{0, 0};
+    sf::Vector2u  window_size_{0, 0};
     boids_packet *boids_packet_{nullptr};
 
     entt::registry registry_{};

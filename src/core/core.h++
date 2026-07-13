@@ -20,13 +20,13 @@ class core {
 
   private:
     sf::RenderWindow window_;
-    sf::Vector2u window_size_;
+    sf::Vector2u     window_size_;
 
     std::unique_ptr<manager_entity> manager_entity_;
-    std::unique_ptr<manager_ui> manager_ui_;
+    std::unique_ptr<manager_ui>     manager_ui_;
 
     sf::Clock clock_;
-    float dt_;
+    float     dt_;
 
     boids_packet m_boids_packet;
 };

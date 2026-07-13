@@ -3,7 +3,7 @@
 
 core::core() {
     sf::VideoMode video_mode = sf::VideoMode::getDesktopMode();
-    window_size_ = video_mode.size;
+    window_size_             = video_mode.size;
 
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8.f;
@@ -13,7 +13,7 @@ core::core() {
     window_.clear(color_palette::background);
 
     manager_entity_ = std::make_unique<manager_entity>(window_size_, m_boids_packet);
-    manager_ui_ = std::make_unique<manager_ui>(window_size_, m_boids_packet);
+    manager_ui_     = std::make_unique<manager_ui>(window_size_, m_boids_packet);
 }
 
 void core::run() {

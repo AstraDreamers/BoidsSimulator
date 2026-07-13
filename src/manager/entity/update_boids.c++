@@ -6,15 +6,15 @@ void manager_entity::update_boids() {
     // TODO: Maybe use a spatial partitioning structure like a quadtree or a grid
     // TODO: to reduce the number of comparisons.
 
-    const auto view = registry_.view<components::position, components::velocity, components::acceleration>();
+    const auto  view          = registry_.view<components::position, components::velocity, components::acceleration>();
     const float vision_square = boids_packet_->vision_range * boids_packet_->vision_range;
 
     view.each([&](const entt::entity this_entity, components::position &this_position,
                   const components::velocity &this_velocity, components::acceleration &this_acceleration) {
-        sf::Vector2f vector_s = {0.f, 0.f};
-        sf::Vector2f vector_a = {0.f, 0.f};
-        sf::Vector2f vector_c = {0.f, 0.f};
-        uint32_t neighbor_count = 0;
+        sf::Vector2f vector_s       = {0.f, 0.f};
+        sf::Vector2f vector_a       = {0.f, 0.f};
+        sf::Vector2f vector_c       = {0.f, 0.f};
+        uint32_t     neighbor_count = 0;
 
         for (auto other_entity : view) {
             if (this_entity == other_entity) {
@@ -24,8 +24,8 @@ void manager_entity::update_boids() {
             components::position &other_position = view.get<components::position>(other_entity);
             components::velocity &other_velocity = view.get<components::velocity>(other_entity);
 
-            float delta_x = other_position.x - this_position.x;
-            float delta_y = other_position.y - this_position.y;
+            float delta_x         = other_position.x - this_position.x;
+            float delta_y         = other_position.y - this_position.y;
             float distance_square = delta_x * delta_x + delta_y * delta_y;
 
             if (distance_square < vision_square && distance_square > 0.01f) {
