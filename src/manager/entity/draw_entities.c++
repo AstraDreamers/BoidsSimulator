@@ -3,5 +3,5 @@
 
 void manager_entity::draw_entities(sf::RenderWindow &window) {
     registry_.view<components::drawable::circle>().each(
-        [&window](components::drawable::circle &circle) { window.draw(circle.shape); });
+        [&window](components::drawable::circle &circle) -> void { window.draw(circle.shape); });
 }

@@ -1,7 +1,7 @@
 #include "core/core.h++"
 
 /// @brief An actual entry point.
-int main() {
+auto main() -> int {
     core core_engine;
     core_engine.run();
     return 0;

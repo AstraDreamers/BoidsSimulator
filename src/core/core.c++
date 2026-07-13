@@ -1,19 +1,20 @@
 #include "core.h++"
-#include "../colors.h++"
+#include "../config/system_config.h++"
+#include "../config/theme_config.h++"
 
 core::core() {
     sf::VideoMode video_mode = sf::VideoMode::getDesktopMode();
     window_size_             = video_mode.size;
 
     sf::ContextSettings settings;
-    settings.antiAliasingLevel = 8.f;
-    window_.create(sf::VideoMode(window_size_, 32), "Boids Simulator", sf::Style::Close, sf::State::Fullscreen,
-                   settings);
-    window_.setFramerateLimit(60);
-    window_.clear(color_palette::background);
+    settings.antiAliasingLevel = system_config::antialiasing_level;
+    window_.create(sf::VideoMode(window_size_, system_config::bits_per_pixel), "Boids Simulator", sf::Style::Close,
+                   sf::State::Fullscreen, settings);
+    window_.setFramerateLimit(system_config::framerate_limit);
+    window_.clear(theme_config::background);
 
-    manager_entity_ = std::make_unique<manager_entity>(window_size_, m_boids_packet);
-    manager_ui_     = std::make_unique<manager_ui>(window_size_, m_boids_packet);
+    manager_entity_ = std::make_unique<manager_entity>(window_size_, boids_packet_);
+    manager_ui_     = std::make_unique<manager_ui>(window_size_, boids_packet_);
 }
 
 void core::run() {
@@ -44,7 +45,7 @@ void core::update() {
 }
 
 void core::render() {
-    window_.clear(color_palette::background);
+    window_.clear(theme_config::background);
     manager_entity_->render(window_);
     manager_ui_->render(window_);
     window_.display();

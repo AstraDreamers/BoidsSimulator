@@ -1,12 +1,12 @@
 #include "../manager_entity.h++"
 #include "components.h++"
 
-void manager_entity::update_position(float dt) {
+void manager_entity::update_position(const float time_dt) {
     // Update position and wrapping entities around the screen
     registry_.view<components::velocity, components::position>().each(
-        [&](const components::velocity &velocity, components::position &position) {
-            position.x += velocity.x * dt;
-            position.y += velocity.y * dt;
+        [&](const components::velocity &velocity, components::position &position) -> void {
+            position.x += velocity.x * time_dt;
+            position.y += velocity.y * time_dt;
 
             while (position.x > static_cast<float>(window_size_.x) + 10.f) {
                 position.x -= static_cast<float>(window_size_.x);
@@ -29,10 +29,8 @@ void manager_entity::update_position(float dt) {
             }
         });
 
-    // Update the position of the circles, and add a rotation for fun
     registry_.view<components::position, components::drawable::circle>().each(
-        [](components::position &p, components::drawable::circle &circle) {
+        [](components::position &p, components::drawable::circle &circle) -> void {
             circle.shape.setPosition({p.x, p.y});
-            circle.shape.rotate(sf::degrees(5.f));
         });
 }

@@ -4,24 +4,28 @@ Checks: >
   clang-analyzer-*,
   cppcoreguidelines-*,
   misc-*,
+  -misc-use-anonymous-namespace,
   modernize-*,
   objc-*,
   performance-*,
   portability-*,
-  readability-*
+  readability-*,
+
 CheckOptions:
-CheckOptions:
-  - { key: readability-identifier-naming.ClassCase,           value: lower_case }
-  - { key: readability-identifier-naming.StructCase,          value: lower_case }
-  - { key: readability-identifier-naming.FunctionCase,        value: lower_case }
-  - { key: readability-identifier-naming.MethodCase,          value: lower_case }
-  - { key: readability-identifier-naming.VariableCase,        value: lower_case }
-  - { key: readability-identifier-naming.ParameterCase,       value: lower_case }
-  - { key: readability-identifier-naming.MemberCase,          value: lower_case }
-  - { key: readability-identifier-naming.ProtectedMemberCase,   value: lower_case }
+  - { key: readability-identifier-naming.ClassCase, value: lower_case }
+  - { key: readability-identifier-naming.StructCase, value: lower_case }
+  - { key: readability-identifier-naming.FunctionCase, value: lower_case }
+  - { key: readability-identifier-naming.MethodCase, value: lower_case }
+  - { key: readability-identifier-naming.VariableCase, value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase, value: lower_case }
+  - { key: readability-identifier-naming.MemberCase, value: lower_case }
+  - {
+      key: readability-identifier-naming.ProtectedMemberCase,
+      value: lower_case,
+    }
   - { key: readability-identifier-naming.ProtectedMemberSuffix, value: _ }
-  - { key: readability-identifier-naming.PrivateMemberCase,     value: lower_case }
-  - { key: readability-identifier-naming.PrivateMemberSuffix,   value: _ }
-HeaderFilterRegex: '((.*/(src|include)/SFML/.*)|(.*/(test|examples)/.*))'
-WarningsAsErrors: '*'
+  - { key: readability-identifier-naming.PrivateMemberCase, value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberSuffix, value: _ }
+HeaderFilterRegex: "((.*/(src|include)/SFML/.*)|(.*/(test|examples)/.*))"
+WarningsAsErrors: "*"
 UseColor: true

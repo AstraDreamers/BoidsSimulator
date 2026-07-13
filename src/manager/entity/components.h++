@@ -2,18 +2,18 @@
 
 namespace components {
     struct position {
-        float x;
-        float y;
+        float x{0.F};
+        float y{0.F};
     };
 
     struct velocity {
-        float x;
-        float y;
+        float x{0.F};
+        float y{0.F};
     };
 
     struct acceleration {
-        float x;
-        float y;
+        float x{0.F};
+        float y{0.F};
     };
 
     namespace drawable {

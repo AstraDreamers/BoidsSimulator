@@ -8,12 +8,17 @@ class manager_entity {
     /// @brief Construct a new manager_entity object.
     /// @param window_size The size of the window.
     /// @param boids_packet The variable packets for boids.
-    manager_entity(const sf::Vector2u window_size, boids_packet &boids_packet);
+    manager_entity(sf::Vector2u window_size, boids_packet &boids_packet);
     ~manager_entity() = default;
 
+    manager_entity(const manager_entity &)                         = delete;
+    auto operator=(const manager_entity &) -> manager_entity &     = delete;
+    manager_entity(manager_entity &&) noexcept                     = default;
+    auto operator=(manager_entity &&) noexcept -> manager_entity & = delete;
+
     /// @brief Update the simulation.
-    /// @param dt The delta time since the last update.
-    void update(const float dt);
+    /// @param time_dt The delta time since the last update.
+    void update(float time_dt);
 
     /// @brief Render the simulation.
     /// @param window The window to render to.
@@ -21,13 +26,12 @@ class manager_entity {
 
   private:
     void update_boids();
-    void update_velocity(float dt);
-    void update_position(float dt);
+    void update_velocity(float time_dt);
+    void update_position(float time_dt);
     void draw_entities(sf::RenderWindow &window);
 
-  private:
     sf::Vector2u  window_size_{0, 0};
     boids_packet *boids_packet_{nullptr};
 
-    entt::registry registry_{};
+    entt::registry registry_;
 };

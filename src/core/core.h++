@@ -10,6 +10,11 @@ class core {
     core();
     ~core() = default;
 
+    core(const core &)                         = delete;
+    auto operator=(const core &) -> core &     = delete;
+    core(core &&) noexcept                     = default;
+    auto operator=(core &&) noexcept -> core & = delete;
+
     /// @brief Start the program
     void run();
 
@@ -18,15 +23,14 @@ class core {
     void update();
     void render();
 
-  private:
     sf::RenderWindow window_;
-    sf::Vector2u     window_size_;
+    sf::Vector2u     window_size_{0U, 0U};
 
     std::unique_ptr<manager_entity> manager_entity_;
     std::unique_ptr<manager_ui>     manager_ui_;
 
     sf::Clock clock_;
-    float     dt_;
+    float     dt_{0.F};
 
-    boids_packet m_boids_packet;
+    boids_packet boids_packet_;
 };
