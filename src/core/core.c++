@@ -1,23 +1,30 @@
 #include "core.h++"
 #include "../config/system_config.h++"
 #include "../config/theme_config.h++"
+#include "SFML/Window/ContextSettings.hpp"
+#include "SFML/Window/Event.hpp"
+#include "SFML/Window/VideoMode.hpp"
+#include <memory>
 
 core::core() {
-    sf::VideoMode video_mode = sf::VideoMode::getDesktopMode();
-    window_size_             = video_mode.size;
+    /// Get current user screen size
+    sf::VideoMode desktop_mode{sf::VideoMode::getDesktopMode()};
+    window_size_ = desktop_mode.size;
 
-    sf::ContextSettings settings;
-    settings.antiAliasingLevel = system_config::antialiasing_level;
-    window_.create(sf::VideoMode(window_size_, system_config::bits_per_pixel), "Boids Simulator", sf::Style::Close,
-                   sf::State::Fullscreen, settings);
+    sf::ContextSettings context_settings{};
+    context_settings.antiAliasingLevel = system_config::antialiasing_level;
+
+    window_.create(sf::VideoMode(window_size_, system_config::bits_per_pixel), system_config::window_title,
+                   sf::Style::Close, sf::State::Fullscreen, context_settings);
     window_.setFramerateLimit(system_config::framerate_limit);
-    window_.clear(theme_config::background);
 
     manager_entity_ = std::make_unique<manager_entity>(window_size_, boids_packet_);
     manager_ui_     = std::make_unique<manager_ui>(window_size_, boids_packet_);
 }
 
-void core::run() {
+core::~core() = default;
+
+auto core::run() -> void {
     while (window_.isOpen()) {
         handle_events();
         if (window_.hasFocus()) {
@@ -30,21 +37,21 @@ void core::run() {
     }
 }
 
-void core::handle_events() {
-    while (const std::optional<sf::Event> event = window_.pollEvent()) {
+auto core::handle_events() -> void {
+    while (const auto event{window_.pollEvent()}) {
         if (event->is<sf::Event::Closed>()) {
             window_.close();
         }
     }
 }
 
-void core::update() {
-    dt_ = clock_.restart().asSeconds();
-    manager_entity_->update(dt_);
+auto core::update() -> void {
+    dt_ = clock_.restart();
+    manager_entity_->update(dt_.asSeconds());
     manager_ui_->update();
 }
 
-void core::render() {
+auto core::render() -> void {
     window_.clear(theme_config::background);
     manager_entity_->render(window_);
     manager_ui_->render(window_);
