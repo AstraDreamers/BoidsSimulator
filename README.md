@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="boids_simulator_dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="boids_simulator_light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="banner/boids_simulator_dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="banner/boids_simulator_light.svg">
   <img alt="BoidsSimulator Logo" src="path/to/default-logo.png">
 </picture>
 
