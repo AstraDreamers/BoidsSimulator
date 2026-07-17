@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD			26)
 set(CMAKE_C_STANDARD			23)
 set(CMAKE_CXX_STANDARD_REQUIRED	ON)
 set(CMAKE_C_STANDARD_REQUIRED	ON)
+set(CMAKE_COLOR_DIAGNOSTICS 	ON)
 
 set(BUILD_SHARED_LIBS		OFF	CACHE BOOL "" FORCE)
 set(SFML_STATIC_LIBRARIES	ON	CACHE BOOL "" FORCE)
@@ -56,6 +57,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 		-Wall
 		-Wextra
 		-m64
+		-fdiagnostics-color=always
 )
 
 target_link_options(${PROJECT_NAME} PRIVATE

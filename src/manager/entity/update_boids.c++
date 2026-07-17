@@ -2,7 +2,7 @@
 #include "../manager_entity.h++"
 #include "components.h++"
 
-void manager_entity::update_boids() {
+auto manager_entity::update_boids() -> void {
     // TODO: This is O(n^2) and must be optimized in the future.
     // TODO: Maybe use a spatial partitioning structure like a quadtree or a grid
     // TODO: to reduce the number of comparisons.

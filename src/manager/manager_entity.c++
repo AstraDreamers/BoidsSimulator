@@ -1,33 +1,38 @@
 #include "manager_entity.h++"
-#include "../colors.h++"
+#include "../config/simulation_config.h++"
+#include "../config/theme_config.h++"
 #include "entity/components.h++"
 
-manager_entity::manager_entity(sf::Vector2u window_size, boids_packet &boids_packet) {
-    window_size_  = window_size;
-    boids_packet_ = &boids_packet;
+manager_entity::manager_entity(sf::Vector2u window_size, boids_packet &boids_packet)
+    : window_size_(window_size), boids_packet_(&boids_packet) {
 
-    for (uint16_t i = 0; i < 200; i++) {
+    std::uniform_real_distribution<float> random_x(0.F, static_cast<float>(window_size_.x));
+    std::uniform_real_distribution<float> random_y(0.F, static_cast<float>(window_size_.y));
+    std::uniform_real_distribution<float> random_v(-simulation_config::initialization_velocity_range,
+                                                   simulation_config::initialization_velocity_range);
+
+    for ([[maybe_unused]] const auto entity_index : std::views::iota(0U, simulation_config::boids_count)) {
         entt::entity entity = registry_.create();
 
-        registry_.emplace<components::position>(entity, static_cast<float>(rand() % window_size_.x),
-                                                static_cast<float>(rand() % window_size_.y));
-        registry_.emplace<components::velocity>(entity, static_cast<float>(rand() % 400) - 200.f,
-                                                static_cast<float>(rand() % 400) - 200.f);
-        registry_.emplace<components::acceleration>(entity, 0.f, 0.f);
+        registry_.emplace<components::position>(entity, random_x(random_engine_), random_y(random_engine_));
+        registry_.emplace<components::velocity>(entity, random_v(random_engine_), random_v(random_engine_));
+        registry_.emplace<components::acceleration>(entity, 0.F, 0.F);
         registry_.emplace<components::drawable::circle>(entity);
 
         auto &circle = registry_.get<components::drawable::circle>(entity);
-        circle.shape.setRadius(10.f);
-        circle.shape.setOrigin({10.f, 10.f});
-        circle.shape.setPointCount(5);
-        circle.shape.setFillColor(color_palette::boids);
+        circle.shape.setRadius(10.F);
+        circle.shape.setOrigin({10.F, 10.F});
+        circle.shape.setPointCount(5U);
+        circle.shape.setFillColor(theme_config::boids);
     }
 }
 
-void manager_entity::update(const float dt) {
+manager_entity::~manager_entity() = default;
+
+auto manager_entity::update(const float time_dt) -> void {
     update_boids();
-    update_velocity(dt);
-    update_position(dt);
+    update_velocity(time_dt);
+    update_position(time_dt);
 }
 
-void manager_entity::render(sf::RenderWindow &window) { draw_entities(window); }
+auto manager_entity::render(sf::RenderWindow &window) -> void { draw_entities(window); }

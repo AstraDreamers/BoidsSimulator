@@ -28,8 +28,8 @@ class core {
     sf::RenderWindow window_;
     sf::Vector2u     window_size_{0U, 0U};
 
-    std::unique_ptr<manager_entity> manager_entity_;
-    std::unique_ptr<manager_ui>     manager_ui_;
+    std::unique_ptr<manager_entity> manager_entity_{nullptr};
+    std::unique_ptr<manager_ui>     manager_ui_{nullptr};
 
     sf::Clock clock_;
     sf::Time  dt_;
