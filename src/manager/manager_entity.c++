@@ -17,13 +17,6 @@ manager_entity::manager_entity(sf::Vector2u window_size, boids_packet &boids_pac
         registry_.emplace<components::position>(entity, random_x(random_engine_), random_y(random_engine_));
         registry_.emplace<components::velocity>(entity, random_v(random_engine_), random_v(random_engine_));
         registry_.emplace<components::acceleration>(entity, 0.F, 0.F);
-        registry_.emplace<components::drawable::circle>(entity);
-
-        auto &circle = registry_.get<components::drawable::circle>(entity);
-        circle.shape.setRadius(10.F);
-        circle.shape.setOrigin({10.F, 10.F});
-        circle.shape.setPointCount(5U);
-        circle.shape.setFillColor(theme_config::boids);
     }
 }
 

@@ -15,10 +15,4 @@ namespace components {
         float x{0.F};
         float y{0.F};
     };
-
-    namespace drawable {
-        struct circle {
-            sf::CircleShape shape;
-        };
-    } // namespace drawable
 } // namespace components
