@@ -2,11 +2,11 @@
 
 slider::slider(float &value, float clamp_min, float clamp_max)
     : m_vertices(sf::PrimitiveType::Triangles, 12 + (m_circle_segments * 3 * 3)) {
-    m_value = &value;
+    m_value     = &value;
     m_clamp_min = clamp_min;
     m_clamp_max = clamp_max;
 
-    *m_value = std::clamp(*m_value, m_clamp_min, m_clamp_max);
+    *m_value      = std::clamp(*m_value, m_clamp_min, m_clamp_max);
     m_value_based = (*m_value - m_clamp_min) / (m_clamp_max - m_clamp_min);
 
     const float theta_step = (2.0f * M_PI) / m_circle_segments;
@@ -18,8 +18,8 @@ slider::slider(float &value, float clamp_min, float clamp_max)
     update_geometry();
 }
 
-void slider::set_position(sf::Vector2f position) { /// position: {x=68.300003, y=691.199951}
-    m_position = position; // Exception: Exception: Exception 0xc0000005 encountered at address 0x7ff70af0b0d8: Access violation writing location 0x0000003c
+void slider::set_position(sf::Vector2f position) {
+    m_position = position;
     update_geometry();
 }
 
@@ -46,11 +46,11 @@ void slider::set_color_background(sf::Color color) {
 void slider::update() {
     sf::Vector2f mouse_position = sf::Vector2f(sf::Mouse::getPosition());
 
-    float current_x = m_position.x + m_value_based * m_size.x;
+    float        current_x       = m_position.x + m_value_based * m_size.x;
     sf::Vector2f circle_position = {current_x, m_position.y};
 
-    sf::Vector2f d = mouse_position - circle_position;
-    float active_radius = m_size.y * (0.75f + 0.25f * m_size_fade);
+    sf::Vector2f d             = mouse_position - circle_position;
+    float        active_radius = m_size.y * (0.75f + 0.25f * m_size_fade);
 
     if (m_locked) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
@@ -63,7 +63,7 @@ void slider::update() {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             m_value_based = (mouse_position.x - m_position.x) / m_size.x;
             m_value_based = std::clamp(m_value_based, 0.f, 1.f);
-            m_locked = true;
+            m_locked      = true;
         }
     }
 
@@ -91,9 +91,9 @@ void slider::update_geometry() {
         static_cast<uint8_t>(m_color_inactive.b + m_color_fade * (m_color_active.b - m_color_inactive.b)),
         static_cast<uint8_t>(m_color_inactive.a + m_color_fade * (m_color_active.a - m_color_inactive.a))};
 
-    float fill_width = m_value_based * m_size.x;
-    float half_y = m_size.y / 2.f;
-    size_t offset = 0;
+    float  fill_width = m_value_based * m_size.x;
+    float  half_y     = m_size.y / 2.f;
+    size_t offset     = 0;
 
     sf::Vector2f bg_tl = {m_position.x, m_position.y - half_y};
     sf::Vector2f bg_br = {m_position.x + m_size.x, m_position.y + half_y};
@@ -132,7 +132,7 @@ void slider::update_geometry() {
     }
 
     sf::Vector2f thumb_center = {m_position.x + fill_width, m_position.y};
-    float thumb_radius = m_size.y * (0.75f + 0.25f * m_size_fade);
+    float        thumb_radius = m_size.y * (0.75f + 0.25f * m_size_fade);
     for (size_t i = 0; i < m_circle_segments; ++i) {
         m_vertices[offset++] = sf::Vertex(thumb_center, current_active_color);
         m_vertices[offset++] =

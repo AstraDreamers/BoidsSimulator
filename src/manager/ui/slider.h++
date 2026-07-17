@@ -42,9 +42,9 @@ class slider {
     sf::VertexArray m_vertices;
 
     float *m_value = nullptr;
-    float m_value_based{};
-    float m_clamp_min{};
-    float m_clamp_max{};
+    float  m_value_based{};
+    float  m_clamp_min{};
+    float  m_clamp_max{};
 
     sf::Vector2f m_position{};
     sf::Vector2f m_size{100.f, 10.f};
@@ -53,7 +53,7 @@ class slider {
     sf::Color m_color_active{sf::Color::Cyan};
     sf::Color m_color_background{sf::Color::White};
 
-    bool m_locked{false};
+    bool  m_locked{false};
     float m_color_fade{};
     float m_size_fade{};
 

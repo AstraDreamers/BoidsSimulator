@@ -10,8 +10,10 @@
 #include <entt/entt.hpp>
 
 /// Standard Libraries
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <print>
+#include <random>
+#include <ranges>
 #include <string>
-#include <stdint.h>
