@@ -1,5 +1,6 @@
 #include "manager_ui.h++"
 #include "../config/theme_config.h++"
+#include "../config/ui_config.h++"
 
 manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packet)
     : window_size_(window_size), boids_packet_(&boids_packet) {
@@ -16,14 +17,14 @@ manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packe
     /// ****************************
     text_title_ = std::make_unique<sf::Text>(font_);
     text_title_->setString("Boids Algorithm");
-    text_title_->setCharacterSize(100);
+    text_title_->setCharacterSize(ui_config::size_text_title);
     text_title_->setPosition({0.F, 0.F});
     text_title_->setOrigin({-20.F, 0.F});
     text_title_->setFillColor(theme_config::text_title);
 
     for (uint8_t i = 0; i < 4; i++) {
         text_slider_name_.at(i) = std::make_unique<sf::Text>(font_);
-        text_slider_name_.at(i)->setCharacterSize(20);
+        text_slider_name_.at(i)->setCharacterSize(ui_config::size_text_slider_name);
         text_slider_name_.at(i)->setPosition({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
                                                   (0.05F * static_cast<float>(window_size_.x)),
                                               0.85F * static_cast<float>(window_size_.y)});
@@ -32,7 +33,7 @@ manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packe
         text_slider_name_.at(i)->setString(slider_names.at(i));
 
         text_slider_value_.at(i) = std::make_unique<sf::Text>(font_);
-        text_slider_value_.at(i)->setCharacterSize(15);
+        text_slider_value_.at(i)->setCharacterSize(ui_config::size_text_slider_value);
         text_slider_value_.at(i)->setPosition(
             {text_slider_name_.at(i)->getPosition().x + text_slider_name_.at(i)->getGlobalBounds().size.x + 10.F,
              text_slider_name_.at(i)->getPosition().y});
@@ -59,7 +60,9 @@ manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packe
     }
 }
 
-void manager_ui::update() const {
+manager_ui::~manager_ui() = default;
+
+auto manager_ui::update() const -> void {
     for (const auto &slider : slider_) {
         slider->update();
     }
@@ -70,7 +73,7 @@ void manager_ui::update() const {
     text_slider_value_[3]->setString(std::format("{:.2f}", boids_packet_->vision_range));
 }
 
-void manager_ui::render(sf::RenderWindow &window) const {
+auto manager_ui::render(sf::RenderWindow &window) const -> void {
     window.draw(*text_title_);
     for (uint8_t i = 0; i < 4; i++) {
         slider_.at(i)->render(window);

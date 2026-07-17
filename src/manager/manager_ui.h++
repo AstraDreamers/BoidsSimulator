@@ -10,7 +10,7 @@ class manager_ui {
     /// @param window_size The size of the window.
     /// @param boids_packet The variable packets for boids.
     manager_ui(sf::Vector2u window_size, boids_packet &boids_packet);
-    ~manager_ui() = default;
+    ~manager_ui();
 
     manager_ui(const manager_ui &)                         = delete;
     auto operator=(const manager_ui &) -> manager_ui &     = delete;
@@ -18,11 +18,11 @@ class manager_ui {
     auto operator=(manager_ui &&) noexcept -> manager_ui & = delete;
 
     /// @brief Update the simulation.
-    void update() const;
+    auto update() const -> void;
 
     /// @brief Render the simulation.
     /// @param window The window to render to.
-    void render(sf::RenderWindow &window) const;
+    auto render(sf::RenderWindow &window) const -> void;
 
   private:
     sf::Vector2u  window_size_{0, 0};
