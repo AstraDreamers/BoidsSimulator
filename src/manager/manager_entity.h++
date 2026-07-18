@@ -38,4 +38,6 @@ class manager_entity {
 
     std::random_device random_device_;
     std::mt19937_64    random_engine_{random_device_()};
+
+    sf::CircleShape boids_;
 };
