@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 4.0)
 project(
 		BoidsSimulator
-		LANGUAGES C CXX
+		LANGUAGES CXX
 		VERSION 1.0
 )
 
 set(CMAKE_CXX_STANDARD			26)
-set(CMAKE_C_STANDARD			23)
 set(CMAKE_CXX_STANDARD_REQUIRED	ON)
-set(CMAKE_C_STANDARD_REQUIRED	ON)
 set(CMAKE_COLOR_DIAGNOSTICS 	ON)
 
 set(BUILD_SHARED_LIBS		OFF	CACHE BOOL "" FORCE)
@@ -23,23 +21,15 @@ FetchContent_Declare(
 		GIT_SHALLOW ON
 )
 
-FetchContent_Declare(
-		entt
-		GIT_REPOSITORY https://github.com/skypjack/entt.git
-		GIT_TAG v3.16.0
-		GIT_SHALLOW ON
-)
-
 FetchContent_MakeAvailable(sfml)
-FetchContent_MakeAvailable(entt)
 
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-	"src/*.cpp"
-	"src/*.hpp"
-	"src/*.c++"
-	"src/*.h++"
-	"src/*.c"
-	"src/*.h"
+		"src/*.cpp"
+		"src/*.hpp"
+		"src/*.c++"
+		"src/*.h++"
+		"src/*.c"
+		"src/*.h"
 )
 
 list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h++")
@@ -73,7 +63,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 		SFML::Audio
 		SFML::Window
 		SFML::System
-		EnTT::EnTT
 )
 
 add_custom_target(update_assets ALL
