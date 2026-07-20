@@ -26,18 +26,6 @@ class manager_entity {
     auto render(sf::RenderWindow &window) -> void;
 
   private:
-    auto update_boids() -> void;
-    auto update_velocity(float time_dt) -> void;
-    auto update_position(float time_dt) -> void;
-    auto draw_entities(sf::RenderWindow &window) -> void;
-
     sf::Vector2u  window_size_{0U, 0U};
     boids_packet *boids_packet_{nullptr};
-
-    entt::registry registry_;
-
-    std::random_device random_device_;
-    std::mt19937_64    random_engine_{random_device_()};
-
-    sf::CircleShape boids_;
 };
