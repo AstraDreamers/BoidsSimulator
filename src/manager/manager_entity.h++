@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/boids_packet.h++"
+#include "../core/simulation_parameters.h++"
 
 /// @brief Managing the entities in the simulation.
 class manager_entity {
@@ -8,7 +8,7 @@ class manager_entity {
     /// @brief Construct a new manager_entity object.
     /// @param window_size The size of the window.
     /// @param boids_packet The variable packets for boids.
-    manager_entity(sf::Vector2u window_size, boids_packet &boids_packet);
+    manager_entity(sf::Vector2u window_size, simulation_parameters &simulation_parameters);
     ~manager_entity();
 
     manager_entity(const manager_entity &)                         = delete;
@@ -25,6 +25,6 @@ class manager_entity {
     auto render(sf::RenderWindow &window) -> void;
 
   private:
-    sf::Vector2u  window_size_{0U, 0U};
-    boids_packet *boids_packet_{nullptr};
+    sf::Vector2u           window_size_{0U, 0U};
+    simulation_parameters *simulation_parameters_{nullptr};
 };

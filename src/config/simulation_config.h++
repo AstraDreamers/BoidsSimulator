@@ -1,16 +1,43 @@
 #pragma once
 
 namespace simulation_config {
-    constexpr inline float minimum_distance_square{0.01F};
 
-    constexpr inline float initialization_gain_separation{1.F};
-    constexpr inline float initialization_gain_alignment{1.F};
-    constexpr inline float initialization_gain_cohesion{1.F};
-    constexpr inline float initialization_vision_range{100.F};
+    /// **************************************************
+    /// ***** Safety Parameters **************************
+    /// **************************************************
 
-    constexpr inline float random_initialization_velocity_range{200.F};
+    /// @brief Minimum squared length between 2 objects to ensure safety.
+    /// @note This value should NOT become equal to ZERO (0.F), or the program will crash due to division of 0.
+    constexpr inline float min_length_square{0.01F};
 
-    constexpr inline uint32_t boids_count{500U};
-    constexpr inline uint32_t boids_point_count{5U};
-    constexpr inline float    boids_radius{10.F};
+    /// **************************************************
+    /// ***** Main Parameters Initialization *************
+    /// **************************************************
+
+    /// @brief Initialization of separation gain in objects' behavior.
+    constexpr inline float init_gain_separation{1.F};
+
+    /// @brief Initialization of alignment gain in objects' behavior.
+    constexpr inline float init_gain_alignment{1.F};
+
+    /// @brief Initialization of cohesion gain in objects' behavior.
+    constexpr inline float init_gain_cohesion{1.F};
+
+    /// @brief Initialization of vision range in objects' behavior.
+    constexpr inline float init_vision_range{100.F};
+
+    /// @brief Object count in the simulation
+    /// @details The object count is constant because the backend uses array, and array requires constant number at
+    /// compile time evaluation. We use array to squeeze out performance, as this simulation uses a lot of resources.
+    constexpr inline uint32_t init_object_count{500U};
+
+    /// **************************************************
+    /// ***** Render Configurations **********************
+    /// **************************************************
+
+    /// @brief Point count in the object's shape.
+    constexpr inline uint32_t object_render_point_count{5U};
+
+    /// @brief Object radius in rendering.
+    constexpr inline float object_render_radius{10.F};
 } // namespace simulation_config
