@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 namespace system_config {
     constexpr inline uint32_t    antialiasing_level{8U};

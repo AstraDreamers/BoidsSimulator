@@ -4,7 +4,6 @@
 #include "../manager/manager_ui.h++"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "boids_packet.h++"
-#include <memory>
 
 /// @brief Entry point of the whole program.
 class core {

@@ -4,7 +4,6 @@
 #include "SFML/Window/ContextSettings.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/VideoMode.hpp"
-#include <memory>
 
 core::core() {
     /// Get current user screen size

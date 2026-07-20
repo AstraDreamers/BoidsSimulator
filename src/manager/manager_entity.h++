@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../core/boids_packet.h++"
-#include <random>
 
 /// @brief Managing the entities in the simulation.
 class manager_entity {
