@@ -6,13 +6,11 @@
 
 # Boids Simulator
 
-![WIP](https://img.shields.io/badge/Work-In%20Progress-ffff00)
-![Status](https://img.shields.io/badge/Status-Not%20Ready-ff0000)
-[![C23](https://img.shields.io/badge/C-23-ffffaa)](https://cppreference.com/c/23)
-[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaffff)](https://cppreference.com/cpp/26)
-[![EnTT](https://img.shields.io/badge/EnTT-v3.16.0-aaaaff)](https://github.com/skypjack/entt/releases/tag/v3.16.0)
+![WIP](https://img.shields.io/badge/Work-In%20Progress-ffffaa)
+![Status](https://img.shields.io/badge/Status-Not%20Ready-ffaaaa)
+[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaaaff)](https://cppreference.com/cpp/26)
 [![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-![License](https://img.shields.io/badge/License-MIT-ffaaff)
+[![License](https://img.shields.io/badge/License-MIT-ffaaff)](LICENSE)
 
 A simple flocking simulation.
 
@@ -28,11 +26,9 @@ This project only supports **Windows**.
 |:------------------|:--------------------------|
 | **CMake Version** | CMake 4.0+                |
 | **C++ Standard**  | C++26 (Standard Required) |
-| **C Standard**    | C23 (Standard Required)   |
 | **Linking**       | Static Linking            |
 
 ### Dependencies
-- **[EnTT v3.16.0](https://github.com/skypjack/entt/releases/tag/v3.16.0)** — Entity Component System (ECS)
 - **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
 > **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required.
