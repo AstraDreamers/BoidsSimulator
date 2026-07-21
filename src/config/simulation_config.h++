@@ -26,6 +26,10 @@ namespace simulation_config {
     /// @brief Initialization of vision range in objects' behavior.
     constexpr inline float init_vision_range{100.F};
 
+    /// @brief Initialization of velocity for objects.
+    /// @details For example, if the value is 200.F, the velocity for each axis will be randomized from -200.F to 200.F.
+    constexpr inline float init_velocity_range{200.F};
+
     /// @brief Object count in the simulation
     /// @details The object count is constant because the backend uses array, and array requires constant number at
     /// compile time evaluation. We use array to squeeze out performance, as this simulation uses a lot of resources.
@@ -40,4 +44,7 @@ namespace simulation_config {
 
     /// @brief Object radius in rendering.
     constexpr inline float object_render_radius{10.F};
+
+    /// @brief Objects' rotation rate.
+    constexpr inline float object_rotation_per_second{10.F};
 } // namespace simulation_config
