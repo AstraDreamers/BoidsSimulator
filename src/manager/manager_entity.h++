@@ -26,8 +26,8 @@ class manager_entity {
     auto render(sf::RenderWindow &window) -> void;
 
   private:
-    [[nodiscard]] static auto wrap_position(const float pos, const float max_bounds) noexcept -> float {
-        return pos - (max_bounds * std::floor(pos / max_bounds));
+    [[nodiscard]] static auto wrap_position(const float position, const float max_bounds) noexcept -> float {
+        return position - (max_bounds * std::floor(position / max_bounds));
     }
 
     sf::Vector2u           window_size_{0U, 0U};
@@ -38,10 +38,10 @@ class manager_entity {
     std::random_device random_device_;
     std::mt19937_64    random_engine_{random_device_()};
 
-    std::array<float, simulation_config::init_object_count> simul_pos_x_{};
-    std::array<float, simulation_config::init_object_count> simul_pos_y_{};
-    std::array<float, simulation_config::init_object_count> simul_velo_x_{};
-    std::array<float, simulation_config::init_object_count> simul_velo_y_{};
-    std::array<float, simulation_config::init_object_count> simul_accel_x_{};
-    std::array<float, simulation_config::init_object_count> simul_accel_y_{};
+    std::array<float, simulation_config::init_object_count> array_position_x_{};
+    std::array<float, simulation_config::init_object_count> array_position_y_{};
+    std::array<float, simulation_config::init_object_count> array_velocity_x_{};
+    std::array<float, simulation_config::init_object_count> array_velocity_y_{};
+    std::array<float, simulation_config::init_object_count> array_acceleration_x_{};
+    std::array<float, simulation_config::init_object_count> array_acceleration_y_{};
 };
