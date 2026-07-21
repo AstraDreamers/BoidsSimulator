@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../config/simulation_config.h++"
 #include "../core/simulation_parameters.h++"
 
 /// @brief Managing the entities in the simulation.
@@ -27,4 +28,11 @@ class manager_entity {
   private:
     sf::Vector2u           window_size_{0U, 0U};
     simulation_parameters *simulation_parameters_{nullptr};
+
+    std::array<float, simulation_config::init_object_count> simul_pos_x_{};
+    std::array<float, simulation_config::init_object_count> simul_pos_y_{};
+    std::array<float, simulation_config::init_object_count> simul_velo_x_{};
+    std::array<float, simulation_config::init_object_count> simul_velo_y_{};
+    std::array<float, simulation_config::init_object_count> simul_accel_x_{};
+    std::array<float, simulation_config::init_object_count> simul_accel_y_{};
 };
