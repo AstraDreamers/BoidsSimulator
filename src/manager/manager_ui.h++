@@ -35,5 +35,6 @@ class manager_ui {
     std::array<std::unique_ptr<sf::Text>, 4> text_slider_value_{nullptr};
     std::array<std::unique_ptr<slider>, 4>   slider_{nullptr};
 
-    static constexpr std::array<std::string, 4> slider_names = {"Separation", "Alignment", "Cohesion", "Vision"};
+    static constexpr std::array<std::string, 4> slider_names = {"Separation Gain", "Alignment Gain", "Cohesion Gain",
+                                                                "Vision Range"};
 };
