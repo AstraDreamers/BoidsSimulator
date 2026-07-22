@@ -34,9 +34,7 @@ class manager_entity {
     sf::Vector2f           window_size_float_{0.F, 0.F};
     simulation_parameters *simulation_parameters_{nullptr};
 
-    sf::CircleShape    render_object_;
-    std::random_device random_device_;
-    std::mt19937_64    random_engine_{random_device_()};
+    sf::CircleShape render_object_;
 
     std::array<float, simulation_config::init_object_count> array_position_x_{};
     std::array<float, simulation_config::init_object_count> array_position_y_{};

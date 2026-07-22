@@ -12,6 +12,9 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
     render_object_.setOrigin({simulation_config::object_render_radius, simulation_config::object_render_radius});
     render_object_.setFillColor(theme_config::boids);
 
+    std::random_device random_device;
+    std::mt19937_64    random_engine{random_device()};
+
     std::uniform_real_distribution<float> random_x(0.F, static_cast<float>(window_size_.x));
     std::uniform_real_distribution<float> random_y(0.F, static_cast<float>(window_size_.y));
     std::uniform_real_distribution<float> random_v(-simulation_config::init_velocity_range,
@@ -23,11 +26,11 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
         ax_ = 0.F;
         ay_ = 0.F;
 
-        vx_ = random_v(random_engine_);
-        vy_ = random_v(random_engine_);
+        vx_ = random_v(random_engine);
+        vy_ = random_v(random_engine);
 
-        px_ = random_x(random_engine_);
-        py_ = random_y(random_engine_);
+        px_ = random_x(random_engine);
+        py_ = random_y(random_engine);
     }
 }
 

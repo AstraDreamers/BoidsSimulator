@@ -33,7 +33,7 @@ namespace simulation_config {
     /// @brief Object count in the simulation
     /// @details The object count is constant because the backend uses array, and array requires constant number at
     /// compile time evaluation. We use array to squeeze out performance, as this simulation uses a lot of resources.
-    constexpr inline uint32_t init_object_count{1000U};
+    constexpr inline uint32_t init_object_count{200U};
 
     /// **************************************************
     /// ***** Render Configurations **********************
