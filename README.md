@@ -6,13 +6,11 @@
 
 # Boids Simulator
 
-![WIP](https://img.shields.io/badge/Work-In%20Progress-ffff00)
-![Status](https://img.shields.io/badge/Status-Not%20Ready-ff0000)
-[![C23](https://img.shields.io/badge/C-23-ffffaa)](https://cppreference.com/c/23)
-[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaffff)](https://cppreference.com/cpp/26)
-[![EnTT](https://img.shields.io/badge/EnTT-v3.16.0-aaaaff)](https://github.com/skypjack/entt/releases/tag/v3.16.0)
+![WIP](https://img.shields.io/badge/Work-In%20Progress-ffffaa)
+![Status](https://img.shields.io/badge/Status-Not%20Ready-ffaaaa)
+[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaaaff)](https://cppreference.com/cpp/26)
 [![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-![License](https://img.shields.io/badge/License-MIT-ffaaff)
+[![License](https://img.shields.io/badge/License-MIT-ffaaff)](LICENSE)
 
 A simple flocking simulation.
 
@@ -22,24 +20,91 @@ A simple flocking simulation.
 
 ## Technical Architecture
 
-This project only supports **Windows**.
+This project supports **Windows** and **Partially Linux** (Only tested on **Arch Linux**).
 
-| Specification     | Value                     |
-|:------------------|:--------------------------|
-| **CMake Version** | CMake 4.0+                |
-| **C++ Standard**  | C++26 (Standard Required) |
-| **C Standard**    | C23 (Standard Required)   |
-| **Linking**       | Static Linking            |
+Ensure you have a modern C++ compiler supporting C++26 (`clang++ >= 18` or `g++ >= 14`), along with **CMake 4.0+** and a build generator like **Ninja** or **Make**.
+
+| Specification     | Value                                                                                      |
+|:------------------|:-------------------------------------------------------------------------------------------|
+| **CMake Version** | CMake 4.0+                                                                                 |
+| **C++ Standard**  | C++ 26 (Standard Required)                                                                 |
+| **Linking**       | Static Linking (**Windows Only**), Dynamic Linking (**Other Platforms, including Linux**)  |
 
 ### Dependencies
-- **[EnTT v3.16.0](https://github.com/skypjack/entt/releases/tag/v3.16.0)** — Entity Component System (ECS)
 - **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
-> **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required.
+> **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required. **(Except Linux users, they must install SFML's dependencies through system's package manager)**
 
 ## Build instruction
 
-Coming soon!
+### On Windows
+
+On Windows, SFML and its runtime dependencies are automatically pulled, and are statically compiled directly into the binary - no pre-installed system packages or DLL management are required.
+
+1. **Clone the repository:**
+    ```powershell
+    git clone https://github.com/AstraDreamers/BoidsSimulator.git
+    cd BoidsSimulator
+    ```
+2. **Configure the project:**
+    ```powershell
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+    ```
+
+3. **Build the project:**
+    ```powershell
+    cmake --build build --config Release
+    ```
+
+4. **Run the application:**
+    ```powershell
+    .\build\BoidsSimulator.exe
+    ```
+
+### On Arch Linux
+
+On Linux, SFML is built dynamically. You must install the system-level development libraries for X11, OpenGL, FreeType, and audio codecs before configuring.
+
+1. **Install required dependencies:** 
+    ```bash
+    sudo pacman -S --needed \
+        base-devel \
+        cmake \
+        ninja \
+        clang \
+        libxrandr \
+        libxcursor \
+        libxi \
+        libxrender \
+        libx11 \
+        systemd-libs \
+        freetype2 \
+        flac \
+        libvorbis \
+        libogg \
+        mesa \
+        mbedtls
+    ```
+
+2. **Clone the repository:**
+    ```bash
+    git clone https://github.com/AstraDreamers/BoidsSimulator.git
+    cd BoidsSimulator
+    ```
+3. **Configure the project:**
+    ```bash
+    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+    ```
+
+4. **Build the project:**
+    ```bash
+    cmake --build build
+    ```
+
+5. **Run the application:**
+    ```bash
+    .\build\BoidsSimulator
+    ```
 
 ## The simulation logic under the hood
 

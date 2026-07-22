@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/boids_packet.h++"
-#include <random>
+#include "../config/simulation_config.h++"
+#include "../core/simulation_parameters.h++"
 
 /// @brief Managing the entities in the simulation.
 class manager_entity {
@@ -9,7 +9,7 @@ class manager_entity {
     /// @brief Construct a new manager_entity object.
     /// @param window_size The size of the window.
     /// @param boids_packet The variable packets for boids.
-    manager_entity(sf::Vector2u window_size, boids_packet &boids_packet);
+    manager_entity(sf::Vector2u window_size, simulation_parameters &simulation_parameters);
     ~manager_entity();
 
     manager_entity(const manager_entity &)                         = delete;
@@ -26,16 +26,20 @@ class manager_entity {
     auto render(sf::RenderWindow &window) -> void;
 
   private:
-    auto update_boids() -> void;
-    auto update_velocity(float time_dt) -> void;
-    auto update_position(float time_dt) -> void;
-    auto draw_entities(sf::RenderWindow &window) -> void;
+    [[nodiscard]] static auto wrap_position(const float position, const float max_bounds) noexcept -> float {
+        return position - (max_bounds * std::floor(position / max_bounds));
+    }
 
-    sf::Vector2u  window_size_{0U, 0U};
-    boids_packet *boids_packet_{nullptr};
+    sf::Vector2u           window_size_{0U, 0U};
+    sf::Vector2f           window_size_float_{0.F, 0.F};
+    simulation_parameters *simulation_parameters_{nullptr};
 
-    entt::registry registry_;
+    sf::CircleShape render_object_;
 
-    std::random_device random_device_;
-    std::mt19937_64    random_engine_{random_device_()};
+    std::array<float, simulation_config::init_object_count> array_position_x_{};
+    std::array<float, simulation_config::init_object_count> array_position_y_{};
+    std::array<float, simulation_config::init_object_count> array_velocity_x_{};
+    std::array<float, simulation_config::init_object_count> array_velocity_y_{};
+    std::array<float, simulation_config::init_object_count> array_acceleration_x_{};
+    std::array<float, simulation_config::init_object_count> array_acceleration_y_{};
 };

@@ -2,8 +2,8 @@
 #include "../config/theme_config.h++"
 #include "../config/ui_config.h++"
 
-manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packet)
-    : window_size_(window_size), boids_packet_(&boids_packet) {
+manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &simulation_parameters)
+    : window_size_(window_size), simulation_parameters_(&simulation_parameters) {
     /// ****************************
     /// ***** Font loading *********
     /// ****************************
@@ -44,10 +44,10 @@ manager_ui::manager_ui(const sf::Vector2u window_size, boids_packet &boids_packe
     /// ****************************
     /// ***** Slider ***************
     /// ****************************
-    slider_[0] = std::make_unique<slider>(boids_packet_->gain_separation, 0.F, 10.F);
-    slider_[1] = std::make_unique<slider>(boids_packet_->gain_alignment, 0.F, 10.F);
-    slider_[2] = std::make_unique<slider>(boids_packet_->gain_cohesion, 0.F, 10.F);
-    slider_[3] = std::make_unique<slider>(boids_packet_->vision_range, 0.F, 100.F);
+    slider_[0] = std::make_unique<slider>(simulation_parameters_->gain_separation, 0.F, 10.F);
+    slider_[1] = std::make_unique<slider>(simulation_parameters_->gain_alignment, 0.F, 10.F);
+    slider_[2] = std::make_unique<slider>(simulation_parameters_->gain_cohesion, 0.F, 10.F);
+    slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, 0.F, 100.F);
 
     for (int i = 0; i < 4; i++) {
         slider_.at(i)->set_position({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
@@ -67,10 +67,10 @@ auto manager_ui::update() const -> void {
         slider->update();
     }
 
-    text_slider_value_[0]->setString(std::format("{:.2f}", boids_packet_->gain_separation));
-    text_slider_value_[1]->setString(std::format("{:.2f}", boids_packet_->gain_alignment));
-    text_slider_value_[2]->setString(std::format("{:.2f}", boids_packet_->gain_cohesion));
-    text_slider_value_[3]->setString(std::format("{:.2f}", boids_packet_->vision_range));
+    text_slider_value_[0]->setString(std::format("{:.2f}", simulation_parameters_->gain_separation));
+    text_slider_value_[1]->setString(std::format("{:.2f}", simulation_parameters_->gain_alignment));
+    text_slider_value_[2]->setString(std::format("{:.2f}", simulation_parameters_->gain_cohesion));
+    text_slider_value_[3]->setString(std::format("{:.2f}", simulation_parameters_->vision_range));
 }
 
 auto manager_ui::render(sf::RenderWindow &window) const -> void {

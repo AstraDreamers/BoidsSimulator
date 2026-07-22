@@ -1,10 +1,6 @@
 #include "core.h++"
 #include "../config/system_config.h++"
 #include "../config/theme_config.h++"
-#include "SFML/Window/ContextSettings.hpp"
-#include "SFML/Window/Event.hpp"
-#include "SFML/Window/VideoMode.hpp"
-#include <memory>
 
 core::core() {
     /// Get current user screen size
@@ -18,8 +14,8 @@ core::core() {
                    sf::Style::Close, sf::State::Fullscreen, context_settings);
     window_.setFramerateLimit(system_config::framerate_limit);
 
-    manager_entity_ = std::make_unique<manager_entity>(window_size_, boids_packet_);
-    manager_ui_     = std::make_unique<manager_ui>(window_size_, boids_packet_);
+    manager_entity_ = std::make_unique<manager_entity>(window_size_, simulation_parameters_);
+    manager_ui_     = std::make_unique<manager_ui>(window_size_, simulation_parameters_);
 }
 
 core::~core() = default;

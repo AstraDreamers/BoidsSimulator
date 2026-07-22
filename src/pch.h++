@@ -6,9 +6,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-/// EnTT Includes
-#include <entt/entt.hpp>
-
 /// Standard Libraries
 #include <cstdint>
 #include <memory>
