@@ -115,7 +115,7 @@ On Linux, SFML is built dynamically. You must install the system-level developme
 5. **Run the application:**
 
    ```bash
-   .\build\BoidsSimulator
+   build/BoidsSimulator
    ```
 
 ## The simulation logic under the hood
