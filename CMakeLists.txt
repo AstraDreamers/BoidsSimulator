@@ -39,6 +39,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(sfml)
 
+
+# -------------------
+# Source Files Adding
+# -------------------
+
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 	"src/*.cpp"
 	"src/*.hpp"
@@ -61,35 +66,34 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
 	src/pch.h++
 )
 
-target_compile_options(${PROJECT_NAME} PRIVATE
-	$<$<CONFIG:Debug>:-g>
-	$<$<CONFIG:Release>:-O3>
-	$<$<CONFIG:Release>:-ffast-math>
-	-Wall
-	-Wextra
-	-m64
-	-fdiagnostics-color=always
-)
-
-
 # -------------------------
 # Compile & Linking Options
 # -------------------------
 
-if(WIN32)
-target_link_options(${PROJECT_NAME} PRIVATE
-	$<$<CONFIG:Release>:-mwindows>
-	-m64
-	-static-libgcc
-	-static-libstdc++
-	-static
-)
+if(MSVC)
+
 else()
-target_link_options(${PROJECT_NAME} PRIVATE
-	-m64
-	-static-libgcc
-	-static-libstdc++
-)
+	target_compile_options(${PROJECT_NAME} PRIVATE
+		$<$<CONFIG:Debug>:-g>
+		$<$<CONFIG:Release>:-O3>
+		$<$<CONFIG:Release>:-ffast-math>
+		-Wall
+		-Wextra
+		-m64
+	)
+
+	target_link_options(${PROJECT_NAME} PRIVATE
+		$<$<CONFIG:Release>:-mwindows>
+		-static-libgcc
+		-static-libstdc++
+		-m64
+	)
+
+	if(WIN32)
+		target_link_options(${PROJECT_NAME} PRIVATE
+			-static
+		)
+	endif()
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
