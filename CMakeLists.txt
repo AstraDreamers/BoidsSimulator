@@ -2,15 +2,6 @@ cmake_minimum_required(VERSION 4.0)
 
 project(BoidsSimulator LANGUAGES CXX VERSION 1.0)
 
-
-# --------------------
-# Standard C++26 Setup
-# --------------------
-
-set(CMAKE_CXX_STANDARD			26)
-set(CMAKE_CXX_STANDARD_REQUIRED	ON)
-
-
 # ----------------------------------
 # Static & Dynamic Linking Configure
 # ----------------------------------
@@ -44,27 +35,29 @@ FetchContent_MakeAvailable(sfml)
 # Source Files Adding
 # -------------------
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-	"src/*.cpp"
-	"src/*.hpp"
-	"src/*.c++"
-	"src/*.h++"
-	"src/*.c"
-	"src/*.h"
+add_executable(${PROJECT_NAME} 
+	src/core/core.c++
+	src/manager/ui/slider.c++
+	src/manager/manager_entity.c++
+	src/manager/manager_ui.c++
+	src/main.c++
 )
 
-list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h++")
-
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
-
-
-# ------------------
-# Precompile headers
-# ------------------
+target_include_directories(${PROJECT_NAME} PRIVATE
+	include/
+)
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE
-	src/pch.h++
+	include/pch.h++
 )
+
+
+# --------------------
+# Standard C++26 Setup
+# --------------------
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_26)
+
 
 # -------------------------
 # Compile & Linking Options
@@ -116,7 +109,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 
 # ------------------------
-# Moving assets/ to build/
+# Moving assets/ To build/
 # ------------------------
 
 add_custom_target(update_assets ALL

@@ -1,4 +1,4 @@
-#include "slider.h++"
+#include "manager/ui/slider.h++"
 
 slider::slider(float &value, float clamp_min, float clamp_max)
     : m_vertices(sf::PrimitiveType::Triangles, 12 + (m_circle_segments * 3 * 3)) {

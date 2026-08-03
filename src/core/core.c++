@@ -1,6 +1,6 @@
-#include "core.h++"
-#include "../config/system_config.h++"
-#include "../config/theme_config.h++"
+#include "core/core.h++"
+#include "config/system_config.h++"
+#include "config/theme_config.h++"
 
 core::core() {
     /// Get current user screen size

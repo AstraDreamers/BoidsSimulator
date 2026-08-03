@@ -1,6 +1,6 @@
-#include "manager_ui.h++"
-#include "../config/theme_config.h++"
-#include "../config/ui_config.h++"
+#include "manager/manager_ui.h++"
+#include "config/theme_config.h++"
+#include "config/ui_config.h++"
 
 manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &simulation_parameters)
     : window_size_(window_size), simulation_parameters_(&simulation_parameters) {

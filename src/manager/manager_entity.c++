@@ -1,5 +1,5 @@
-#include "manager_entity.h++"
-#include "../config/theme_config.h++"
+#include "manager/manager_entity.h++"
+#include "config/theme_config.h++"
 
 manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &simulation_parameters)
     : window_size_(window_size), simulation_parameters_(&simulation_parameters) {
