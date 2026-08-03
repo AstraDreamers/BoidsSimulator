@@ -71,7 +71,18 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
 # -------------------------
 
 if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        /W4
+        /permissive-
+        $<$<CONFIG:Debug>:/Zi>
+        $<$<CONFIG:Release>:/O2>
+        $<$<CONFIG:Release>:/fp:fast>
+    )
 
+    target_link_options(${PROJECT_NAME} PRIVATE
+        $<$<CONFIG:Debug>:/DEBUG>
+        $<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
+    )
 else()
 	target_compile_options(${PROJECT_NAME} PRIVATE
 		$<$<CONFIG:Debug>:-g>
