@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 4.0)
 
-project(
-	BoidsSimulator
-	LANGUAGES CXX
-	VERSION 1.0
-)
+project(BoidsSimulator LANGUAGES CXX VERSION 1.0)
+
+
+# --------------------
+# Standard C++26 Setup
+# --------------------
 
 set(CMAKE_CXX_STANDARD			26)
 set(CMAKE_CXX_STANDARD_REQUIRED	ON)
+
+
+# ----------------------------------
+# Static & Dynamic Linking Configure
+# ----------------------------------
 
 if(WIN32)
 	set(BUILD_SHARED_LIBS		OFF	CACHE BOOL "" FORCE)
@@ -16,6 +22,11 @@ else()
 	set(BUILD_SHARED_LIBS		ON	CACHE BOOL "" FORCE)
 	set(SFML_STATIC_LIBRARIES	OFF	CACHE BOOL "" FORCE)
 endif()
+
+
+# ---------------------------
+# External Projects Importing
+# ---------------------------
 
 include(FetchContent)
 
@@ -41,6 +52,11 @@ list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h++")
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
+
+# ------------------
+# Precompile headers
+# ------------------
+
 target_precompile_headers(${PROJECT_NAME} PRIVATE
 	src/pch.h++
 )
@@ -54,6 +70,11 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 	-m64
 	-fdiagnostics-color=always
 )
+
+
+# -------------------------
+# Compile & Linking Options
+# -------------------------
 
 if(WIN32)
 target_link_options(${PROJECT_NAME} PRIVATE
@@ -78,11 +99,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	SFML::System
 )
 
+
+# ------------------------
+# Moving assets/ to build/
+# ------------------------
+
 add_custom_target(update_assets ALL
-	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	"${CMAKE_CURRENT_SOURCE_DIR}/assets"
-	"${CMAKE_BINARY_DIR}/assets"
-	COMMENT "Syncing assets to build directory..."
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
+	COMMENT "[External Job] Syncing assets to build directory."
 )
 
 add_dependencies(${PROJECT_NAME} update_assets)
