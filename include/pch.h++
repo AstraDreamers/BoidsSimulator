@@ -18,11 +18,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include "core/core.h++"
+#pragma once
 
-/// @brief An actual entry point.
-auto main() -> int {
-    core core_engine;
-    core_engine.run();
-    return 0;
-}
+/// SFML Includes
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+
+/// Standard Libraries
+#include <cstdint>
+#include <memory>
+#include <optional>
+#include <print>
+#include <random>
+#include <ranges>
+#include <string>

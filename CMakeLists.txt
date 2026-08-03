@@ -1,14 +1,26 @@
+#    BoidsSimulator - A simple flocking simulation.
+#    Copyright (C) 2026  AstraDreamers
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 cmake_minimum_required(VERSION 4.0)
 
-project(
-	BoidsSimulator
-	LANGUAGES CXX
-	VERSION 1.0
-)
+project(BoidsSimulator LANGUAGES CXX VERSION 1.0)
 
-set(CMAKE_CXX_STANDARD			26)
-set(CMAKE_CXX_STANDARD_REQUIRED	ON)
-set(CMAKE_COLOR_DIAGNOSTICS 	ON)
+# ----------------------------------
+# Static & Dynamic Linking Configure
+# ----------------------------------
 
 if(WIN32)
 	set(BUILD_SHARED_LIBS		OFF	CACHE BOOL "" FORCE)
@@ -17,6 +29,11 @@ else()
 	set(BUILD_SHARED_LIBS		ON	CACHE BOOL "" FORCE)
 	set(SFML_STATIC_LIBRARIES	OFF	CACHE BOOL "" FORCE)
 endif()
+
+
+# ---------------------------
+# External Projects Importing
+# ---------------------------
 
 include(FetchContent)
 
@@ -29,47 +46,74 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(sfml)
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-	"src/*.cpp"
-	"src/*.hpp"
-	"src/*.c++"
-	"src/*.h++"
-	"src/*.c"
-	"src/*.h"
+
+# -------------------
+# Source Files Adding
+# -------------------
+
+add_executable(${PROJECT_NAME} 
+	src/core/core.c++
+	src/manager/ui/slider.c++
+	src/manager/manager_entity.c++
+	src/manager/manager_ui.c++
+	src/main.c++
 )
 
-list(REMOVE_ITEM PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.h++")
-
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE
+	include/
+)
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE
-	src/pch.h++
+	include/pch.h++
 )
 
-target_compile_options(${PROJECT_NAME} PRIVATE
-	$<$<CONFIG:Debug>:-g>
-	$<$<CONFIG:Release>:-O3>
-	$<$<CONFIG:Release>:-ffast-math>
-	-Wall
-	-Wextra
-	-m64
-	-fdiagnostics-color=always
-)
 
-if(WIN32)
-target_link_options(${PROJECT_NAME} PRIVATE
-	$<$<CONFIG:Release>:-mwindows>
-	-m64
-	-static-libgcc
-	-static-libstdc++
-	-static
-)
+# --------------------
+# Standard C++26 Setup
+# --------------------
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_26)
+
+
+# -------------------------
+# Compile & Linking Options
+# -------------------------
+
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        /W4
+        /permissive-
+        $<$<CONFIG:Debug>:/Zi>
+        $<$<CONFIG:Release>:/O2>
+        $<$<CONFIG:Release>:/fp:fast>
+    )
+
+    target_link_options(${PROJECT_NAME} PRIVATE
+        $<$<CONFIG:Debug>:/DEBUG>
+        $<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
+    )
 else()
-target_link_options(${PROJECT_NAME} PRIVATE
-	-m64
-	-static-libgcc
-	-static-libstdc++
-)
+	target_compile_options(${PROJECT_NAME} PRIVATE
+		$<$<CONFIG:Debug>:-g>
+		$<$<CONFIG:Release>:-O3>
+		$<$<CONFIG:Release>:-ffast-math>
+		-Wall
+		-Wextra
+		-m64
+	)
+
+	target_link_options(${PROJECT_NAME} PRIVATE
+		$<$<CONFIG:Release>:-mwindows>
+		-static-libgcc
+		-static-libstdc++
+		-m64
+	)
+
+	if(WIN32)
+		target_link_options(${PROJECT_NAME} PRIVATE
+			-static
+		)
+	endif()
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -79,11 +123,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	SFML::System
 )
 
+
+# ------------------------
+# Moving assets/ To build/
+# ------------------------
+
 add_custom_target(update_assets ALL
-	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	"${CMAKE_CURRENT_SOURCE_DIR}/assets"
-	"${CMAKE_BINARY_DIR}/assets"
-	COMMENT "Syncing assets to build directory..."
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
+	COMMENT "[External Job] Syncing assets to build directory."
 )
 
 add_dependencies(${PROJECT_NAME} update_assets)

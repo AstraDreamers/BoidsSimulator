@@ -24,13 +24,14 @@ This project supports **Windows** and **Partially Linux** (Only tested on **Arch
 
 Ensure you have a modern C++ compiler supporting C++26 (`clang++ >= 18` or `g++ >= 14`), along with **CMake 4.0+** and a build generator like **Ninja** or **Make**.
 
-| Specification     | Value                                                                                      |
-|:------------------|:-------------------------------------------------------------------------------------------|
-| **CMake Version** | CMake 4.0+                                                                                 |
-| **C++ Standard**  | C++ 26 (Standard Required)                                                                 |
-| **Linking**       | Static Linking (**Windows Only**), Dynamic Linking (**Other Platforms, including Linux**)  |
+| Specification     | Value                                                                                     |
+| :---------------- | :---------------------------------------------------------------------------------------- |
+| **CMake Version** | CMake 4.0+                                                                                |
+| **C++ Standard**  | C++26                                                                                     |
+| **Linking**       | Static Linking (**Windows Only**), Dynamic Linking (**Other Platforms, including Linux**) |
 
 ### Dependencies
+
 - **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
 > **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required. **(Except Linux users, they must install SFML's dependencies through system's package manager)**
@@ -42,73 +43,85 @@ Ensure you have a modern C++ compiler supporting C++26 (`clang++ >= 18` or `g++ 
 On Windows, SFML and its runtime dependencies are automatically pulled, and are statically compiled directly into the binary - no pre-installed system packages or DLL management are required.
 
 1. **Clone the repository:**
-    ```powershell
-    git clone https://github.com/AstraDreamers/BoidsSimulator.git
-    cd BoidsSimulator
-    ```
+
+   ```powershell
+   git clone https://github.com/AstraDreamers/BoidsSimulator.git
+   cd BoidsSimulator
+   ```
+
 2. **Configure the project:**
-    ```powershell
-    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-    ```
+
+   ```powershell
+   cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+   ```
 
 3. **Build the project:**
-    ```powershell
-    cmake --build build --config Release
-    ```
+
+   ```powershell
+   cmake --build build --config Release
+   ```
 
 4. **Run the application:**
-    ```powershell
-    .\build\BoidsSimulator.exe
-    ```
+
+   ```powershell
+   .\build\BoidsSimulator.exe
+   ```
 
 ### On Arch Linux
 
 On Linux, SFML is built dynamically. You must install the system-level development libraries for X11, OpenGL, FreeType, and audio codecs before configuring.
 
-1. **Install required dependencies:** 
-    ```bash
-    sudo pacman -S --needed \
-        base-devel \
-        cmake \
-        ninja \
-        clang \
-        libxrandr \
-        libxcursor \
-        libxi \
-        libxrender \
-        libx11 \
-        systemd-libs \
-        freetype2 \
-        flac \
-        libvorbis \
-        libogg \
-        mesa \
-        mbedtls
-    ```
+1. **Install required dependencies:**
+
+   ```bash
+   sudo pacman -S --needed \
+       base-devel \
+       cmake \
+       ninja \
+       clang \
+       libxrandr \
+       libxcursor \
+       libxi \
+       libxrender \
+       libx11 \
+       systemd-libs \
+       freetype2 \
+       flac \
+       libvorbis \
+       libogg \
+       mesa \
+       mbedtls
+   ```
 
 2. **Clone the repository:**
-    ```bash
-    git clone https://github.com/AstraDreamers/BoidsSimulator.git
-    cd BoidsSimulator
-    ```
+
+   ```bash
+   git clone https://github.com/AstraDreamers/BoidsSimulator.git
+   cd BoidsSimulator
+   ```
+
 3. **Configure the project:**
-    ```bash
-    cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-    ```
+
+   ```bash
+   cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+   ```
 
 4. **Build the project:**
-    ```bash
-    cmake --build build
-    ```
+
+   ```bash
+   cmake --build build
+   ```
 
 5. **Run the application:**
-    ```bash
-    .\build\BoidsSimulator
-    ```
+
+   ```bash
+   build/BoidsSimulator
+   ```
 
 ## The simulation logic under the hood
 
 The simulation implements **Craig Reynolds' Steering Behaviors**:
+
 - **[Separation](#separation)**: Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
 - **[Alignment](#alignment)**: Entities match their velocity vectors with the local average to achieve directional flocking consensus.
 - **[Cohesion](#cohesion)**: Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
@@ -116,16 +129,18 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 #### Variables
 
 There are some values we can tune to result with different results:
+
 - **Separation** $w_s$: Separation gain
 - **Alignment** $w_a$: Alignment gain
 - **Cohesion** $w_c$: Cohesion gain
 
 ... And a small value:
+
 - **Vision range** $l_{vision}$: Vision range of entities, which affects how far the neighborhood selection applies.
 
 #### Separation
 
-This behavior prevents local congestion by applying a force inversely proportional to the distance between boids. 
+This behavior prevents local congestion by applying a force inversely proportional to the distance between boids.
 
 Given that $A$ is the current position of an entity, let $N$ be the set of neighbors that is inside the vision range of the mentioned entity, we can get this specific vector that tells us the direction to move and the intensity:
 
@@ -149,6 +164,7 @@ $$k_y=\sum_{B\in N}\frac{\Delta y}{|\overrightarrow{BA}|^2}=\sum_{B\in N}\frac{\
 > As we can see, $|\overrightarrow{BA}|$ is at the denominator of the fraction, which means that $|\overrightarrow{BA}|$ should not equal $0$, which can cause the program to crash. That's why we only check if the distance is larger than $0.01$ for mentioned safety issues.
 >
 > Here is a piece of pseudo-C++ code:
+>
 > ```cpp
 > float dx = this_p.x - other_p.x; // Calculate Δx
 > float dy = this_p.y - other_p.y; // Calculate Δy
@@ -175,7 +191,7 @@ $$\overrightarrow{F_s}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 This behavior ensures that an entity moves in the same direction as its neighbors, creating a synchronized "flocking" effect.
 
-> And yeah, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are *separated***. Please pay attention!
+> And yeah, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are _separated_**. Please pay attention!
 
 First, we have to calculate the average velocity of all neighbors:
 
@@ -204,7 +220,7 @@ $$\overrightarrow{F_a}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
 This behavior ensures the entities steer to the average position (center of mass) of the neighbors, keeping the group united.
 
-> I have to say it again, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are *separated***. Please pay attention!
+> I have to say it again, this part only uses **$A$ as an entity**, the **set $N$ of its neighbors** and **maximum velocity**, $v_{max}$, from [separation section](#separation), **other variables are _separated_**. Please pay attention!
 
 First, we have to calculate the average position of all neighbors, also means the center of this set $N$:
 
@@ -243,7 +259,12 @@ Finally, we sum everything up together to get the **final acceleration for the e
 $$\overrightarrow{a_A}=w_s\cdot\overrightarrow{F_s}+w_a\cdot\overrightarrow{F_a}+w_c\cdot\overrightarrow{F_c}$$
 
 **With:**
+
 - $w_s$ : The gain of separation.
 - $w_a$ : The gain of alignment.
 - $w_c$ : The gain of cohesion.
 - $\overrightarrow{F_s}$, $\overrightarrow{F_a}$, $\overrightarrow{F_c}$ : The forces that we calculated before.
+
+## References & Citations
+
+- [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids)

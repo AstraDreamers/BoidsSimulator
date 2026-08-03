@@ -7,7 +7,6 @@ cmake-build-release/
 
 # IDEs and Editors
 .idea/
-.vscode/
 .vs/
 .cache/
 .clangd/
@@ -27,3 +26,8 @@ cmake-build-release/
 *.log
 *.tlog
 *.lastbuildstate
+
+# Arch stuffs
+.DS_Store
+*.swp
+*.out
