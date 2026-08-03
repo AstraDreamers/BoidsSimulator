@@ -122,15 +122,3 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	SFML::Window
 	SFML::System
 )
-
-
-# ------------------------
-# Moving assets/ To build/
-# ------------------------
-
-add_custom_target(update_assets ALL
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
-	COMMENT "[External Job] Syncing assets to build directory."
-)
-
-add_dependencies(${PROJECT_NAME} update_assets)
