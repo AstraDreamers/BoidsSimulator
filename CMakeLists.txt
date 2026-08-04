@@ -18,6 +18,14 @@ cmake_minimum_required(VERSION 4.0)
 
 project(BoidsSimulator LANGUAGES CXX VERSION 1.0)
 
+# -----------------
+# Set C++26 Feature
+# -----------------
+
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
 # ----------------------------------
 # Static & Dynamic Linking Configure
 # ----------------------------------
@@ -66,13 +74,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_precompile_headers(${PROJECT_NAME} PRIVATE
 	include/pch.h++
 )
-
-
-# --------------------
-# Standard C++26 Setup
-# --------------------
-
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_26)
 
 
 # -------------------------

@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "manager/manager_ui.h++"
+#include "assets/assets.h++"
 #include "config/theme_config.h++"
 #include "config/ui_config.h++"
 
@@ -27,8 +28,8 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     /// ****************************
     /// ***** Font loading *********
     /// ****************************
-    if (!font_.openFromFile("assets/Google Sans.ttf")) {
-        std::println(stderr, "Can't open file assets/Google Sans.ttf");
+    if (!font_.openFromMemory(assets::font::google_sans.data(), assets::font::google_sans.size())) {
+        std::println(stderr, "Can't open stream assets/google_sans.ttf");
         exit(-1);
     }
 
