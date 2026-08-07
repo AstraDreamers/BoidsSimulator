@@ -18,6 +18,14 @@ cmake_minimum_required(VERSION 4.0)
 
 project(BoidsSimulator LANGUAGES CXX VERSION 1.0)
 
+# -----------------
+# Set C++26 Feature
+# -----------------
+
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
 # ----------------------------------
 # Static & Dynamic Linking Configure
 # ----------------------------------
@@ -68,13 +76,6 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
 )
 
 
-# --------------------
-# Standard C++26 Setup
-# --------------------
-
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_26)
-
-
 # -------------------------
 # Compile & Linking Options
 # -------------------------
@@ -122,15 +123,3 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	SFML::Window
 	SFML::System
 )
-
-
-# ------------------------
-# Moving assets/ To build/
-# ------------------------
-
-add_custom_target(update_assets ALL
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
-	COMMENT "[External Job] Syncing assets to build directory."
-)
-
-add_dependencies(${PROJECT_NAME} update_assets)
