@@ -128,15 +128,12 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 
 #### Variables
 
-There are some values we can tune to result with different results:
+There are some variables that we can modify to get different results:
 
 - **Separation** $w_s$: Separation gain
 - **Alignment** $w_a$: Alignment gain
 - **Cohesion** $w_c$: Cohesion gain
-
-... And a small value:
-
-- **Vision range** $l_{vision}$: Vision range of entities, which affects how far the neighborhood selection applies.
+- **Vision range** $r_{vision}$: Vision range of entities, which affects how far the neighborhood selection applies.
 
 #### Separation
 
