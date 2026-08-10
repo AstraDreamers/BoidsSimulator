@@ -140,7 +140,7 @@ There are some variables that we can modify to get different results:
 > - $p,v,a$: Position, velocity and acceleration of **the current entity**.
 > - $p_i,v_i,a_i$: Positions, velocities, and accelerations of **the neighbor entities**
 
-#### Separation
+#### Separation Behavior
 
 This behavior prevents local congestion by applying a force inversely proportional to the distance between boids.
 
@@ -189,7 +189,7 @@ But there is a small problem. the current velocity of the entity, $\overrightarr
 
 $$\overrightarrow{F_s}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
-#### Alignment
+#### Alignment Behavior
 
 This behavior ensures that an entity moves in the same direction as its neighbors, creating a synchronized "flocking" effect.
 
@@ -218,7 +218,7 @@ The same as separation process, we also have to calculate the steering force bas
 
 $$\overrightarrow{F_a}=\overrightarrow{v_{desired}}-\overrightarrow{v_A}$$
 
-#### Cohesion
+#### Cohesion Behavior
 
 This behavior ensures the entities steer to the average position (center of mass) of the neighbors, keeping the group united.
 
