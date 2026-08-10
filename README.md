@@ -135,6 +135,11 @@ There are some variables that we can modify to get different results:
 - **Cohesion** $w_c$: Cohesion gain
 - **Vision range** $r_{vision}$: Vision range of entities, which affects how far the neighborhood selection applies.
 
+> In the following sections, I would use the following naming styles:
+>
+> - $p,v,a$: Position, velocity and acceleration of **the current entity**.
+> - $p_i,v_i,a_i$: Positions, velocities, and accelerations of **the neighbor entities**
+
 #### Separation
 
 This behavior prevents local congestion by applying a force inversely proportional to the distance between boids.
