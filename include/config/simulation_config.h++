@@ -35,13 +35,13 @@ namespace simulation_config {
     /// **************************************************
 
     /// @brief Initialization of separation gain in objects' behavior.
-    constexpr inline float init_gain_separation{1.F};
+    constexpr inline float init_gain_separation{0.F};
 
     /// @brief Initialization of alignment gain in objects' behavior.
-    constexpr inline float init_gain_alignment{1.F};
+    constexpr inline float init_gain_alignment{0.F};
 
     /// @brief Initialization of cohesion gain in objects' behavior.
-    constexpr inline float init_gain_cohesion{1.F};
+    constexpr inline float init_gain_cohesion{0.F};
 
     /// @brief Initialization of vision range in objects' behavior.
     constexpr inline float init_vision_range{100.F};

@@ -67,63 +67,71 @@ auto manager_entity::update(const float time_dt) -> void {
     for (auto &&[px1, py1, vx1, vy1, ax1, ay1] :
          std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
                          array_acceleration_x_, array_acceleration_y_)) {
-        float vector_separation_x{0.F};
-        float vector_separation_y{0.F};
 
-        float vector_alignment_x{0.F};
-        float vector_alignment_y{0.F};
+        float force_separation_x{0.F};
+        float force_separation_y{0.F};
 
-        float vector_cohesion_x{0.F};
-        float vector_cohesion_y{0.F};
+        float force_alignment_x{0.F};
+        float force_alignment_y{0.F};
+
+        float force_cohesion_x{0.F};
+        float force_cohesion_y{0.F};
+
+        float target_position_x{0.F};
+        float target_position_y{0.F};
 
         uint32_t neighbor_count{0U};
 
         for (auto &&[px2, py2, vx2, vy2, ax2, ay2] :
              std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
                              array_acceleration_x_, array_acceleration_y_)) {
-            const float delta_x{px2 - px1};
-            const float delta_y{py2 - py1};
-            const float distance_square{(delta_x * delta_x) + (delta_y * delta_y)};
 
-            if (distance_square <= vision_range_square && distance_square > simulation_config::min_length_square) {
-                const float distance_reversed{1.F / std::sqrtf(distance_square)};
+            const float distance_square{((px2 - px1) * (px2 - px1)) + ((py2 - py1) * (py2 - py1))};
+            const float minimum_distance_square{0.01F};
 
-                vector_separation_x -= delta_x * distance_reversed;
-                vector_separation_y -= delta_y * distance_reversed;
+            if (distance_square > minimum_distance_square) {
+                if (distance_square <= vision_range_square) {
+                    /// Add a neighbor to a count first
+                    neighbor_count += 1U;
 
-                vector_alignment_x += vx2;
-                vector_alignment_y += vy2;
+                    /// ? Separation
+                    force_separation_x += (-(px2 - px1)) / distance_square;
+                    force_separation_y += (-(py2 - py1)) / distance_square;
 
-                vector_cohesion_x += px2;
-                vector_cohesion_y += py2;
+                    /// ? Alignment
+                    force_alignment_x += vx2;
+                    force_alignment_y += vy2;
 
-                neighbor_count += 1U;
+                    /// ? Cohesion
+                    target_position_x += px2;
+                    target_position_y += py2;
+                }
             }
         }
 
         if (neighbor_count > 0U) {
-            const float neighbor_count_invert = 1.F / static_cast<float>(neighbor_count);
+            const float neighbor_count_inverse{1.F / static_cast<float>(neighbor_count)};
 
-            vector_alignment_x *= neighbor_count_invert;
-            vector_alignment_y *= neighbor_count_invert;
+            /// ? Separation
+            force_separation_x *= neighbor_count_inverse;
+            force_separation_y *= neighbor_count_inverse;
 
-            vector_cohesion_x *= neighbor_count_invert;
-            vector_cohesion_y *= neighbor_count_invert;
+            /// ? Alignment
+            force_alignment_x *= neighbor_count_inverse;
+            force_alignment_y *= neighbor_count_inverse;
 
-            vector_cohesion_x -= px1;
-            vector_cohesion_y -= py1;
+            /// ? Cohesion
+            target_position_x *= neighbor_count_inverse;
+            target_position_y *= neighbor_count_inverse;
 
-            vector_separation_x *= gain_separation;
-            vector_separation_y *= gain_separation;
+            force_cohesion_x = target_position_x - px1;
+            force_cohesion_y = target_position_y - py1;
 
-            vector_alignment_x *= gain_alignment;
-            vector_alignment_y *= gain_alignment;
-
-            vector_cohesion_x *= gain_cohesion;
-            vector_cohesion_y *= gain_cohesion;
-
-            ax1 = vector_separation_x + vector_alignment_x + vector_cohesion_x - vx1;
-            ay1 = vector_separation_y + vector_alignment_y + vector_cohesion_y - vy1;
+            /// ? Final Calculation
+            ax1 = (gain_separation * force_separation_x) + (gain_alignment * force_alignment_x) +
+                  (gain_cohesion * force_cohesion_x);
+            ay1 = (gain_separation * force_separation_y) + (gain_alignment * force_alignment_y) +
+                  (gain_cohesion * force_cohesion_y);
         }
     }
 
