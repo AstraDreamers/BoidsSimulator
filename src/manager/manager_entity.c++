@@ -129,9 +129,9 @@ auto manager_entity::update(const float time_dt) -> void {
 
             /// ? Final Calculation
             ax1 = (gain_separation * force_separation_x) + (gain_alignment * force_alignment_x) +
-                  (gain_cohesion * force_cohesion_x);
+                  (gain_cohesion * force_cohesion_x) - vx1;
             ay1 = (gain_separation * force_separation_y) + (gain_alignment * force_alignment_y) +
-                  (gain_cohesion * force_cohesion_y);
+                  (gain_cohesion * force_cohesion_y) - vy1;
         }
     }
 
