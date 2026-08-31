@@ -24,61 +24,54 @@ class slider {
   public:
     /// @brief Constructor for slider UI component.
     /// @param value Reference to the float variable that the slider will control.
-    /// @param clamp_min Minimum value for the slider.
-    /// @param clamp_max Maximum value for the slider.
-    slider(float &value, float clamp_min, float clamp_max);
+    /// @param clamp Clamp pair, mathematical model is [`clamp.first`, `clamp.second`].
+    slider(float &value, std::pair<float, float> clamp);
     ~slider() = default;
 
     /// @brief Set the position of the slider.
     /// @param position The new position of the slider.
-    void set_position(sf::Vector2f position);
+    auto set_position(sf::Vector2f position) -> void;
 
     /// @brief Set the size of the slider.
     /// @param size The new size of the slider.
-    void set_size(sf::Vector2f size);
+    auto set_size(sf::Vector2f size) -> void;
 
     /// @brief Set the color of the inactive (unfilled) portion of the slider.
     /// @param color The new color for the inactive portion.
-    void set_color_inactive(sf::Color color);
+    auto set_color_inactive(sf::Color color) -> void;
 
     /// @brief Set the color of the active (filled) portion of the slider.
     /// @param color The new color for the active portion.
-    void set_color_active(sf::Color color);
+    auto set_color_active(sf::Color color) -> void;
 
     /// @brief Set the color of the background (track) of the slider.
     /// @param color The new color for the background.
-    void set_color_background(sf::Color color);
+    auto set_color_background(sf::Color color) -> void;
 
     /// @brief Update the slider's state based on user interaction and internal logic.
-    void update();
+    /// @param mouse_position The current mouse's position in the window, relatively to the window.
+    /// @param mouse_clicked `true` when clicked, `false otherwise`.
+    auto update(sf::Vector2f mouse_position, bool mouse_clicked) -> void;
 
     /// @brief Render the slider onto the given SFML render window.
     /// @param window The SFML render window to draw the slider on.
-    void render(sf::RenderWindow &window);
+    auto render(sf::RenderWindow &window) const -> void;
 
   private:
-    void update_geometry();
+    float *value_{nullptr};
+    float  value_clamp_min_{0.F};
+    float  value_clamp_max_{0.F};
+    float  value_internal_{0.F};
 
-    sf::VertexArray m_vertices;
+    sf::Vector2f position_{0.F, 0.F};
+    sf::Vector2f size_{1.F, 1.F};
 
-    float *m_value = nullptr;
-    float  m_value_based{};
-    float  m_clamp_min{};
-    float  m_clamp_max{};
+    sf::Color color_active_{sf::Color::Cyan};
+    sf::Color color_inactive_{sf::Color::Blue};
 
-    sf::Vector2f m_position{};
-    sf::Vector2f m_size{100.f, 10.f};
-
-    sf::Color m_color_inactive{sf::Color::Blue};
-    sf::Color m_color_active{sf::Color::Cyan};
-    sf::Color m_color_background{sf::Color::White};
-
-    bool  m_locked{false};
-    float m_color_fade{};
-    float m_size_fade{};
-
-    static constexpr uint16_t m_circle_segments{30};
-
-    std::array<float, m_circle_segments + 1> m_lut_cos;
-    std::array<float, m_circle_segments + 1> m_lut_sin;
+    sf::CircleShape    circle_left_;
+    sf::CircleShape    circle_right_;
+    sf::CircleShape    circle_knob_;
+    sf::RectangleShape rectangle_background_;
+    sf::RectangleShape rectangle_foreground_;
 };

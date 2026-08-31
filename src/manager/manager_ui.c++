@@ -65,10 +65,10 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     /// ****************************
     /// ***** Slider ***************
     /// ****************************
-    slider_[0] = std::make_unique<slider>(simulation_parameters_->gain_separation, 0.F, 10.F);
-    slider_[1] = std::make_unique<slider>(simulation_parameters_->gain_alignment, 0.F, 10.F);
-    slider_[2] = std::make_unique<slider>(simulation_parameters_->gain_cohesion, 0.F, 10.F);
-    slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, 0.F, 100.F);
+    slider_[0] = std::make_unique<slider>(simulation_parameters_->gain_separation, std::make_pair(0.F, 10.F));
+    slider_[1] = std::make_unique<slider>(simulation_parameters_->gain_alignment, std::make_pair(0.F, 10.F));
+    slider_[2] = std::make_unique<slider>(simulation_parameters_->gain_cohesion, std::make_pair(0.F, 10.F));
+    slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, std::make_pair(0.F, 100.F));
 
     for (int i = 0; i < 4; i++) {
         slider_.at(i)->set_position({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
@@ -84,8 +84,11 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
 manager_ui::~manager_ui() = default;
 
 auto manager_ui::update() const -> void {
+    const sf::Vector2f mouse_position{sf::Mouse::getPosition()};
+    const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
+
     for (const auto &slider : slider_) {
-        slider->update();
+        slider->update(mouse_position, mouse_clicked);
     }
 
     text_slider_value_[0]->setString(std::format("{:.2f}", simulation_parameters_->gain_separation));
