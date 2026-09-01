@@ -122,6 +122,14 @@ On Linux, SFML is built dynamically. You must install the system-level developme
 
 Coming soon!
 
+## Contributors
+
+**Many thanks for the contributors!**
+
+<a href="https://github.com/AstraDreamers/BoidsSimulator/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AstraDreamers/BoidsSimulator" />
+</a>
+
 ## References & Citations
 
 - [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids)
