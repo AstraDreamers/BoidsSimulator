@@ -18,6 +18,18 @@ A simple flocking simulation.
 
 > **WARNING: The velocity of entities aren't still clamped. if the velocity is too high, it can cause total freeze.**
 
+## Under the hood
+
+The simulation implements **Craig Reynolds' Steering Behaviors**:
+
+- **Separation:** Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
+- **Alignment:** Entities match their velocity vectors with the local average to achieve directional flocking consensus.
+- **Cohesion:** Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
+
+| Separation                     | Alignment                     | Cohesion                     |
+| ------------------------------ | ----------------------------- | ---------------------------- |
+| <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
+
 ## Technical Architecture
 
 This project supports **Windows** and **Partially Linux** (Only tested on **Arch Linux**).
@@ -117,18 +129,6 @@ On Linux, SFML is built dynamically. You must install the system-level developme
    ```bash
    build/BoidsSimulator
    ```
-
-## Under the hood
-
-The simulation implements **Craig Reynolds' Steering Behaviors**:
-
-- **Separation:** Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
-- **Alignment:** Entities match their velocity vectors with the local average to achieve directional flocking consensus.
-- **Cohesion:** Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
-
-| Separation                     | Alignment                     | Cohesion                     |
-| ------------------------------ | ----------------------------- | ---------------------------- |
-| <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
 
 ## Contributors
 
