@@ -10,7 +10,7 @@
 ![Status](https://img.shields.io/badge/Status-Not%20Ready-ffaaaa)
 [![C++26](https://img.shields.io/badge/C%2B%2B-26-aaaaff)](https://cppreference.com/cpp/26)
 [![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-[![License](https://img.shields.io/badge/License-MIT-ffaaff)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPLv3-ffaaff)](LICENSE)
 
 A simple flocking simulation.
 
