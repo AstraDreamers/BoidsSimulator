@@ -120,7 +120,15 @@ On Linux, SFML is built dynamically. You must install the system-level developme
 
 ## Under the hood
 
-Coming soon!
+The simulation implements **Craig Reynolds' Steering Behaviors**:
+
+- **Separation:** Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
+- **Alignment:** Entities match their velocity vectors with the local average to achieve directional flocking consensus.
+- **Cohesion:** Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
+
+| Separation                     | Alignment                     | Cohesion                     |
+| ------------------------------ | ----------------------------- | ---------------------------- |
+| <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
 
 ## Contributors
 
