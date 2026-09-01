@@ -6,13 +6,11 @@
 
 # Boids Simulator
 
-![WIP](https://img.shields.io/badge/Work-In%20Progress-ffffaa)
-![Status](https://img.shields.io/badge/Status-Not%20Ready-ffaaaa)
 [![C++26](https://img.shields.io/badge/C%2B%2B-26-aaaaff)](https://cppreference.com/cpp/26)
 [![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
 [![License](https://img.shields.io/badge/License-GPLv3-ffaaff)](LICENSE)
 
-A simple flocking simulation.
+A simple flocking simulation that implements spatial partitioning in order to achieve better performance.
 
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 
