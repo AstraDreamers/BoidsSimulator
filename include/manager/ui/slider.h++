@@ -28,6 +28,11 @@ class slider {
     slider(float &value, std::pair<float, float> clamp);
     ~slider() = default;
 
+    slider(const slider &)                         = delete;
+    auto operator=(const slider &) -> slider &     = delete;
+    slider(slider &&) noexcept                     = default;
+    auto operator=(slider &&) noexcept -> slider & = delete;
+
     /// @brief Set the position of the slider.
     /// @param position The new position of the slider.
     auto set_position(sf::Vector2f position) -> void;
@@ -96,8 +101,8 @@ class slider {
                                                 const float value) noexcept -> sf::Color {
         const auto interpolate = [value](const std::uint8_t color_a,
                                          const std::uint8_t color_b) noexcept -> std::uint8_t {
-            const auto result{static_cast<float>(color_a) +
-                              (((static_cast<float>(color_b) - static_cast<float>(color_a)) * value))};
+            const float result{static_cast<float>(color_a) +
+                               (((static_cast<float>(color_b) - static_cast<float>(color_a)) * value))};
 
             return static_cast<std::uint8_t>(result);
         };

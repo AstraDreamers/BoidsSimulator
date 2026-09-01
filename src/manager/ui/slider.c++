@@ -74,9 +74,11 @@ auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
     const float interpolated_position_x{position_.x + interpolated_length};
     const float mouse_length{std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y)};
 
+    /// ? Set position of the knob and the bar based on interpolated length
     circle_knob_.setPosition({interpolated_position_x, position_.y});
     rectangle_foreground_.setSize({interpolated_length, size_.y});
 
+    /// ? Resolving mouse clicking event
     if (mouse_length <= twice_of(size_.y) && mouse_clicked) {
         mouse_is_locked_ = true;
     }
@@ -85,6 +87,7 @@ auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
         mouse_is_locked_ = false;
     }
 
+    /// ? Resolving knob size scale
     if (mouse_length <= twice_of(size_.y) || mouse_is_locked_) {
         knob_scale_ += knob_scale_step;
     } else {
@@ -93,6 +96,7 @@ auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
 
     knob_scale_ = std::clamp(knob_scale_, 0.F, 1.F);
 
+    /// ? Resolving color interpolation scale, and changing internal value when clicked
     if (mouse_is_locked_) {
         color_scale_ += color_scale_step;
         value_internal_ = std::clamp((mouse_position.x - position_.x) / size_.x, 0.F, 1.F);
@@ -102,6 +106,7 @@ auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
 
     color_scale_ = std::clamp(color_scale_, 0.F, 1.F);
 
+    /// ? Updating knob size and rotations
     circle_knob_.setRadius(size_.y + (knob_scale_ * half_of(size_.y)));
     circle_knob_.setOrigin({circle_knob_.getRadius(), circle_knob_.getRadius()});
     circle_knob_.rotate(sf::degrees(color_scale_ * knob_rotation_rate_degrees));
@@ -112,10 +117,12 @@ auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
     circle_knob_.setFillColor(interpolated_color);
     rectangle_foreground_.setFillColor(interpolated_color);
 
+    /// ? Updating provided value when changed
     if (value_internal_ != value_internal_last_) {
         *value_ = value_clamp_min_ + (value_internal_ * value_clamp_range_);
     }
 
+    /// ? Updating last values
     value_internal_last_ = value_internal_;
     mouse_click_last_    = mouse_clicked;
 }
