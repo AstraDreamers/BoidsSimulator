@@ -14,12 +14,6 @@
 
 A simple flocking simulation.
 
-> **Disclaimer: This is a proof-of-concept. The current implementation is $O(n^2)$ and is poorly optimized. Refactoring and spatial partitioning are planned for future milestones.**
-
-> **WARNING: The velocity of entities aren't still clamped. if the velocity is too high, it can cause total freeze.**
-
-## Under the hood
-
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 
 - **Separation:** Entities apply a repulsive force to maintain a minimum buffer distance, preventing local congestion.
@@ -29,6 +23,8 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 | Separation                     | Alignment                     | Cohesion                     |
 | ------------------------------ | ----------------------------- | ---------------------------- |
 | <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
+
+_(Image source: [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids))_
 
 ## Technical Architecture
 
@@ -88,6 +84,7 @@ On Linux, SFML is built dynamically. You must install the system-level developme
    ```bash
    sudo pacman -S --needed \
        base-devel \
+       git \
        cmake \
        ninja \
        clang \
