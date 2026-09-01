@@ -39,6 +39,14 @@ else()
 endif()
 
 
+# --------------------
+# Other Configurations
+# --------------------
+
+set(MBEDTLS_THREADING_C ON CACHE BOOL "" FORCE)
+set(MBEDTLS_THREADING_PTHREAD ON CACHE BOOL "" FORCE)
+set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
+
 # ---------------------------
 # External Projects Importing
 # ---------------------------
