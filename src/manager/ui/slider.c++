@@ -30,12 +30,35 @@ slider::slider(float &value, std::pair<float, float> clamp)
         std::swap(value_clamp_max_, value_clamp_min_);
     }
 
-    value_internal_ = (*value_ - value_clamp_min_) / (value_clamp_max_ - value_clamp_min_);
+    value_clamp_range_ = value_clamp_max_ - value_clamp_min_;
+    value_internal_    = (*value_ - value_clamp_min_) / value_clamp_range_;
+
+    circle_knob_.setPointCount(4U);
 }
 
-auto slider::set_position(sf::Vector2f position) -> void { position_ = position; }
+auto slider::set_position(sf::Vector2f position) -> void {
+    position_ = position;
 
-auto slider::set_size(sf::Vector2f size) -> void { size_ = size; }
+    circle_left_.setPosition(position_);
+    circle_right_.setPosition({position_.x + size_.x, position_.y});
+    rectangle_background_.setPosition(position_);
+    rectangle_foreground_.setPosition(position_);
+}
+
+auto slider::set_size(sf::Vector2f size) -> void {
+    size_ = size;
+
+    circle_right_.setPosition({position_.x + size_.x, position_.y});
+
+    circle_left_.setRadius(half_of(size_.y));
+    circle_right_.setRadius(half_of(size_.y));
+    rectangle_background_.setSize(size_);
+
+    circle_left_.setOrigin({circle_left_.getRadius(), circle_left_.getRadius()});
+    circle_right_.setOrigin({circle_right_.getRadius(), circle_right_.getRadius()});
+    rectangle_background_.setOrigin({0.F, half_of(size_.y)});
+    rectangle_foreground_.setOrigin({0.F, half_of(size_.y)});
+}
 
 auto slider::set_color_inactive(sf::Color color) -> void { color_inactive_ = color; }
 
@@ -47,18 +70,54 @@ auto slider::set_color_background(sf::Color color) -> void {
 }
 
 auto slider::update(sf::Vector2f mouse_position, bool mouse_clicked) -> void {
-    circle_left_.setPosition(position_);
-    circle_right_.setPosition({position_.x + size_.x, position_.y});
-    rectangle_background_.setPosition(position_);
-    rectangle_foreground_.setPosition(position_);
+    const float interpolated_length{value_internal_ * size_.x};
+    const float interpolated_position_x{position_.x + interpolated_length};
+    const float mouse_length{std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y)};
 
-    circle_left_.setRadius(size_.y / 2.F);
-    circle_right_.setRadius(size_.y / 2.F);
-    rectangle_background_.setSize(size_);
+    circle_knob_.setPosition({interpolated_position_x, position_.y});
+    rectangle_foreground_.setSize({interpolated_length, size_.y});
 
-    circle_left_.setOrigin({circle_left_.getRadius(), circle_left_.getRadius()});
-    circle_right_.setOrigin({circle_right_.getRadius(), circle_right_.getRadius()});
-    rectangle_background_.setOrigin({0.F, size_.y / 2.F});
+    if (mouse_length <= twice_of(size_.y) && mouse_clicked) {
+        mouse_is_locked_ = true;
+    }
+
+    if (!mouse_clicked) {
+        mouse_is_locked_ = false;
+    }
+
+    if (mouse_length <= twice_of(size_.y) || mouse_is_locked_) {
+        knob_scale_ += knob_scale_step;
+    } else {
+        knob_scale_ -= knob_scale_step;
+    }
+
+    knob_scale_ = std::clamp(knob_scale_, 0.F, 1.F);
+
+    if (mouse_is_locked_) {
+        color_scale_ += color_scale_step;
+        value_internal_ = std::clamp((mouse_position.x - position_.x) / size_.x, 0.F, 1.F);
+    } else {
+        color_scale_ -= color_scale_step;
+    }
+
+    color_scale_ = std::clamp(color_scale_, 0.F, 1.F);
+
+    circle_knob_.setRadius(size_.y + (knob_scale_ * half_of(size_.y)));
+    circle_knob_.setOrigin({circle_knob_.getRadius(), circle_knob_.getRadius()});
+    circle_knob_.rotate(sf::degrees(color_scale_ * knob_rotation_rate_degrees));
+
+    const sf::Color interpolated_color{interpolate_color(color_inactive_, color_active_, color_scale_)};
+
+    circle_left_.setFillColor(interpolated_color);
+    circle_knob_.setFillColor(interpolated_color);
+    rectangle_foreground_.setFillColor(interpolated_color);
+
+    if (value_internal_ != value_internal_last_) {
+        *value_ = value_clamp_min_ + (value_internal_ * value_clamp_range_);
+    }
+
+    value_internal_last_ = value_internal_;
+    mouse_click_last_    = mouse_clicked;
 }
 
 auto slider::render(sf::RenderWindow &window) const -> void {

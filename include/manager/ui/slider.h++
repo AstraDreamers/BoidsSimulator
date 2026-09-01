@@ -61,7 +61,9 @@ class slider {
     float *value_{nullptr};
     float  value_clamp_min_{0.F};
     float  value_clamp_max_{0.F};
+    float  value_clamp_range_{0.F};
     float  value_internal_{0.F};
+    float  value_internal_last_{0.F};
 
     sf::Vector2f position_{0.F, 0.F};
     sf::Vector2f size_{1.F, 1.F};
@@ -74,4 +76,37 @@ class slider {
     sf::CircleShape    circle_knob_;
     sf::RectangleShape rectangle_background_;
     sf::RectangleShape rectangle_foreground_;
+
+    bool  mouse_click_last_{false};
+    bool  mouse_is_locked_{false};
+    float knob_scale_{0.F};
+    float color_scale_{0.F};
+
+    [[nodiscard]] static auto half_of(const float value) noexcept -> float {
+        constexpr float half{0.5F};
+        return value * half;
+    }
+
+    [[nodiscard]] static auto twice_of(const float value) noexcept -> float {
+        constexpr float two{2.F};
+        return value * two;
+    }
+
+    [[nodiscard]] static auto interpolate_color(const sf::Color &color_a, const sf::Color &color_b,
+                                                const float value) noexcept -> sf::Color {
+        const auto interpolate = [value](const std::uint8_t color_a,
+                                         const std::uint8_t color_b) noexcept -> std::uint8_t {
+            const auto result{static_cast<float>(color_a) +
+                              (((static_cast<float>(color_b) - static_cast<float>(color_a)) * value))};
+
+            return static_cast<std::uint8_t>(result);
+        };
+
+        return sf::Color{interpolate(color_a.r, color_b.r), interpolate(color_a.g, color_b.g),
+                         interpolate(color_a.b, color_b.b), interpolate(color_a.a, color_b.a)};
+    }
+
+    static constexpr float knob_scale_step{0.05F};
+    static constexpr float color_scale_step{0.05F};
+    static constexpr float knob_rotation_rate_degrees{10.F};
 };
