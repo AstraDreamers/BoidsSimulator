@@ -61,76 +61,9 @@ auto manager_entity::update(const float time_dt) -> void {
     const float gain_alignment{simulation_parameters_->gain_alignment};
     const float gain_cohesion{simulation_parameters_->gain_cohesion};
 
-    for (auto &&[px1, py1, vx1, vy1, ax1, ay1] :
-         std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                         array_acceleration_x_, array_acceleration_y_)) {
-
-        float force_separation_x{0.F};
-        float force_separation_y{0.F};
-
-        float force_alignment_x{0.F};
-        float force_alignment_y{0.F};
-
-        float force_cohesion_x{0.F};
-        float force_cohesion_y{0.F};
-
-        float target_position_x{0.F};
-        float target_position_y{0.F};
-
-        uint32_t neighbor_count{0U};
-
-        for (auto &&[px2, py2, vx2, vy2, ax2, ay2] :
-             std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                             array_acceleration_x_, array_acceleration_y_)) {
-
-            const float distance_square{((px2 - px1) * (px2 - px1)) + ((py2 - py1) * (py2 - py1))};
-            const float minimum_distance_square{0.01F};
-
-            if (distance_square > minimum_distance_square) {
-                if (distance_square <= vision_range_square) {
-                    /// Add a neighbor to a count first
-                    neighbor_count += 1U;
-
-                    /// ? Separation
-                    force_separation_x += (-(px2 - px1)) / distance_square;
-                    force_separation_y += (-(py2 - py1)) / distance_square;
-
-                    /// ? Alignment
-                    force_alignment_x += vx2;
-                    force_alignment_y += vy2;
-
-                    /// ? Cohesion
-                    target_position_x += px2;
-                    target_position_y += py2;
-                }
-            }
-        }
-
-        if (neighbor_count > 0U) {
-            const float neighbor_count_inverse{1.F / static_cast<float>(neighbor_count)};
-
-            /// ? Separation
-            force_separation_x *= neighbor_count_inverse;
-            force_separation_y *= neighbor_count_inverse;
-
-            /// ? Alignment
-            force_alignment_x *= neighbor_count_inverse;
-            force_alignment_y *= neighbor_count_inverse;
-
-            /// ? Cohesion
-            target_position_x *= neighbor_count_inverse;
-            target_position_y *= neighbor_count_inverse;
-
-            force_cohesion_x = target_position_x - px1;
-            force_cohesion_y = target_position_y - py1;
-
-            /// ? Final Calculation
-            ax1 = (gain_separation * force_separation_x) + (gain_alignment * force_alignment_x) +
-                  (gain_cohesion * force_cohesion_x) - vx1;
-            ay1 = (gain_separation * force_separation_y) + (gain_alignment * force_alignment_y) +
-                  (gain_cohesion * force_cohesion_y) - vy1;
-        }
-    }
+    /// ! The core code goes here
+    /// ? This current problem is so complex that I can't even stand of it anymore (with me only). so I think that it's
+    /// ? a good idea to pause the core development and clean up surrounding code.
 
     for (auto &&[px_, py_, vx_, vy_, ax_, ay_, indices] :
          std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
