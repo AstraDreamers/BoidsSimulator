@@ -27,11 +27,6 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
     window_size_float_.x = static_cast<float>(window_size_.x);
     window_size_float_.y = static_cast<float>(window_size_.y);
 
-    render_object_.setPointCount(simulation_config::object_render_point_count);
-    render_object_.setRadius(simulation_config::object_render_radius);
-    render_object_.setOrigin({simulation_config::object_render_radius, simulation_config::object_render_radius});
-    render_object_.setFillColor(theme_config::boids);
-
     std::random_device random_device;
     std::mt19937_64    random_engine{random_device()};
 
@@ -52,13 +47,15 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
         px_ = random_x(random_engine);
         py_ = random_y(random_engine);
     }
+
+    for (auto &indices : render_array_) {
+        indices.color = theme_config::boids;
+    }
 }
 
 manager_entity::~manager_entity() = default;
 
 auto manager_entity::update(const float time_dt) -> void {
-    render_object_.rotate(sf::degrees(simulation_config::object_rotation_per_second));
-
     const float vision_range_square{simulation_parameters_->vision_range * simulation_parameters_->vision_range};
     const float gain_separation{simulation_parameters_->gain_separation};
     const float gain_alignment{simulation_parameters_->gain_alignment};
@@ -135,9 +132,9 @@ auto manager_entity::update(const float time_dt) -> void {
         }
     }
 
-    for (auto &&[px_, py_, vx_, vy_, ax_, ay_] :
+    for (auto &&[px_, py_, vx_, vy_, ax_, ay_, indices] :
          std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                         array_acceleration_x_, array_acceleration_y_)) {
+                         array_acceleration_x_, array_acceleration_y_, render_array_)) {
         vx_ += ax_ * time_dt;
         vy_ += ay_ * time_dt;
 
@@ -149,12 +146,10 @@ auto manager_entity::update(const float time_dt) -> void {
 
         ax_ = 0.F;
         ay_ = 0.F;
+
+        indices.position.x = px_;
+        indices.position.y = py_;
     }
 }
 
-auto manager_entity::render(sf::RenderWindow &window) -> void {
-    for (auto &&[px_, py_] : std::views::zip(array_position_x_, array_position_y_)) {
-        render_object_.setPosition({px_, py_});
-        window.draw(render_object_);
-    }
-}
+auto manager_entity::render(sf::RenderWindow &window) -> void { window.draw(render_array_); }

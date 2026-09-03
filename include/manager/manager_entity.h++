@@ -54,7 +54,7 @@ class manager_entity {
     sf::Vector2f           window_size_float_{0.F, 0.F};
     simulation_parameters *simulation_parameters_{nullptr};
 
-    sf::CircleShape render_object_;
+    sf::VertexArray render_array_{sf::PrimitiveType::Points, simulation_config::init_object_count};
 
     std::array<float, simulation_config::init_object_count> array_position_x_{};
     std::array<float, simulation_config::init_object_count> array_position_y_{};
