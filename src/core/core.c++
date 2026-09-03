@@ -36,6 +36,15 @@ core::core() {
 
     manager_entity_ = std::make_unique<manager_entity>(window_size_, simulation_parameters_);
     manager_ui_     = std::make_unique<manager_ui>(window_size_, simulation_parameters_);
+
+    clear_window_shape_[0].position = {0.F, 0.F};
+    clear_window_shape_[1].position = {static_cast<float>(window_size_.x), 0.F};
+    clear_window_shape_[2].position = {static_cast<float>(window_size_.x), static_cast<float>(window_size_.y)};
+    clear_window_shape_[3].position = {0.F, static_cast<float>(window_size_.y)};
+
+    for (auto &indices : clear_window_shape_) {
+        indices.color = {theme_config::background.r, theme_config::background.g, theme_config::background.b, 150U};
+    }
 }
 
 core::~core() = default;
@@ -68,7 +77,7 @@ auto core::update() -> void {
 }
 
 auto core::render() -> void {
-    window_.clear(theme_config::background);
+    window_.draw(clear_window_shape_);
     manager_entity_->render(window_);
     manager_ui_->render(window_);
     window_.display();
