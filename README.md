@@ -16,6 +16,7 @@
 
 [**About This Simulation**](#about-this-simulation) •
 [**Technical Architecture**](#technical-architecture) •
+[**Build Instructions**](#build-instruction) •
 [**Contributors**](#contributors) •
 [**References & Citations**](#references--citations)
 
