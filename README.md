@@ -1,16 +1,29 @@
+# Boids Simulator
+
+<div id="badges" align="center">
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="banner/boids_simulator_dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="banner/boids_simulator_light.svg">
-  <img alt="BoidsSimulator Logo" src="path/to/default-logo.png">
+  <img alt="BoidsSimulator Logo" src="default.png">
 </picture>
 
-# Boids Simulator
+**A simple flocking simulation that implements spatial partitioning in order to achieve better performance.**
 
 [![C++26](https://hyggshi-badge.vercel.app/api/badge?message=26&label=C%2B%2B&color=3b82f6&labelColor=110f29&style=neon&shape=square&animation=gradient-shift)](https://cppreference.com/cpp/26)
 [![SFML](https://hyggshi-badge.vercel.app/api/badge?message=3.1.0&label=SFML&color=22c55e&labelColor=0f291e&style=neon&shape=square)](https://github.com/SFML/SFML/releases/tag/3.1.0)
 [![License](https://hyggshi-badge.vercel.app/api/badge?message=GPLv3&label=License&color=a855f7&labelColor=1f0f29&style=neon&shape=square&animation=gradient-shift)](LICENSE)
 
-A simple flocking simulation that implements spatial partitioning in order to achieve better performance.
+[**About This Simulation**](#about-this-simulation) •
+[**Technical Architecture**](#technical-architecture) •
+[**Contributors**](#contributors) •
+[**References & Citations**](#references--citations)
+
+</div>
+
+---
+
+## About This Simulation
 
 The simulation implements **Craig Reynolds' Steering Behaviors**:
 
@@ -23,6 +36,8 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 | <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
 
 _(Image source: [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids))_
+
+---
 
 ## Technical Architecture
 
@@ -41,6 +56,8 @@ Ensure you have a modern C++ compiler supporting C++26 (`clang++ >= 18` or `g++ 
 - **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
 > **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required. **(Except Linux users, they must install SFML's dependencies through system's package manager)**
+
+---
 
 ## Build instruction
 
@@ -125,11 +142,15 @@ On Linux, SFML is built dynamically. You must install the system-level developme
    build/BoidsSimulator
    ```
 
+---
+
 ## Contributors
 
 **Many thanks for the contributors!**
 
 [![Contributors](https://contrib.rocks/image?repo=AstraDreamers/BoidsSimulator)](https://github.com/AstraDreamers/BoidsSimulator/graphs/contributors)
+
+---
 
 ## References & Citations
 
