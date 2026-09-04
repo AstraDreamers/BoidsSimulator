@@ -27,11 +27,6 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
     window_size_float_.x = static_cast<float>(window_size_.x);
     window_size_float_.y = static_cast<float>(window_size_.y);
 
-    render_object_.setPointCount(simulation_config::object_render_point_count);
-    render_object_.setRadius(simulation_config::object_render_radius);
-    render_object_.setOrigin({simulation_config::object_render_radius, simulation_config::object_render_radius});
-    render_object_.setFillColor(theme_config::boids);
-
     std::random_device random_device;
     std::mt19937_64    random_engine{random_device()};
 
@@ -52,84 +47,27 @@ manager_entity::manager_entity(sf::Vector2u window_size, simulation_parameters &
         px_ = random_x(random_engine);
         py_ = random_y(random_engine);
     }
+
+    for (auto &indices : render_array_) {
+        indices.color = theme_config::boids;
+    }
 }
 
 manager_entity::~manager_entity() = default;
 
 auto manager_entity::update(const float time_dt) -> void {
-    render_object_.rotate(sf::degrees(simulation_config::object_rotation_per_second));
-
     const float vision_range_square{simulation_parameters_->vision_range * simulation_parameters_->vision_range};
     const float gain_separation{simulation_parameters_->gain_separation};
     const float gain_alignment{simulation_parameters_->gain_alignment};
     const float gain_cohesion{simulation_parameters_->gain_cohesion};
 
-    for (auto &&[px1, py1, vx1, vy1, ax1, ay1] :
+    /// ! The core code goes here
+    /// ? This current problem is so complex that I can't even stand of it anymore (with me only). so I think that it's
+    /// ? a good idea to pause the core development and clean up surrounding code.
+
+    for (auto &&[px_, py_, vx_, vy_, ax_, ay_, indices] :
          std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                         array_acceleration_x_, array_acceleration_y_)) {
-        float vector_separation_x{0.F};
-        float vector_separation_y{0.F};
-
-        float vector_alignment_x{0.F};
-        float vector_alignment_y{0.F};
-
-        float vector_cohesion_x{0.F};
-        float vector_cohesion_y{0.F};
-
-        uint32_t neighbor_count{0U};
-
-        for (auto &&[px2, py2, vx2, vy2, ax2, ay2] :
-             std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                             array_acceleration_x_, array_acceleration_y_)) {
-            const float delta_x{px2 - px1};
-            const float delta_y{py2 - py1};
-            const float distance_square{(delta_x * delta_x) + (delta_y * delta_y)};
-
-            if (distance_square <= vision_range_square && distance_square > simulation_config::min_length_square) {
-                const float distance_reversed{1.F / std::sqrtf(distance_square)};
-
-                vector_separation_x -= delta_x * distance_reversed;
-                vector_separation_y -= delta_y * distance_reversed;
-
-                vector_alignment_x += vx2;
-                vector_alignment_y += vy2;
-
-                vector_cohesion_x += px2;
-                vector_cohesion_y += py2;
-
-                neighbor_count += 1U;
-            }
-        }
-
-        if (neighbor_count > 0U) {
-            const float neighbor_count_invert = 1.F / static_cast<float>(neighbor_count);
-
-            vector_alignment_x *= neighbor_count_invert;
-            vector_alignment_y *= neighbor_count_invert;
-
-            vector_cohesion_x *= neighbor_count_invert;
-            vector_cohesion_y *= neighbor_count_invert;
-
-            vector_cohesion_x -= px1;
-            vector_cohesion_y -= py1;
-
-            vector_separation_x *= gain_separation;
-            vector_separation_y *= gain_separation;
-
-            vector_alignment_x *= gain_alignment;
-            vector_alignment_y *= gain_alignment;
-
-            vector_cohesion_x *= gain_cohesion;
-            vector_cohesion_y *= gain_cohesion;
-
-            ax1 = vector_separation_x + vector_alignment_x + vector_cohesion_x - vx1;
-            ay1 = vector_separation_y + vector_alignment_y + vector_cohesion_y - vy1;
-        }
-    }
-
-    for (auto &&[px_, py_, vx_, vy_, ax_, ay_] :
-         std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
-                         array_acceleration_x_, array_acceleration_y_)) {
+                         array_acceleration_x_, array_acceleration_y_, render_array_)) {
         vx_ += ax_ * time_dt;
         vy_ += ay_ * time_dt;
 
@@ -141,12 +79,10 @@ auto manager_entity::update(const float time_dt) -> void {
 
         ax_ = 0.F;
         ay_ = 0.F;
+
+        indices.position.x = px_;
+        indices.position.y = py_;
     }
 }
 
-auto manager_entity::render(sf::RenderWindow &window) -> void {
-    for (auto &&[px_, py_] : std::views::zip(array_position_x_, array_position_y_)) {
-        render_object_.setPosition({px_, py_});
-        window.draw(render_object_);
-    }
-}
+auto manager_entity::render(sf::RenderWindow &window) -> void { window.draw(render_array_); }

@@ -53,6 +53,8 @@ class core {
     sf::Clock clock_;
     sf::Time  dt_;
 
+    sf::VertexArray clear_window_shape_{sf::PrimitiveType::TriangleFan, 4U};
+
     simulation_parameters simulation_parameters_{
         .gain_separation = simulation_config::init_gain_separation,
         .gain_alignment  = simulation_config::init_gain_alignment,
