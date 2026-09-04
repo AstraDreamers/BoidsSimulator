@@ -8,7 +8,7 @@
   <img alt="BoidsSimulator Logo" src="default.png">
 </picture>
 
-**A simple flocking simulation that implements spatial partitioning in order to achieve better performance.**
+**A simple flocking simulation.**
 
 [![C++26](https://hyggshi-badge.vercel.app/api/badge?message=26&label=C%2B%2B&color=3b82f6&labelColor=110f29&style=neon&shape=square&animation=gradient-shift)](https://cppreference.com/cpp/26)
 [![SFML](https://hyggshi-badge.vercel.app/api/badge?message=3.1.0&label=SFML&color=22c55e&labelColor=0f291e&style=neon&shape=square)](https://github.com/SFML/SFML/releases/tag/3.1.0)
