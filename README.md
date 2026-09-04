@@ -6,9 +6,9 @@
 
 # Boids Simulator
 
-[![C++26](https://img.shields.io/badge/C%2B%2B-26-aaaaff)](https://cppreference.com/cpp/26)
-[![SFML](https://img.shields.io/badge/SFML-3.1.0-aaffaa)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-[![License](https://img.shields.io/badge/License-GPLv3-ffaaff)](LICENSE)
+[![C++26](https://hyggshi-badge.vercel.app/api/badge?message=26&label=C%2B%2B&color=3b82f6&labelColor=110f29&style=neon&shape=square&icon=cpp&animation=gradient-shift)](https://cppreference.com/cpp/26)
+[![SFML](https://hyggshi-badge.vercel.app/api/badge?message=3.1.0&label=SFML&color=22c55e&labelColor=0f291a&style=neon&shape=square&icon=https%3A%2F%2Fwww.sfml-dev.org%2Fdownload%2Fgoodies%2Fsfml-icon-mini.png&animation=gradient-shift)](https://github.com/SFML/SFML/releases/tag/3.1.0)
+[![License](https://hyggshi-badge.vercel.app/api/badge?message=GPLv3&label=License&color=a855f7&labelColor=1f0f29&style=neon&shape=square&icon=github&animation=gradient-shift)](LICENSE)
 
 A simple flocking simulation that implements spatial partitioning in order to achieve better performance.
 
