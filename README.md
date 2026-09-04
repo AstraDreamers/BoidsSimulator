@@ -14,6 +14,8 @@
 [![SFML](doc/badge_sfml.svg)](https://github.com/SFML/SFML/releases/tag/3.1.0)
 [![License](doc/badge_license.svg)](LICENSE)
 
+(⁠◕⁠ᴗ⁠◕⁠✿⁠)
+
 </div>
 
 ---
