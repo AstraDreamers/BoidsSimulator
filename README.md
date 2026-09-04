@@ -8,17 +8,11 @@
   <img alt="BoidsSimulator Logo" src="default.png">
 </picture>
 
-**A simple flocking simulation.**
+<h3>A simple flocking simulation.</h3>
 
 [![C++26](https://hyggshi-badge.vercel.app/api/badge?message=26&label=C%2B%2B&color=3b82f6&labelColor=110f29&style=neon&shape=square&animation=gradient-shift)](https://cppreference.com/cpp/26)
 [![SFML](https://hyggshi-badge.vercel.app/api/badge?message=3.1.0&label=SFML&color=22c55e&labelColor=0f291e&style=neon&shape=square)](https://github.com/SFML/SFML/releases/tag/3.1.0)
 [![License](https://hyggshi-badge.vercel.app/api/badge?message=GPLv3&label=License&color=a855f7&labelColor=1f0f29&style=neon&shape=square&animation=gradient-shift)](LICENSE)
-
-[**About This Simulation**](#about-this-simulation) •
-[**Technical Architecture**](#technical-architecture) •
-[**Build Instructions**](#build-instruction) •
-[**Contributors**](#contributors) •
-[**References & Citations**](#references--citations)
 
 </div>
 
