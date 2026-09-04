@@ -10,9 +10,9 @@
 
 <h3>A simple flocking simulation.</h3>
 
-[![C++26](https://hyggshi-badge.vercel.app/api/badge?message=26&label=C%2B%2B&color=3b82f6&labelColor=110f29&style=neon&shape=square&animation=gradient-shift)](https://cppreference.com/cpp/26)
-[![SFML](https://hyggshi-badge.vercel.app/api/badge?message=3.1.0&label=SFML&color=22c55e&labelColor=0f291e&style=neon&shape=square)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-[![License](https://hyggshi-badge.vercel.app/api/badge?message=GPLv3&label=License&color=a855f7&labelColor=1f0f29&style=neon&shape=square&animation=gradient-shift)](LICENSE)
+[![C++26](doc/badge_cpp.svg)](https://cppreference.com/cpp/26)
+[![SFML](doc/badge_sfml.svg)](https://github.com/SFML/SFML/releases/tag/3.1.0)
+[![License](doc/badge_license.svg)](LICENSE)
 
 </div>
 
@@ -26,9 +26,9 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 - **Alignment:** Entities match their velocity vectors with the local average to achieve directional flocking consensus.
 - **Cohesion:** Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
 
-| Separation                     | Alignment                     | Cohesion                     |
-| ------------------------------ | ----------------------------- | ---------------------------- |
-| <img src="doc/separation.gif"> | <img src="doc/alignment.gif"> | <img src="doc/cohesion.gif"> |
+| Separation                                  | Alignment                                  | Cohesion                                  |
+| ------------------------------------------- | ------------------------------------------ | ----------------------------------------- |
+| <img src="doc/illustration_separation.gif"> | <img src="doc/illustration_alignment.gif"> | <img src="doc/illustration_cohesion.gif"> |
 
 _(Image source: [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids))_
 
