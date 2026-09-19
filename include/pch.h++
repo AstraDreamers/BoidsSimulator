@@ -28,9 +28,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// Standard Libraries
 #include <cstdint>
+#include <expected>
 #include <memory>
 #include <optional>
 #include <print>
 #include <random>
 #include <ranges>
 #include <string>
+
+/// CMakeRC Header (assets access)
+#include <cmrc/cmrc.hpp>
+
+CMRC_DECLARE(assets);

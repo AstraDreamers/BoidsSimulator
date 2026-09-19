@@ -19,24 +19,40 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "manager/manager_ui.h++"
-#include "assets/assets.h++"
 #include "config/simulation_config.h++"
 #include "config/theme_config.h++"
 #include "config/ui_config.h++"
 
 manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &simulation_parameters)
     : window_size_(window_size), simulation_parameters_(&simulation_parameters) {
+
     /// ****************************
     /// ***** Font loading *********
     /// ****************************
-    if (!font_.openFromMemory(assets::font::google_sans.data(), assets::font::google_sans.size())) {
-        std::println(stderr, "Can't open stream assets/google_sans.ttf");
+
+    try {
+        auto              filesystem{cmrc::assets::get_filesystem()};
+        const std::string relative_font_path{"assets/fonts/google_sans.ttf"};
+
+        if (!filesystem.exists(relative_font_path)) {
+            throw std::unexpected<std::string>("Can't open file " + relative_font_path);
+        }
+
+        cmrc::file font{filesystem.open(relative_font_path)};
+
+        if (!font_.openFromMemory(font.begin(), font.size())) {
+            throw std::unexpected<std::string>("Can't open stream " + relative_font_path);
+        }
+
+    } catch (const std::exception &exception) {
+        std::println(stderr, "Exception: {}\n", exception.what());
         exit(-1);
     }
 
     /// ****************************
     /// ***** Text *****************
     /// ****************************
+
     text_title_ = std::make_unique<sf::Text>(font_);
     text_title_->setString("Boids Algorithm");
     text_title_->setCharacterSize(ui_config::size_text_title);
@@ -66,6 +82,7 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     /// ****************************
     /// ***** Slider ***************
     /// ****************************
+
     slider_[0] =
         std::make_unique<slider>(simulation_parameters_->gain_separation, simulation_config::range_gain_separation);
     slider_[1] =

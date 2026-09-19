@@ -46,6 +46,7 @@ endif()
 set(MBEDTLS_THREADING_C ON CACHE BOOL "" FORCE)
 set(MBEDTLS_THREADING_PTHREAD ON CACHE BOOL "" FORCE)
 set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ---------------------------
 # External Projects Importing
@@ -61,6 +62,25 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(sfml)
+
+
+# ---------------------
+# Resource Files Adding
+# ---------------------
+
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeRC.cmake")
+
+file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS
+	"${CMAKE_CURRENT_SOURCE_DIR}/assets/*"
+)
+
+cmrc_add_resource_library(
+	assets
+	ALIAS		assets::rc
+	NAMESPACE	assets
+
+	${ASSET_FILES}
+)
 
 
 # -------------------
@@ -130,4 +150,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	SFML::Audio
 	SFML::Window
 	SFML::System
+	assets::rc
 )
