@@ -63,7 +63,10 @@ namespace theme_config {
     /// *******************************
 
     /// @brief Background color of the simulator window.
-    constexpr inline sf::Color background{};
+    constexpr inline sf::Color background{palette::crust};
+
+    /// @brief Background refresh alpha
+    constexpr inline uint8_t background_refresh_alpha{150U};
 
     /// @brief Body color of entities (Boids).
     constexpr inline sf::Color boids{palette::teal};

@@ -43,7 +43,8 @@ core::core() {
     clear_window_shape_[3].position = {0.F, static_cast<float>(window_size_.y)};
 
     for (auto &indices : clear_window_shape_) {
-        indices.color = {theme_config::background.r, theme_config::background.g, theme_config::background.b, 150U};
+        indices.color = {theme_config::background.r, theme_config::background.g, theme_config::background.b,
+                         theme_config::background_refresh_alpha};
     }
 }
 
