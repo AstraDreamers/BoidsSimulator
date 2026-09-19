@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "Boids",
+    "bugprone",
     "cmrc",
+    "cppcoreguidelines",
     "DCMAKE",
     "ffast",
     "flac",
@@ -17,6 +19,7 @@
     "libxrender",
     "mbedtls",
     "mwindows",
+    "objc",
     "overrightarrow",
     "pacman",
     "SFML",

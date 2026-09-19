@@ -19,9 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "core/core.h++"
+#include "license.h++"
 
 /// @brief An actual entry point.
-auto main() -> int {
+auto main(int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
+    cli_license_handle(cli_argument_count, cli_argument_vector);
+
     core core_engine;
     core_engine.run();
     return 0;
