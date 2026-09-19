@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /// @brief Handle CLI about and license section
 /// @param cli_argument_count argc
 /// @param cli_argument_vector argv
-inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argument_vector[]) -> void {
+[[nodiscard]] inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argument_vector[]) -> bool {
     if (cli_argument_count > 1) {
         std::string subcommand{cli_argument_vector[1]};
         if (subcommand == "about") {
@@ -62,7 +62,7 @@ inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argum
                                "an absolute waiver of all civil liability in connection with the\n"
                                "Program, unless a warranty or assumption of liability accompanies a\n"
                                "copy of the Program in return for a fee.\n\n");
-                    return 0;
+                    return true;
                 }
 
                 if (subcommand == "copyright") {
@@ -70,7 +70,7 @@ inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argum
                         "\n\033[1mBoidsSimulator - A simple flocking simulation.\033[0m\n"
                         "\033[1mCopyright (C) 2026  AstraDreamers\033[0m\n"
                         "\n"
-                        "This program is free software: you can redistribute it and/or modify\n"
+                        "This program is free softwareturn 1;re: you can redistribute it and/or modify\n"
                         "it under the terms of the GNU General Public License as published by\n"
                         "the Free Software Foundation, either version 3 of the License, or\n"
                         "(at your option) any later version.\n"
@@ -83,7 +83,7 @@ inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argum
                         "\n"
                         "You should have received a copy of the GNU General Public License\n"
                         "along with this program.  If not, see \033[1m<https://www.gnu.org/licenses/>\033[0m.\n\n");
-                    return 0;
+                    return true;
                 }
             }
 
@@ -93,7 +93,9 @@ inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argum
                        "This is free software, and you are welcome to redistribute it\n"
                        "under certain conditions; type \033[1m'./BoidsSimulator about copyright'\033[0m\n"
                        "for details.\n\n");
-            return 0;
+            return true;
         }
     }
+
+    return false;
 }

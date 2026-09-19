@@ -23,7 +23,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// @brief An actual entry point.
 auto main(int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
-    cli_license_handle(cli_argument_count, cli_argument_vector);
+    if (cli_license_handle(cli_argument_count, cli_argument_vector)) {
+        return 0;
+    }
 
     core core_engine;
     core_engine.run();
