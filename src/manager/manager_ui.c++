@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "manager/manager_ui.h++"
 #include "assets/assets.h++"
+#include "config/simulation_config.h++"
 #include "config/theme_config.h++"
 #include "config/ui_config.h++"
 
@@ -40,7 +41,7 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     text_title_->setString("Boids Algorithm");
     text_title_->setCharacterSize(ui_config::size_text_title);
     text_title_->setPosition({0.F, 0.F});
-    text_title_->setOrigin({-20.F, 0.F});
+    text_title_->setOrigin({0.F, 0.F});
     text_title_->setFillColor(theme_config::text_title);
 
     for (uint8_t i = 0; i < 4; i++) {
@@ -65,10 +66,13 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     /// ****************************
     /// ***** Slider ***************
     /// ****************************
-    slider_[0] = std::make_unique<slider>(simulation_parameters_->gain_separation, std::make_pair(0.F, 10.F));
-    slider_[1] = std::make_unique<slider>(simulation_parameters_->gain_alignment, std::make_pair(0.F, 10.F));
-    slider_[2] = std::make_unique<slider>(simulation_parameters_->gain_cohesion, std::make_pair(0.F, 10.F));
-    slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, std::make_pair(0.F, 100.F));
+    slider_[0] =
+        std::make_unique<slider>(simulation_parameters_->gain_separation, simulation_config::range_gain_separation);
+    slider_[1] =
+        std::make_unique<slider>(simulation_parameters_->gain_alignment, simulation_config::range_gain_alignment);
+    slider_[2] =
+        std::make_unique<slider>(simulation_parameters_->gain_cohesion, simulation_config::range_gain_cohesion);
+    slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, simulation_config::range_vision_range);
 
     for (int i = 0; i < 4; i++) {
         slider_.at(i)->set_position({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +

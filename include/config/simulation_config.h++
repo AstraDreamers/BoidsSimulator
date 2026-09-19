@@ -46,6 +46,18 @@ namespace simulation_config {
     /// @brief Initialization of vision range in objects' behavior.
     constexpr inline float init_vision_range{100.F};
 
+    /// @brief Range of separation gain.
+    constexpr inline std::pair<float, float> range_gain_separation{0.F, 10.F};
+
+    /// @brief Range of alignment gain.
+    constexpr inline std::pair<float, float> range_gain_alignment{0.F, 10.F};
+
+    /// @brief Range of cohesion gain.
+    constexpr inline std::pair<float, float> range_gain_cohesion{0.F, 10.F};
+
+    /// @brief Range of vision range.
+    constexpr inline std::pair<float, float> range_vision_range{0.F, 100.F};
+
     /// @brief Initialization of velocity for objects.
     /// @details For example, if the value is 200.F, the velocity for each axis will be randomized from -200.F to 200.F.
     constexpr inline float init_velocity_range{200.F};
