@@ -10,9 +10,9 @@
 
 <h3>A simple flocking simulation.</h3>
 
-[![C++26](doc/badge_cpp.svg)](https://cppreference.com/cpp/26)
-[![SFML](doc/badge_sfml.svg)](https://github.com/SFML/SFML/releases/tag/3.1.0)
-[![License](doc/badge_license.svg)](LICENSE)
+[![C++26](doc/assets/badge_cpp.svg)](https://cppreference.com/cpp/26)
+[![SFML](doc/assets/badge_sfml.svg)](https://github.com/SFML/SFML/releases/tag/3.1.0)
+[![License](doc/assets/badge_license.svg)](LICENSE)
 
 (⁠◕⁠ᴗ⁠◕⁠✿⁠)
 
@@ -28,9 +28,9 @@ The simulation implements **Craig Reynolds' Steering Behaviors**:
 - **Alignment:** Entities match their velocity vectors with the local average to achieve directional flocking consensus.
 - **Cohesion:** Entities steer toward the neighborhood's centroid (center of mass) to maintain group density.
 
-| Separation                                  | Alignment                                  | Cohesion                                  |
-| ------------------------------------------- | ------------------------------------------ | ----------------------------------------- |
-| <img src="doc/illustration_separation.gif"> | <img src="doc/illustration_alignment.gif"> | <img src="doc/illustration_cohesion.gif"> |
+| Separation                                         | Alignment                                         | Cohesion                                         |
+| -------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| <img src="doc/assets/illustration_separation.gif"> | <img src="doc/assets/illustration_alignment.gif"> | <img src="doc/assets/illustration_cohesion.gif"> |
 
 _(Image source: [Boids - Wikipedia](https://en.wikipedia.org/wiki/Boids))_
 
