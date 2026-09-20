@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "version.h++"
 
-/// @brief Handle CLI section
-/// @param cli_arguments args
+/// @brief Handle command line interface
+/// @param cli_arguments Command line interface arguments
 [[nodiscard]] inline auto cli_handle(std::span<const char *> cli_arguments) -> bool {
     // Check if any arguments were provided after the executable path
     if (cli_arguments.size() > 1) {
