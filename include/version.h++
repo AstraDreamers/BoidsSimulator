@@ -18,16 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include "cli.h++"
-#include "core/core.h++"
+#pragma once
 
-/// @brief An actual entry point.
-auto main(int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
-    if (cli_handle({const_cast<const char **>(cli_argument_vector), static_cast<std::size_t>(cli_argument_count)})) {
-        return 0;
-    }
-
-    core core_engine;
-    core_engine.run();
-    return 0;
-}
+#define PROGRAM_VERSION_MAJOR 1
+#define PROGRAM_VERSION_MINOR 0
+#define PROGRAM_VERSION_SPECS "Alpha"

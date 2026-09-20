@@ -20,17 +20,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-/// @brief Handle CLI about and license section
-/// @param cli_argument_count argc
-/// @param cli_argument_vector argv
-[[nodiscard]] inline auto cli_license_handle(const int32_t cli_argument_count, char *cli_argument_vector[]) -> bool {
-    if (cli_argument_count > 1) {
-        std::string subcommand{cli_argument_vector[1]};
-        if (subcommand == "about") {
-            if (cli_argument_count > 2) {
-                subcommand = cli_argument_vector[2];
+#include "version.h++"
 
-                if (subcommand == "warranty") {
+/// @brief Handle CLI section
+/// @param cli_arguments args
+[[nodiscard]] inline auto cli_handle(std::span<const char *> cli_arguments) -> bool {
+    // Check if any arguments were provided after the executable path
+    if (cli_arguments.size() > 1) {
+        std::string_view subcommand{cli_arguments[1]};
+
+        if (subcommand == "version") {
+            std::print("\nBoidsSimulator version {}.{} {}\n\n", PROGRAM_VERSION_MAJOR, PROGRAM_VERSION_MINOR,
+                       PROGRAM_VERSION_SPECS);
+            return true;
+        }
+
+        if (subcommand == "about") {
+            // Check for a secondary sub-command (e.g., "about warranty")
+            if (cli_arguments.size() > 2) {
+                std::string_view detail{cli_arguments[2]};
+
+                if (detail == "warranty") {
                     std::print("\n\033[1m15. Disclaimer of Warranty.\033[0m\n"
                                "\n"
                                "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY\n"
@@ -65,12 +75,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                     return true;
                 }
 
-                if (subcommand == "copyright") {
+                if (detail == "copyright") {
                     std::print(
                         "\n\033[1mBoidsSimulator - A simple flocking simulation.\033[0m\n"
                         "\033[1mCopyright (C) 2026  AstraDreamers\033[0m\n"
                         "\n"
-                        "This program is free softwareturn 1;re: you can redistribute it and/or modify\n"
+                        "This program is free software: you can redistribute it and/or modify\n"
                         "it under the terms of the GNU General Public License as published by\n"
                         "the Free Software Foundation, either version 3 of the License, or\n"
                         "(at your option) any later version.\n"
