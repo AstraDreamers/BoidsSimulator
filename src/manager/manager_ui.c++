@@ -31,17 +31,17 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
     /// ****************************
 
     try {
-        auto              filesystem{cmrc::assets::get_filesystem()};
-        const std::string relative_font_path{"assets/fonts/google_sans.ttf"};
+        cmrc::embedded_filesystem embedded_filesystem{cmrc::assets::get_filesystem()};
+        const std::string         embedded_font_path{"assets/fonts/google_sans.ttf"};
 
-        if (!filesystem.exists(relative_font_path)) {
-            throw std::unexpected<std::string>("Can't open file " + relative_font_path);
+        if (!embedded_filesystem.exists(embedded_font_path)) {
+            throw std::unexpected<std::string>("Can't open file " + embedded_font_path);
         }
 
-        cmrc::file font{filesystem.open(relative_font_path)};
+        cmrc::file font{embedded_filesystem.open(embedded_font_path)};
 
         if (!font_.openFromMemory(font.begin(), font.size())) {
-            throw std::unexpected<std::string>("Can't open stream " + relative_font_path);
+            throw std::unexpected<std::string>("Can't open stream " + embedded_font_path);
         }
 
     } catch (const std::exception &exception) {
@@ -55,10 +55,12 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
 
     text_title_ = std::make_unique<sf::Text>(font_);
     text_title_->setString("Boids Algorithm");
-    text_title_->setCharacterSize(ui_config::size_text_title);
     text_title_->setPosition({0.F, 0.F});
     text_title_->setOrigin({0.F, 0.F});
+    text_title_->setCharacterSize(ui_config::size_text_title);
     text_title_->setFillColor(theme_config::text_title);
+
+    text_fps_ = std::make_unique<sf::Text>(font_);
 
     for (uint8_t i = 0; i < 4; i++) {
         text_slider_name_.at(i) = std::make_unique<sf::Text>(font_);
@@ -91,11 +93,12 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
         std::make_unique<slider>(simulation_parameters_->gain_cohesion, simulation_config::range_gain_cohesion);
     slider_[3] = std::make_unique<slider>(simulation_parameters_->vision_range, simulation_config::range_vision_range);
 
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         slider_.at(i)->set_position({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
                                          (0.05f * static_cast<float>(window_size_.x)),
                                      0.9f * static_cast<float>(window_size_.y)});
         slider_.at(i)->set_size({0.15f * static_cast<float>(window_size_.x), 10.F});
+
         slider_.at(i)->set_color_background(theme_config::slider_background);
         slider_.at(i)->set_color_active(theme_config::slider_active);
         slider_.at(i)->set_color_inactive(theme_config::slider_inactive);
@@ -104,7 +107,7 @@ manager_ui::manager_ui(const sf::Vector2u window_size, simulation_parameters &si
 
 manager_ui::~manager_ui() = default;
 
-auto manager_ui::update() const -> void {
+auto manager_ui::update(const float time_dt) const -> void {
     const sf::Vector2f mouse_position{sf::Mouse::getPosition()};
     const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
 
@@ -116,10 +119,14 @@ auto manager_ui::update() const -> void {
     text_slider_value_[1]->setString(std::format("{:.2f}", simulation_parameters_->gain_alignment));
     text_slider_value_[2]->setString(std::format("{:.2f}", simulation_parameters_->gain_cohesion));
     text_slider_value_[3]->setString(std::format("{:.2f}", simulation_parameters_->vision_range));
+
+    text_fps_->setString(std::format("FPS: {:.2f}", 1.F / time_dt));
 }
 
 auto manager_ui::render(sf::RenderWindow &window) const -> void {
     window.draw(*text_title_);
+    window.draw(*text_fps_);
+
     for (uint8_t i = 0; i < 4; i++) {
         slider_.at(i)->render(window);
         window.draw(*text_slider_name_.at(i));

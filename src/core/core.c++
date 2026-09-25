@@ -74,7 +74,7 @@ auto core::handle_events() -> void {
 auto core::update() -> void {
     dt_ = clock_.restart();
     manager_entity_->update(dt_.asSeconds());
-    manager_ui_->update();
+    manager_ui_->update(dt_.asSeconds());
 }
 
 auto core::render() -> void {

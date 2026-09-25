@@ -38,7 +38,8 @@ class manager_ui {
     auto operator=(manager_ui &&) noexcept -> manager_ui & = delete;
 
     /// @brief Update the simulation.
-    auto update() const -> void;
+    /// @param time_dt The delta time since the last update.
+    auto update(float time_dt) const -> void;
 
     /// @brief Render the simulation.
     /// @param window The window to render to.
@@ -50,10 +51,13 @@ class manager_ui {
 
     sf::Font font_;
 
-    std::unique_ptr<sf::Text>                text_title_{nullptr};
+    std::unique_ptr<sf::Text> text_title_{nullptr};
+    std::unique_ptr<sf::Text> text_fps_{nullptr};
+
     std::array<std::unique_ptr<sf::Text>, 4> text_slider_name_{nullptr};
     std::array<std::unique_ptr<sf::Text>, 4> text_slider_value_{nullptr};
-    std::array<std::unique_ptr<slider>, 4>   slider_{nullptr};
+
+    std::array<std::unique_ptr<slider>, 4> slider_{nullptr};
 
     static constexpr std::array<std::string, 4> slider_names = {"Separation Gain", "Alignment Gain", "Cohesion Gain",
                                                                 "Vision Range"};

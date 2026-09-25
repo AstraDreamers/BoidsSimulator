@@ -28,7 +28,7 @@ namespace system_config {
     constexpr inline uint32_t antialiasing_level{0U};
 
     /// @brief Window's framerate limit (FPS).
-    constexpr inline uint32_t framerate_limit{60U};
+    constexpr inline uint32_t framerate_limit{144U};
 
     /// @brief Pixel's size in OpenGL backend. Default is 32 bits per pixel (RGBA, 8 bits or 1 byte per pixel, 8x4=32).
     constexpr inline uint32_t bits_per_pixel{32U};
