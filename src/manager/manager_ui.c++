@@ -115,7 +115,7 @@ namespace manager {
         const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
 
         for (const auto &slider : slider_) {
-            slider->update(mouse_position, mouse_clicked);
+            slider->update(time_dt, mouse_position, mouse_clicked);
         }
 
         text_slider_value_[0]->setString(std::format("{:.2f}", simulation_parameters_->gain_separation));

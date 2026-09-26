@@ -70,11 +70,12 @@ namespace ui {
         rectangle_background_.setFillColor(color);
     }
 
-    auto slider::update(const sf::Vector2f mouse_position, const bool mouse_clicked) -> void {
+    auto slider::update(const float time_dt, const sf::Vector2f mouse_position, const bool mouse_clicked) -> void {
         const float interpolated_length{value_internal_ * size_.x};
         const float interpolated_position_x{position_.x + interpolated_length};
         const float mouse_length{
-            std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y)};
+            std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y),
+        };
 
         /// ? Set position of the knob and the bar based on interpolated length
         circle_knob_.setPosition({interpolated_position_x, position_.y});
@@ -111,7 +112,7 @@ namespace ui {
         /// ? Updating knob size and rotations
         circle_knob_.setRadius(size_.y + (knob_scale_ * half_of(size_.y)));
         circle_knob_.setOrigin({circle_knob_.getRadius(), circle_knob_.getRadius()});
-        circle_knob_.rotate(sf::degrees(color_scale_ * knob_rotation_rate_degrees));
+        circle_knob_.rotate(sf::degrees(color_scale_ * knob_rotation_rate_degrees * time_dt));
 
         const sf::Color interpolated_color{interpolate_color(color_inactive_, color_active_, color_scale_)};
 

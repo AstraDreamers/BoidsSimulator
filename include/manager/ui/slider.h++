@@ -56,9 +56,10 @@ namespace ui {
         auto set_color_background(sf::Color color) -> void;
 
         /// @brief Update the slider's state based on user interaction and internal logic.
+        /// @param time_dt The delta time since the last update.
         /// @param mouse_position The current mouse's position in the window, relatively to the window.
         /// @param mouse_clicked `true` when clicked, `false otherwise`.
-        auto update(sf::Vector2f mouse_position, bool mouse_clicked) -> void;
+        auto update(float time_dt, sf::Vector2f mouse_position, bool mouse_clicked) -> void;
 
         /// @brief Render the slider onto the given SFML render window.
         /// @param window The SFML render window to draw the slider on.
@@ -115,6 +116,6 @@ namespace ui {
 
         static constexpr float knob_scale_step{0.05F};
         static constexpr float color_scale_step{0.05F};
-        static constexpr float knob_rotation_rate_degrees{10.F};
+        static constexpr float knob_rotation_rate_degrees{180.F};
     };
 } // namespace ui

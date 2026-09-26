@@ -55,8 +55,6 @@ namespace core {
         sf::Clock clock_;
         sf::Time  dt_;
 
-        sf::VertexArray clear_window_shape_{sf::PrimitiveType::TriangleFan, 4U};
-
         simulation_parameters simulation_parameters_{
             .gain_separation = config::simulation::init_gain_separation,
             .gain_alignment  = config::simulation::init_gain_alignment,
