@@ -41,7 +41,7 @@ namespace manager {
 
         /// @brief Update the simulation.
         /// @param time_dt The delta time since the last update.
-        auto update(float time_dt) const -> void;
+        auto update(float time_dt) -> void;
 
         /// @brief Render the simulation.
         /// @param window The window to render to.
@@ -50,6 +50,9 @@ namespace manager {
       private:
         sf::Vector2u                 window_size_{0, 0};
         core::simulation_parameters *simulation_parameters_{nullptr};
+
+        float    fps_clock_{0.F};
+        uint32_t fps_count_{0U};
 
         sf::Font font_;
 

@@ -53,23 +53,24 @@ namespace manager {
         /// ****************************
         /// ***** Text *****************
         /// ****************************
-
         text_title_ = std::make_unique<sf::Text>(font_);
         text_title_->setString("Boids Algorithm");
-        text_title_->setPosition({0.F, 0.F});
-        text_title_->setOrigin({0.F, 0.F});
         text_title_->setCharacterSize(config::ui::size_text_title);
+        text_title_->setPosition({20.F, 20.F});
+        text_title_->setOrigin(text_title_->getLocalBounds().position);
         text_title_->setFillColor(config::theme::text_title);
 
         text_fps_ = std::make_unique<sf::Text>(font_);
+        text_fps_->setCharacterSize(20U);
+        text_fps_->setPosition({window_size_.x - 20.F, 20.F});
 
-        for (uint8_t i = 0; i < 4; i++) {
+        for (uint8_t i = 0U; i < 4U; i++) {
             text_slider_name_.at(i) = std::make_unique<sf::Text>(font_);
             text_slider_name_.at(i)->setCharacterSize(config::ui::size_text_slider_name);
             text_slider_name_.at(i)->setPosition({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
                                                       (0.05F * static_cast<float>(window_size_.x)),
                                                   0.85F * static_cast<float>(window_size_.y)});
-            text_slider_name_.at(i)->setOrigin({0.F, 0.F});
+            text_slider_name_.at(i)->setOrigin(text_slider_name_.at(i)->getLocalBounds().position);
             text_slider_name_.at(i)->setFillColor(config::theme::text_slider_name);
             text_slider_name_.at(i)->setString(slider_names.at(i));
 
@@ -78,7 +79,7 @@ namespace manager {
             text_slider_value_.at(i)->setPosition(
                 {text_slider_name_.at(i)->getPosition().x + text_slider_name_.at(i)->getGlobalBounds().size.x + 10.F,
                  text_slider_name_.at(i)->getPosition().y});
-            text_slider_value_.at(i)->setOrigin({0.F, 0.F});
+            text_slider_value_.at(i)->setOrigin(text_slider_name_.at(i)->getLocalBounds().position);
             text_slider_value_.at(i)->setFillColor(config::theme::text_slider_value);
         }
 
@@ -109,7 +110,7 @@ namespace manager {
 
     manager_ui::~manager_ui() = default;
 
-    auto manager_ui::update(const float time_dt) const -> void {
+    auto manager_ui::update(const float time_dt) -> void {
         const sf::Vector2f mouse_position{sf::Mouse::getPosition()};
         const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
 
@@ -122,7 +123,17 @@ namespace manager {
         text_slider_value_[2]->setString(std::format("{:.2f}", simulation_parameters_->gain_cohesion));
         text_slider_value_[3]->setString(std::format("{:.2f}", simulation_parameters_->vision_range));
 
-        text_fps_->setString(std::format("FPS: {:.2f}", 1.F / time_dt));
+        fps_clock_ += time_dt;
+        fps_count_++;
+
+        if (fps_clock_ >= 1.F) {
+            text_fps_->setString(std::format("FPS: {}", fps_count_));
+            text_fps_->setOrigin(text_fps_->getLocalBounds().position +
+                                 sf::Vector2f(text_fps_->getLocalBounds().size.x, 0.F));
+
+            fps_clock_ = 0.F;
+            fps_count_ = 0U;
+        }
     }
 
     auto manager_ui::render(sf::RenderWindow &window) const -> void {
