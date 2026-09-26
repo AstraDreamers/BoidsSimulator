@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace simulation_config {
+namespace config::simulation {
 
     /// **************************************************
     /// ***** Safety Parameters **************************
@@ -79,4 +79,4 @@ namespace simulation_config {
 
     /// @brief Objects' rotation rate.
     constexpr inline float object_rotation_per_second{10.F};
-} // namespace simulation_config
+} // namespace config::simulation

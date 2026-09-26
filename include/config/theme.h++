@@ -20,42 +20,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-/// @brief This macro is used for conveniently importing color palette.
-/// @note DO NOT USE THIS MACRO
-#define rgb(r, g, b) r, g, b
 namespace theme_config {
-
     namespace palette {
-        constexpr inline sf::Color rosewater{rgb(245, 224, 220)};
-        constexpr inline sf::Color flamingo{rgb(242, 205, 205)};
-        constexpr inline sf::Color pink{rgb(245, 194, 231)};
-        constexpr inline sf::Color mauve{rgb(203, 166, 247)};
-        constexpr inline sf::Color red{rgb(243, 139, 168)};
-        constexpr inline sf::Color maroon{rgb(235, 160, 172)};
-        constexpr inline sf::Color peach{rgb(250, 179, 135)};
-        constexpr inline sf::Color yellow{rgb(249, 226, 175)};
-        constexpr inline sf::Color green{rgb(166, 227, 161)};
-        constexpr inline sf::Color teal{rgb(148, 226, 213)};
-        constexpr inline sf::Color sky{rgb(137, 220, 235)};
-        constexpr inline sf::Color sapphire{rgb(116, 199, 236)};
-        constexpr inline sf::Color blue{rgb(137, 180, 250)};
-        constexpr inline sf::Color lavender{rgb(180, 190, 254)};
+        constexpr inline sf::Color rosewater{245U, 224U, 220U};
+        constexpr inline sf::Color flamingo{242U, 205U, 205U};
+        constexpr inline sf::Color pink{245U, 194U, 231U};
+        constexpr inline sf::Color mauve{203U, 166U, 247U};
+        constexpr inline sf::Color red{243U, 139U, 168U};
+        constexpr inline sf::Color maroon{235U, 160U, 172U};
+        constexpr inline sf::Color peach{250U, 179U, 135U};
+        constexpr inline sf::Color yellow{249U, 226U, 175U};
+        constexpr inline sf::Color green{166U, 227U, 161U};
+        constexpr inline sf::Color teal{148U, 226U, 213U};
+        constexpr inline sf::Color sky{137U, 220U, 235U};
+        constexpr inline sf::Color sapphire{116U, 199U, 236U};
+        constexpr inline sf::Color blue{137U, 180U, 250U};
+        constexpr inline sf::Color lavender{180U, 190U, 254U};
 
-        constexpr inline sf::Color text{rgb(205, 214, 244)};
-        constexpr inline sf::Color subtext1{rgb(186, 194, 222)};
-        constexpr inline sf::Color subtext0{rgb(166, 173, 200)};
+        constexpr inline sf::Color text{205U, 214U, 244U};
+        constexpr inline sf::Color subtext1{186U, 194U, 222U};
+        constexpr inline sf::Color subtext0{166U, 173U, 200U};
 
-        constexpr inline sf::Color overlay2{rgb(147, 153, 178)};
-        constexpr inline sf::Color overlay1{rgb(127, 132, 156)};
-        constexpr inline sf::Color overlay0{rgb(108, 112, 134)};
+        constexpr inline sf::Color overlay2{147U, 153U, 178U};
+        constexpr inline sf::Color overlay1{127U, 132U, 156U};
+        constexpr inline sf::Color overlay0{108U, 112U, 134U};
 
-        constexpr inline sf::Color surface2{rgb(88, 91, 112)};
-        constexpr inline sf::Color surface1{rgb(69, 71, 90)};
-        constexpr inline sf::Color surface0{rgb(49, 50, 68)};
+        constexpr inline sf::Color surface2{88U, 91U, 112U};
+        constexpr inline sf::Color surface1{69U, 71U, 90U};
+        constexpr inline sf::Color surface0{49U, 50U, 68U};
 
-        constexpr inline sf::Color base{rgb(30, 30, 46)};
-        constexpr inline sf::Color mantle{rgb(24, 24, 37)};
-        constexpr inline sf::Color crust{rgb(17, 17, 27)};
+        constexpr inline sf::Color base{30U, 30U, 46U};
+        constexpr inline sf::Color mantle{24U, 24U, 37U};
+        constexpr inline sf::Color crust{17U, 17U, 27U};
     } // namespace palette
 
     /// *******************************
