@@ -31,23 +31,16 @@ namespace manager {
         /// ***** Font loading *********
         /// ****************************
 
-        try {
-            cmrc::embedded_filesystem embedded_filesystem{cmrc::assets::get_filesystem()};
-            const std::string         embedded_font_path{"assets/fonts/google_sans.ttf"};
+        const cmrc::embedded_filesystem embedded_filesystem{cmrc::assets::get_filesystem()};
+        const std::string         embedded_font_path{"assets/fonts/google_sans.ttf"};
 
-            if (!embedded_filesystem.exists(embedded_font_path)) {
-                throw std::unexpected<std::string>("Can't open file " + embedded_font_path);
-            }
+        if (!embedded_filesystem.exists(embedded_font_path)) {
+            throw std::unexpected("Can't open file " + embedded_font_path);
+        }
 
-            cmrc::file font{embedded_filesystem.open(embedded_font_path)};
-
-            if (!font_.openFromMemory(font.begin(), font.size())) {
-                throw std::unexpected<std::string>("Can't open stream " + embedded_font_path);
-            }
-
-        } catch (const std::exception &exception) {
-            std::println(stderr, "Exception: {}\n", exception.what());
-            exit(-1);
+        if (const cmrc::file font{embedded_filesystem.open(embedded_font_path)};
+            !font_.openFromMemory(font.begin(), font.size())) {
+            throw std::unexpected("Can't open stream " + embedded_font_path);
         }
 
         /// ****************************

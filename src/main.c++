@@ -24,8 +24,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /// @brief An actual entry point.
 auto main(const int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
     if (!cli_handle({const_cast<const char **>(cli_argument_vector), static_cast<std::size_t>(cli_argument_count)})) {
-        core::core core_engine;
-        core_engine.run();
+        try {
+            core::core core_engine;
+            core_engine.run();
+        } catch (const std::exception &exception) {
+            std::println(stderr, "Exception: {}", exception.what());
+        }
     }
 
     return 0;
