@@ -19,67 +19,69 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "core/core.h++"
-#include "config/system_config.h++"
-#include "config/theme_config.h++"
+#include "config/system.h++"
+#include "config/theme.h++"
 
-core::core() {
-    /// Get current user screen size
-    sf::VideoMode desktop_mode{sf::VideoMode::getDesktopMode()};
-    window_size_ = desktop_mode.size;
+namespace core {
+    core::core() {
+        /// Get current user screen size
+        const sf::VideoMode desktop_mode{sf::VideoMode::getDesktopMode()};
+        window_size_ = desktop_mode.size;
 
-    sf::ContextSettings context_settings{};
-    context_settings.antiAliasingLevel = system_config::antialiasing_level;
+        sf::ContextSettings context_settings{};
+        context_settings.antiAliasingLevel = config::system::antialiasing_level;
 
-    window_.create(sf::VideoMode(window_size_, system_config::bits_per_pixel), system_config::window_title,
-                   sf::Style::Close, sf::State::Fullscreen, context_settings);
-    window_.setFramerateLimit(system_config::framerate_limit);
+        window_.create(sf::VideoMode(window_size_, config::system::bits_per_pixel), config::system::window_title,
+                       sf::Style::Close, sf::State::Fullscreen, context_settings);
+        window_.setFramerateLimit(config::system::framerate_limit);
 
-    manager_entity_ = std::make_unique<manager_entity>(window_size_, simulation_parameters_);
-    manager_ui_     = std::make_unique<manager_ui>(window_size_, simulation_parameters_);
+        manager_entity_ = std::make_unique<manager::manager_entity>(window_size_, simulation_parameters_);
+        manager_ui_     = std::make_unique<manager::manager_ui>(window_size_, simulation_parameters_);
 
-    clear_window_shape_[0].position = {0.F, 0.F};
-    clear_window_shape_[1].position = {static_cast<float>(window_size_.x), 0.F};
-    clear_window_shape_[2].position = {static_cast<float>(window_size_.x), static_cast<float>(window_size_.y)};
-    clear_window_shape_[3].position = {0.F, static_cast<float>(window_size_.y)};
+        clear_window_shape_[0].position = {0.F, 0.F};
+        clear_window_shape_[1].position = {static_cast<float>(window_size_.x), 0.F};
+        clear_window_shape_[2].position = {static_cast<float>(window_size_.x), static_cast<float>(window_size_.y)};
+        clear_window_shape_[3].position = {0.F, static_cast<float>(window_size_.y)};
 
-    for (auto &indices : clear_window_shape_) {
-        indices.color = {theme_config::background.r, theme_config::background.g, theme_config::background.b,
-                         theme_config::background_refresh_alpha};
-    }
-}
-
-core::~core() = default;
-
-auto core::run() -> void {
-    while (window_.isOpen()) {
-        handle_events();
-        if (window_.hasFocus()) {
-            update();
-            render();
-        } else {
-            clock_.restart();
-            render();
+        for (auto &indices : clear_window_shape_) {
+            indices.color = {config::theme::background.r, config::theme::background.g, config::theme::background.b,
+                             config::theme::background_refresh_alpha};
         }
     }
-}
 
-auto core::handle_events() -> void {
-    while (const auto event{window_.pollEvent()}) {
-        if (event->is<sf::Event::Closed>()) {
-            window_.close();
+    core::~core() = default;
+
+    auto core::run() -> void {
+        while (window_.isOpen()) {
+            handle_events();
+            if (window_.hasFocus()) {
+                update();
+                render();
+            } else {
+                dt_ = clock_.restart();
+                render();
+            }
         }
     }
-}
 
-auto core::update() -> void {
-    dt_ = clock_.restart();
-    manager_entity_->update(dt_.asSeconds());
-    manager_ui_->update(dt_.asSeconds());
-}
+    auto core::handle_events() -> void {
+        while (const auto event{window_.pollEvent()}) {
+            if (event->is<sf::Event::Closed>()) {
+                window_.close();
+            }
+        }
+    }
 
-auto core::render() -> void {
-    window_.draw(clear_window_shape_);
-    manager_entity_->render(window_);
-    manager_ui_->render(window_);
-    window_.display();
-}
+    auto core::update() -> void {
+        dt_ = clock_.restart();
+        manager_entity_->update(dt_.asSeconds());
+        manager_ui_->update(dt_.asSeconds());
+    }
+
+    auto core::render() -> void {
+        window_.draw(clear_window_shape_);
+        manager_entity_->render(window_);
+        manager_ui_->render(window_);
+        window_.display();
+    }
+} // namespace core

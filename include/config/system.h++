@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace system_config {
+namespace config::system {
 
     /// @brief Window's anti-aliasing level.
     /// @details The higher it gets, the better the anti-aliasing is, but with the cost of significantly more GPU usage.
@@ -35,4 +35,4 @@ namespace system_config {
 
     /// @brief Window's title.
     constexpr inline std::string window_title{"BoidsSimulator"};
-} // namespace system_config
+} // namespace config::system

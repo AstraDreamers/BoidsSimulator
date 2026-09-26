@@ -24,21 +24,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// @brief Handle command line interface
 /// @param cli_arguments Command line interface arguments
-[[nodiscard]] inline auto cli_handle(std::span<const char *> cli_arguments) -> bool {
+[[nodiscard]] inline auto cli_handle(const std::span<const char *> cli_arguments) -> bool {
+    bool return_value{false};
+
     // Check if any arguments were provided after the executable path
-    if (cli_arguments.size() > 1) {
-        std::string_view subcommand{cli_arguments[1]};
+    if (cli_arguments.size() > 1U) {
+        const std::string_view subcommand{cli_arguments.at(1U)};
 
         if (subcommand == "version") {
+            return_value = true;
+
             std::print("\nBoidsSimulator version {}.{} {}\n\n", PROGRAM_VERSION_MAJOR, PROGRAM_VERSION_MINOR,
                        PROGRAM_VERSION_SPECS);
-            return true;
-        }
 
-        if (subcommand == "about") {
-            // Check for a secondary sub-command (e.g., "about warranty")
-            if (cli_arguments.size() > 2) {
-                std::string_view detail{cli_arguments[2]};
+        } else if (subcommand == "about") {
+            return_value = true;
+
+            if (cli_arguments.size() > 2U) {
+                const std::string_view detail{cli_arguments.at(2U)};
 
                 if (detail == "warranty") {
                     std::print("\n\033[1m15. Disclaimer of Warranty.\033[0m\n"
@@ -72,10 +75,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                                "an absolute waiver of all civil liability in connection with the\n"
                                "Program, unless a warranty or assumption of liability accompanies a\n"
                                "copy of the Program in return for a fee.\n\n");
-                    return true;
-                }
 
-                if (detail == "copyright") {
+                } else if (detail == "copyright") {
                     std::print(
                         "\n\033[1mBoidsSimulator - A simple flocking simulation.\033[0m\n"
                         "\033[1mCopyright (C) 2026  AstraDreamers\033[0m\n"
@@ -93,19 +94,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         "\n"
                         "You should have received a copy of the GNU General Public License\n"
                         "along with this program.  If not, see \033[1m<https://www.gnu.org/licenses/>\033[0m.\n\n");
-                    return true;
-                }
-            }
 
-            std::print("\n\033[1mBoidsSimulator  Copyright (C) 2026  AstraDreamers\033[0m\n"
-                       "This program comes with \033[1;31mABSOLUTELY NO WARRANTY\033[0m;\n"
-                       "for details type \033[1m'./BoidsSimulator about warranty'\033[0m.\n"
-                       "This is free software, and you are welcome to redistribute it\n"
-                       "under certain conditions; type \033[1m'./BoidsSimulator about copyright'\033[0m\n"
-                       "for details.\n\n");
-            return true;
+                } else {
+                }
+
+                std::print("\n\033[1mBoidsSimulator  Copyright (C) 2026  AstraDreamers\033[0m\n"
+                           "This program comes with \033[1;31mABSOLUTELY NO WARRANTY\033[0m;\n"
+                           "for details type \033[1m'./BoidsSimulator about warranty'\033[0m.\n"
+                           "This is free software, and you are welcome to redistribute it\n"
+                           "under certain conditions; type \033[1m'./BoidsSimulator about copyright'\033[0m\n"
+                           "for details.\n\n");
+            }
+        } else {
         }
     }
 
-    return false;
+    return return_value;
 }

@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace ui_config {
+namespace config::ui {
 
     /// ********************************
     /// ***** Text Configuration *******
@@ -34,4 +34,4 @@ namespace ui_config {
 
     /// @brief Size of the value beyond the slider, in pixel.
     constexpr inline uint32_t size_text_slider_value{15U};
-} // namespace ui_config
+} // namespace config::ui

@@ -23,42 +23,49 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../core/simulation_parameters.h++"
 #include "ui/slider.h++"
 
-/// @brief Managing the user interface of the simulation.
-class manager_ui {
-  public:
-    /// @brief Construct a new manager_ui object.
-    /// @param window_size The size of the window.
-    /// @param simulation_parameters The simulation parameters.
-    manager_ui(sf::Vector2u window_size, simulation_parameters &simulation_parameters);
-    ~manager_ui();
+namespace manager {
 
-    manager_ui(const manager_ui &)                         = delete;
-    auto operator=(const manager_ui &) -> manager_ui &     = delete;
-    manager_ui(manager_ui &&) noexcept                     = default;
-    auto operator=(manager_ui &&) noexcept -> manager_ui & = delete;
+    /// @brief Managing the user interface of the simulation.
+    class manager_ui {
+      public:
+        /// @brief Construct a new manager_ui object.
+        /// @param window_size The size of the window.
+        /// @param simulation_parameters The simulation parameters.
+        manager_ui(sf::Vector2u window_size, core::simulation_parameters &simulation_parameters);
+        ~manager_ui();
 
-    /// @brief Update the simulation.
-    /// @param time_dt The delta time since the last update.
-    auto update(float time_dt) const -> void;
+        manager_ui(const manager_ui &)                         = delete;
+        auto operator=(const manager_ui &) -> manager_ui &     = delete;
+        manager_ui(manager_ui &&) noexcept                     = default;
+        auto operator=(manager_ui &&) noexcept -> manager_ui & = delete;
 
-    /// @brief Render the simulation.
-    /// @param window The window to render to.
-    auto render(sf::RenderWindow &window) const -> void;
+        /// @brief Update the simulation.
+        /// @param time_dt The delta time since the last update.
+        auto update(float time_dt) const -> void;
 
-  private:
-    sf::Vector2u           window_size_{0, 0};
-    simulation_parameters *simulation_parameters_{nullptr};
+        /// @brief Render the simulation.
+        /// @param window The window to render to.
+        auto render(sf::RenderWindow &window) const -> void;
 
-    sf::Font font_;
+      private:
+        sf::Vector2u                 window_size_{0, 0};
+        core::simulation_parameters *simulation_parameters_{nullptr};
 
-    std::unique_ptr<sf::Text> text_title_{nullptr};
-    std::unique_ptr<sf::Text> text_fps_{nullptr};
+        sf::Font font_;
 
-    std::array<std::unique_ptr<sf::Text>, 4> text_slider_name_{nullptr};
-    std::array<std::unique_ptr<sf::Text>, 4> text_slider_value_{nullptr};
+        std::unique_ptr<sf::Text> text_title_{nullptr};
+        std::unique_ptr<sf::Text> text_fps_{nullptr};
 
-    std::array<std::unique_ptr<slider>, 4> slider_{nullptr};
+        std::array<std::unique_ptr<sf::Text>, 4U> text_slider_name_{nullptr};
+        std::array<std::unique_ptr<sf::Text>, 4U> text_slider_value_{nullptr};
 
-    static constexpr std::array<std::string, 4> slider_names = {"Separation Gain", "Alignment Gain", "Cohesion Gain",
-                                                                "Vision Range"};
-};
+        std::array<std::unique_ptr<ui::slider>, 4U> slider_{nullptr};
+
+        static constexpr std::array<std::string, 4U> slider_names = {
+            "Separation Gain",
+            "Alignment Gain",
+            "Cohesion Gain",
+            "Vision Range",
+        };
+    };
+} // namespace manager

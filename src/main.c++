@@ -22,12 +22,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "core/core.h++"
 
 /// @brief An actual entry point.
-auto main(int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
-    if (cli_handle({const_cast<const char **>(cli_argument_vector), static_cast<std::size_t>(cli_argument_count)})) {
-        return 0;
+auto main(const int32_t cli_argument_count, char *cli_argument_vector[]) -> int32_t {
+    if (!cli_handle({const_cast<const char **>(cli_argument_vector), static_cast<std::size_t>(cli_argument_count)})) {
+        core::core core_engine;
+        core_engine.run();
     }
 
-    core core_engine;
-    core_engine.run();
     return 0;
 }

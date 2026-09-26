@@ -20,7 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace theme_config {
+namespace config::theme {
+
     namespace palette {
         constexpr inline sf::Color rosewater{245U, 224U, 220U};
         constexpr inline sf::Color flamingo{242U, 205U, 205U};
@@ -92,4 +93,4 @@ namespace theme_config {
 
     /// @brief The color of the slider's fill, when inactive.
     constexpr inline sf::Color slider_inactive{palette::blue};
-} // namespace theme_config
+} // namespace config::theme
