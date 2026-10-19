@@ -52,7 +52,8 @@ Ensure you have a modern C++ compiler supporting C++26 (`clang++ >= 18` or `g++ 
 
 - **[SFML 3.1.0](https://github.com/SFML/SFML/releases/tag/3.1.0)** — Multimedia & Rendering Layer
 
-> **Note:** All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required. **(Except Linux users, they must install SFML's dependencies through system's package manager)**
+> [!NOTE]
+> All dependencies are managed via CMake's `FetchContent`. They will be automatically cloned and linked during the configuration phase — no manual dependency installation required. **(Except Linux users, they must install SFML's dependencies through system's package manager)**
 
 ---
 
