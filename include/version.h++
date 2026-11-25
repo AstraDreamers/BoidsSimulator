@@ -20,6 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define PROGRAM_VERSION_MAJOR 1
-#define PROGRAM_VERSION_MINOR 0
-#define PROGRAM_VERSION_SPECS "Alpha"
+inline constexpr auto program_version_major{1};
+inline constexpr auto program_version_minor{0};
+inline constexpr auto program_version_specs{"Alpha"};

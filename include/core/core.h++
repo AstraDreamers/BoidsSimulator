@@ -20,6 +20,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <memory>
+
 #include "../config/simulation.h++"
 #include "../manager/manager_entity.h++"
 #include "../manager/manager_ui.h++"
@@ -29,7 +34,7 @@ namespace core {
 
     /// @brief Entry point of the whole program.
     class core {
-      public:
+    public:
         core();
         ~core();
 
@@ -41,7 +46,7 @@ namespace core {
         /// @brief Start the program
         auto run() -> void;
 
-      private:
+    private:
         auto handle_events() -> void;
         auto update() -> void;
         auto render() -> void;
@@ -56,10 +61,10 @@ namespace core {
         sf::Time  dt_;
 
         simulation_parameters simulation_parameters_{
-            .gain_separation = config::simulation::init_gain_separation,
-            .gain_alignment  = config::simulation::init_gain_alignment,
-            .gain_cohesion   = config::simulation::init_gain_cohesion,
-            .vision_range    = config::simulation::init_vision_range,
+                .gain_separation = config::simulation::init_gain_separation,
+                .gain_alignment  = config::simulation::init_gain_alignment,
+                .gain_cohesion   = config::simulation::init_gain_cohesion,
+                .vision_range    = config::simulation::init_vision_range,
         };
     };
 } // namespace core

@@ -18,21 +18,31 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include "manager/manager_ui.h++"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <cstdint>
+#include <expected>
+#include <string>
+
+#include "cmrc.h++"
+#include "cmrc/cmrc.hpp"
 #include "config/simulation.h++"
 #include "config/theme.h++"
 #include "config/ui.h++"
+#include "core/simulation_parameters.h++"
+#include "manager/manager_ui.h++"
 
 namespace manager {
-    manager_ui::manager_ui(const sf::Vector2u window_size, core::simulation_parameters &simulation_parameters)
-        : window_size_(window_size), simulation_parameters_(&simulation_parameters) {
+    manager_ui::manager_ui(const sf::Vector2u window_size, core::simulation_parameters &simulation_parameters) :
+        window_size_(window_size), simulation_parameters_(&simulation_parameters) {
 
         /// ****************************
         /// ***** Font loading *********
         /// ****************************
 
         const cmrc::embedded_filesystem embedded_filesystem{cmrc::assets::get_filesystem()};
-        const std::string         embedded_font_path{"assets/fonts/google_sans.ttf"};
+        const std::string               embedded_font_path{"assets/fonts/google_sans.ttf"};
 
         if (!embedded_filesystem.exists(embedded_font_path)) {
             throw std::unexpected("Can't open file " + embedded_font_path);
@@ -61,7 +71,7 @@ namespace manager {
             text_slider_name_.at(i) = std::make_unique<sf::Text>(font_);
             text_slider_name_.at(i)->setCharacterSize(config::ui::size_text_slider_name);
             text_slider_name_.at(i)->setPosition({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
-                                                      (0.05F * static_cast<float>(window_size_.x)),
+                                                          (0.05F * static_cast<float>(window_size_.x)),
                                                   0.85F * static_cast<float>(window_size_.y)});
             text_slider_name_.at(i)->setOrigin(text_slider_name_.at(i)->getLocalBounds().position);
             text_slider_name_.at(i)->setFillColor(config::theme::text_slider_name);
@@ -69,9 +79,9 @@ namespace manager {
 
             text_slider_value_.at(i) = std::make_unique<sf::Text>(font_);
             text_slider_value_.at(i)->setCharacterSize(config::ui::size_text_slider_value);
-            text_slider_value_.at(i)->setPosition(
-                {text_slider_name_.at(i)->getPosition().x + text_slider_name_.at(i)->getGlobalBounds().size.x + 10.F,
-                 text_slider_name_.at(i)->getPosition().y});
+            text_slider_value_.at(i)->setPosition({text_slider_name_.at(i)->getPosition().x +
+                                                           text_slider_name_.at(i)->getGlobalBounds().size.x + 10.F,
+                                                   text_slider_name_.at(i)->getPosition().y});
             text_slider_value_.at(i)->setOrigin(text_slider_name_.at(i)->getLocalBounds().position);
             text_slider_value_.at(i)->setFillColor(config::theme::text_slider_value);
         }
@@ -86,12 +96,12 @@ namespace manager {
                                                   config::simulation::range_gain_alignment);
         slider_[2] = std::make_unique<ui::slider>(simulation_parameters_->gain_cohesion,
                                                   config::simulation::range_gain_cohesion);
-        slider_[3] =
-            std::make_unique<ui::slider>(simulation_parameters_->vision_range, config::simulation::range_vision_range);
+        slider_[3] = std::make_unique<ui::slider>(simulation_parameters_->vision_range,
+                                                  config::simulation::range_vision_range);
 
         for (uint32_t i = 0; i < 4; i++) {
             slider_.at(i)->set_position({((static_cast<float>(i) / 4.F) * static_cast<float>(window_size_.x)) +
-                                             (0.05f * static_cast<float>(window_size_.x)),
+                                                 (0.05f * static_cast<float>(window_size_.x)),
                                          0.9f * static_cast<float>(window_size_.y)});
             slider_.at(i)->set_size({0.15f * static_cast<float>(window_size_.x), 10.F});
 
@@ -107,7 +117,7 @@ namespace manager {
         const sf::Vector2f mouse_position{sf::Mouse::getPosition()};
         const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
 
-        for (const auto &slider : slider_) {
+        for (const auto &slider: slider_) {
             slider->update(time_dt, mouse_position, mouse_clicked);
         }
 

@@ -18,12 +18,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include "manager/manager_entity.h++"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <random>
+#include <ranges>
+
+#include "config/simulation.h++"
 #include "config/theme.h++"
+#include "core/simulation_parameters.h++"
+#include "manager/manager_entity.h++"
 
 namespace manager {
-    manager_entity::manager_entity(sf::Vector2u window_size, core::simulation_parameters &simulation_parameters)
-        : window_size_(window_size), simulation_parameters_(&simulation_parameters) {
+    manager_entity::manager_entity(sf::Vector2u window_size, core::simulation_parameters &simulation_parameters) :
+        window_size_(window_size), simulation_parameters_(&simulation_parameters) {
 
         window_size_float_.x = static_cast<float>(window_size_.x);
         window_size_float_.y = static_cast<float>(window_size_.y);
@@ -36,7 +43,7 @@ namespace manager {
         std::uniform_real_distribution<float> random_v(-config::simulation::init_velocity_range,
                                                        config::simulation::init_velocity_range);
 
-        for (auto &&[pos_x, pos_y, vec_x, vec_y, acc_x, acc_y] :
+        for (auto &&[pos_x, pos_y, vec_x, vec_y, acc_x, acc_y]:
              std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
                              array_acceleration_x_, array_acceleration_y_)) {
             acc_x = 0.F;
@@ -49,7 +56,7 @@ namespace manager {
             pos_y = random_y(random_engine);
         }
 
-        for (auto &indices : render_array_) {
+        for (auto &indices: render_array_) {
             indices.color = config::theme::boids;
         }
     }
@@ -66,7 +73,7 @@ namespace manager {
         /// ? This current problem is so complex that I can't even stand of it anymore (with me only). so I think that
         /// it's ? a good idea to pause the core development and clean up surrounding code.
 
-        for (auto &&[pos_x, pos_y, vec_x, vec_y, acc_x, acc_y, indices] :
+        for (auto &&[pos_x, pos_y, vec_x, vec_y, acc_x, acc_y, indices]:
              std::views::zip(array_position_x_, array_position_y_, array_velocity_x_, array_velocity_y_,
                              array_acceleration_x_, array_acceleration_y_, render_array_)) {
             vec_x += acc_x * time_dt;

@@ -99,11 +99,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	include/
 )
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE
-	include/pch.h++
-)
-
-
 # -------------------------
 # Compile & Linking Options
 # -------------------------

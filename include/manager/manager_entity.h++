@@ -20,6 +20,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <SFML/Graphics/PrimitiveType.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <array>
+#include <cmath>
+
 #include "../config/simulation.h++"
 #include "../core/simulation_parameters.h++"
 
@@ -27,7 +34,7 @@ namespace manager {
 
     /// @brief Managing the entities in the simulation.
     class manager_entity {
-      public:
+    public:
         /// @brief Construct a new manager_entity object.
         /// @param window_size The size of the window.
         /// @param simulation_parameters The simulation parameters.
@@ -47,7 +54,7 @@ namespace manager {
         /// @param window The window to render to.
         auto render(sf::RenderWindow &window) -> void;
 
-      private:
+    private:
         [[nodiscard]] static auto wrap_position(const float position, const float max_bounds) noexcept -> float {
             return position - (max_bounds * std::floor(position / max_bounds));
         }

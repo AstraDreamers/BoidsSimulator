@@ -18,9 +18,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-#include "core/core.h++"
+
+#include <SFML/Window/ContextSettings.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowEnums.hpp>
+#include <memory>
+
 #include "config/system.h++"
 #include "config/theme.h++"
+#include "core/core.h++"
+#include "manager/manager_entity.h++"
+#include "manager/manager_ui.h++"
 
 namespace core {
     core::core() {

@@ -20,6 +20,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <array>
+#include <cstdint>
+#include <memory>
+#include <string>
+
 #include "../core/simulation_parameters.h++"
 #include "ui/slider.h++"
 
@@ -27,7 +36,7 @@ namespace manager {
 
     /// @brief Managing the user interface of the simulation.
     class manager_ui {
-      public:
+    public:
         /// @brief Construct a new manager_ui object.
         /// @param window_size The size of the window.
         /// @param simulation_parameters The simulation parameters.
@@ -47,7 +56,7 @@ namespace manager {
         /// @param window The window to render to.
         auto render(sf::RenderWindow &window) const -> void;
 
-      private:
+    private:
         sf::Vector2u                 window_size_{0, 0};
         core::simulation_parameters *simulation_parameters_{nullptr};
 
@@ -65,10 +74,10 @@ namespace manager {
         std::array<std::unique_ptr<ui::slider>, 4U> slider_{nullptr};
 
         static constexpr std::array<std::string, 4U> slider_names = {
-            "Separation Gain",
-            "Alignment Gain",
-            "Cohesion Gain",
-            "Vision Range",
+                "Separation Gain",
+                "Alignment Gain",
+                "Cohesion Gain",
+                "Vision Range",
         };
     };
 } // namespace manager

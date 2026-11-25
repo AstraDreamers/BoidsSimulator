@@ -20,10 +20,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <cstdint>
+#include <utility>
+
 namespace ui {
 
     class slider {
-      public:
+    public:
         /// @brief Constructor for slider UI component.
         /// @param value Reference to the float variable that the slider will control.
         /// @param clamp Clamp pair, mathematical model is [`clamp.first`, `clamp.second`].
@@ -65,7 +73,7 @@ namespace ui {
         /// @param window The SFML render window to draw the slider on.
         auto render(sf::RenderWindow &window) const -> void;
 
-      private:
+    private:
         float *value_{nullptr};
         float  value_clamp_min_{0.F};
         float  value_clamp_max_{0.F};
@@ -104,8 +112,10 @@ namespace ui {
                                                     const float value) noexcept -> sf::Color {
             const auto interpolate = [value](const std::uint8_t color_a,
                                              const std::uint8_t color_b) noexcept -> std::uint8_t {
-                const float result{static_cast<float>(color_a) +
-                                   ((static_cast<float>(color_b) - static_cast<float>(color_a)) * value)};
+                const float result{
+                        static_cast<float>(color_a) +
+                                ((static_cast<float>(color_b) - static_cast<float>(color_a)) * value),
+                };
 
                 return static_cast<std::uint8_t>(result);
             };

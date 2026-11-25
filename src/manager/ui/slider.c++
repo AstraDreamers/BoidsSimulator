@@ -18,11 +18,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Angle.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <algorithm>
+#include <cmath>
+#include <stdexcept>
+#include <utility>
+
 #include "manager/ui/slider.h++"
 
 namespace ui {
-    slider::slider(float &value, const std::pair<float, float> &clamp)
-        : value_(&value), value_clamp_min_(clamp.first), value_clamp_max_(clamp.second) {
+    slider::slider(float &value, const std::pair<float, float> &clamp) :
+        value_(&value), value_clamp_min_(clamp.first), value_clamp_max_(clamp.second) {
         if (value_ == nullptr) {
             throw std::runtime_error("Fatal error: slider: received control value is nullptr.");
         }
@@ -74,7 +83,7 @@ namespace ui {
         const float interpolated_length{value_internal_ * size_.x};
         const float interpolated_position_x{position_.x + interpolated_length};
         const float mouse_length{
-            std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y),
+                std::hypotf(interpolated_position_x - mouse_position.x, position_.y - mouse_position.y),
         };
 
         /// ? Set position of the knob and the bar based on interpolated length

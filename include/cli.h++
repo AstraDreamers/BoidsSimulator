@@ -20,6 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <print>
+#include <span>
+#include <string_view>
+
 #include "version.h++"
 
 /// @brief Handle command line interface
@@ -34,8 +38,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         if (subcommand == "version") {
             return_value = true;
 
-            std::print("\nBoidsSimulator version {}.{} {}\n\n", PROGRAM_VERSION_MAJOR, PROGRAM_VERSION_MINOR,
-                       PROGRAM_VERSION_SPECS);
+            std::print("\nBoidsSimulator version {}.{} {}\n\n", program_version_major, program_version_minor,
+                       program_version_specs);
 
         } else if (subcommand == "about") {
             return_value = true;
@@ -78,22 +82,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
                 } else if (detail == "copyright") {
                     std::print(
-                        "\n\033[1mBoidsSimulator - A simple flocking simulation.\033[0m\n"
-                        "\033[1mCopyright (C) 2026  AstraDreamers\033[0m\n"
-                        "\n"
-                        "This program is free software: you can redistribute it and/or modify\n"
-                        "it under the terms of the GNU General Public License as published by\n"
-                        "the Free Software Foundation, either version 3 of the License, or\n"
-                        "(at your option) any later version.\n"
-                        "\n"
-                        "This program is distributed in the hope that it will be useful,\n"
-                        "but \033[1;31mWITHOUT ANY WARRANTY\033[0m; without even the implied warranty of\n"
-                        "\033[1;31mMERCHANTABILITY\033[0m or \033[1;31mFITNESS FOR A PARTICULAR PURPOSE\033[0m. "
-                        " See the\n"
-                        "GNU General Public License for more details.\n"
-                        "\n"
-                        "You should have received a copy of the GNU General Public License\n"
-                        "along with this program.  If not, see \033[1m<https://www.gnu.org/licenses/>\033[0m.\n\n");
+                            "\n\033[1mBoidsSimulator - A simple flocking simulation.\033[0m\n"
+                            "\033[1mCopyright (C) 2026  AstraDreamers\033[0m\n"
+                            "\n"
+                            "This program is free software: you can redistribute it and/or modify\n"
+                            "it under the terms of the GNU General Public License as published by\n"
+                            "the Free Software Foundation, either version 3 of the License, or\n"
+                            "(at your option) any later version.\n"
+                            "\n"
+                            "This program is distributed in the hope that it will be useful,\n"
+                            "but \033[1;31mWITHOUT ANY WARRANTY\033[0m; without even the implied warranty of\n"
+                            "\033[1;31mMERCHANTABILITY\033[0m or \033[1;31mFITNESS FOR A PARTICULAR PURPOSE\033[0m. "
+                            " See the\n"
+                            "GNU General Public License for more details.\n"
+                            "\n"
+                            "You should have received a copy of the GNU General Public License\n"
+                            "along with this program.  If not, see \033[1m<https://www.gnu.org/licenses/>\033[0m.\n\n");
 
                 } else {
                 }

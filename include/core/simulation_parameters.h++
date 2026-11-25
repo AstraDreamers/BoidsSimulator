@@ -20,6 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <cstdint>
+#include <type_traits>
+
 namespace core {
     inline constexpr uint8_t simulation_parameters_size{16U};
 
