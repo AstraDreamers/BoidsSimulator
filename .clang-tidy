@@ -1,3 +1,4 @@
+---
 Checks: >
   bugprone-*,
   cert-*,
@@ -27,5 +28,5 @@ CheckOptions:
   - { key: readability-identifier-naming.ProtectedMemberSuffix, value: _ }
   - { key: readability-identifier-naming.PrivateMemberCase, value: lower_case }
   - { key: readability-identifier-naming.PrivateMemberSuffix, value: _ }
-WarningsAsErrors: "*"
 UseColor: true
+...

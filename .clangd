@@ -1,5 +1,50 @@
+---
 CompileFlags:
-  Remove: 
+  Remove:
     - "-fmodule-mapper=*"
     - "-fdeps-format=*"
     - "-fmodules-ts"
+
+  Add:
+    - "-Wall"
+    - "-Wextra"
+    - "-Wpedantic"
+    - "-Wshadow"
+    - "-Wconversion"
+    - "-Wsign-conversion"
+    - "-Wnull-dereference"
+    - "-Wdouble-promotion"
+    - "-Wformat=2"
+    - "-Wimplicit-fallthrough"
+    - "-Wnon-virtual-dtor"
+    - "-Wold-style-cast"
+    - "-Woverloaded-virtual"
+
+Diagnostics:
+  ClangTidy:
+    FastCheckFilter: None
+
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+  Includes:
+    AnalyzeAngledIncludes: true
+
+Index:
+  Background: Build
+  StandardLibrary: true
+
+Completion:
+  AllScopes: true
+  ArgumentLists: FullPlaceholders
+  HeaderInsertion: IWYU
+  CodePatterns: All
+
+InlayHints:
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  Designators: true
+  BlockEnd: true
+  DefaultArguments: true
+  TypeNameLimit: 0
+...
