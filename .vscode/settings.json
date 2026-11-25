@@ -8,6 +8,7 @@
     "ffast",
     "flac",
     "freetype",
+    "lastbuildstate",
     "libgcc",
     "libogg",
     "libstdc",
@@ -18,12 +19,14 @@
     "libxrandr",
     "libxrender",
     "mbedtls",
+    "MSVC",
     "mwindows",
     "objc",
     "overrightarrow",
     "pacman",
     "SFML",
     "sqrtf",
+    "tlog",
     "Wextra"
   ]
 }
