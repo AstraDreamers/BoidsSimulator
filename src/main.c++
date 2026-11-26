@@ -18,6 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
+#include <cstddef>
+#include <cstdint>
+#include <exception>
+#include <print>
+
 #include "cli.h++"
 #include "core/core.h++"
 

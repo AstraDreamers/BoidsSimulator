@@ -23,8 +23,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <SFML/Window/Mouse.hpp>
 #include <cstdint>
 #include <expected>
+#include <format>
+#include <memory>
 #include <string>
 
+#include "SFML/Graphics/Text.hpp"
 #include "cmrc.h++"
 #include "cmrc/cmrc.hpp"
 #include "config/simulation.h++"
@@ -32,6 +35,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "config/ui.h++"
 #include "core/simulation_parameters.h++"
 #include "manager/manager_ui.h++"
+#include "manager/ui/slider.h++"
 
 namespace manager {
     manager_ui::manager_ui(const sf::Vector2u window_size, core::simulation_parameters &simulation_parameters) :
@@ -113,7 +117,7 @@ namespace manager {
 
     manager_ui::~manager_ui() = default;
 
-    auto manager_ui::update(const float time_dt) -> void {
+    auto manager_ui::update(float const time_dt) -> void {
         const sf::Vector2f mouse_position{sf::Mouse::getPosition()};
         const bool         mouse_clicked{sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)};
 
